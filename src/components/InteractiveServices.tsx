@@ -128,7 +128,7 @@ export const InteractiveServices: React.FC = () => {
           className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden relative"
         >
 
-          <div className="text-center mb-16 relative z-10">
+          <div className="text-center mb-8 relative z-10 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -149,12 +149,12 @@ export const InteractiveServices: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="relative h-[400px] md:h-[450px] flex items-center justify-center z-10">
+          <div className="relative h-[480px] md:h-[520px] -mt-4 md:-mt-12 flex items-center justify-center z-10">
             {/* Orbiting Lines - Hidden on mobile for clarity */}
             {!isMobile && (
               <>
-                <div className="absolute w-[350px] h-[350px] border border-primary/10 rounded-full" />
-                <div className="absolute w-[220px] h-[220px] border border-primary/5 rounded-full" />
+                <div className="absolute w-[450px] h-[450px] border border-primary/10 rounded-full" />
+                <div className="absolute w-[300px] h-[300px] border border-primary/5 rounded-full" />
               </>
             )}
 
@@ -164,7 +164,7 @@ export const InteractiveServices: React.FC = () => {
                 scale: activeId ? 0.8 : 1,
                 rotate: isMobile ? 0 : rotation * 0.5
               }}
-              className="relative z-20 w-20 h-20 md:w-28 md:h-28 rounded-full bg-[radial-gradient(circle_at_center,_#6D28D9_0%,_#3A0F63_100%)] flex items-center justify-center shadow-[0_0_50px_rgba(58,15,99,0.4)]"
+              className="relative z-20 w-24 h-24 md:w-32 md:h-32 rounded-full bg-[radial-gradient(circle_at_center,_#6D28D9_0%,_#3A0F63_100%)] flex items-center justify-center shadow-[0_0_50px_rgba(58,15,99,0.4)]"
             >
               <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-white relative z-10" />
               
@@ -179,7 +179,7 @@ export const InteractiveServices: React.FC = () => {
             {/* Service Nodes */}
             {services.map((service, index) => {
               const angle = (index / services.length) * 2 * Math.PI + (isMobile ? 0 : rotation * Math.PI / 180);
-              const radius = isMobile ? 120 : 175;
+              const radius = isMobile ? 140 : 225;
               const x = Math.cos(angle) * radius;
               const y = Math.sin(angle) * radius;
 
