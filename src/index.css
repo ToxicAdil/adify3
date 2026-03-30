@@ -25,7 +25,7 @@
   body {
     @apply font-sans;
     color: var(--text-main);
-    background-color: #fce7f3; /* Tailwind pink-100 for a noticeable light pink */
+    background-color: #faf5ff; /* Tailwind purple-50 for a clean light purple */
     min-height: 100vh;
     overflow-x: hidden;
     width: 100%;
