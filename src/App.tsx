@@ -431,7 +431,7 @@ export default function App() {
       </header>
 
       {/* Clients Section (Animated Logo Cloud) */}
-      <section className="py-12 border-b border-slate-100 bg-[#f5f0ff] relative z-10">
+      <section className="py-8 border-b border-slate-100 bg-[#f5f0ff] relative z-10">
         <div className="container-custom">
           <div className="w-full">
             <h2 className="mb-5 text-center">
@@ -450,7 +450,7 @@ export default function App() {
       <InteractiveServices />
 
       {/* Strategic Marketing Detail Section */}
-      <section id="strategic-marketing" className="py-24 relative">
+      <section id="strategic-marketing" className="py-8 relative">
         <div className="container-custom">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -458,63 +458,43 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Media Container - Video Ready Card */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
               >
-                {/* Sophisticated Solid Placeholder */}
-                <div className="absolute inset-0 bg-primary/90 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Adify Strategy
-                  </div>
-                </div>
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774899653/marketing_video_yes6gn.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
 
               {/* Text Content */}
-              <div className="space-y-8 text-center lg:text-left">
+              <div className="flex-1 w-full space-y-8 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       ADS • ADS • ADS
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Strategic Marketing</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Ready to scale your brand with data-driven advertising? We craft high-performing campaigns across platforms that maximize ROI and drive consistent growth.
                     </p>
                   </div>
@@ -524,7 +504,7 @@ export default function App() {
                   {['Facebook Ads', 'Google Ads'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -549,23 +529,23 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Text Content - Left Side */}
-              <div className="space-y-8 order-2 lg:order-1 text-center lg:text-left">
+              <div className="flex-1 w-full space-y-8 order-2 lg:order-1 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       SOCIAL • SOCIAL • SOCIAL
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Social Media</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Build a strong online presence with high-performing social media strategies that engage your audience and drive real business growth.
                     </p>
                   </div>
@@ -575,7 +555,7 @@ export default function App() {
                   {['Instagram', 'LinkedIn', 'Content Strategy'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -584,44 +564,37 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Media Container - Right Side */}
+              {/* Media Container - Right Side (Original Layout with Blurred Fill) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
-                {/* Sophisticated Solid Placeholder */}
-                <div className="absolute inset-0 bg-primary/80 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
+                {/* Blurred Background Video Layer */}
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774898952/management_video_j9vvld.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="absolute inset-0 w-full h-full object-cover z-0"
+                  style={{ filter: 'blur(20px) brightness(0.7)' }}
+                />
 
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Social Growth
-                  </div>
-                </div>
+                {/* Main Foreground Video Layer */}
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774898952/management_video_j9vvld.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="relative w-full h-full object-contain z-10 block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
             </div>
 
@@ -640,63 +613,43 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Media Container - Left Side (Alternating) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
               >
-                {/* Sophisticated Solid Placeholder */}
-                <div className="absolute inset-0 bg-primary/70 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Automation Flow
-                  </div>
-                </div>
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897694/automation_video_eevmht.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
 
               {/* Text Content - Right Side */}
-              <div className="space-y-8 text-center lg:text-left">
+              <div className="flex-1 w-full space-y-8 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       AUTOMATE • AUTOMATE • AUTOMATE
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Automation</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Automate repetitive tasks, streamline workflows, and scale your operations efficiently while focusing on what truly matters.
                     </p>
                   </div>
@@ -706,7 +659,7 @@ export default function App() {
                   {['CRM', 'Lead Gen', 'Business Flows'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -731,23 +684,23 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Text Content - Left Side (Alternating) */}
-              <div className="space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="flex-1 w-full space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       WEB • WEB • WEB
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Web Development</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Build fast, scalable, and high-converting websites that deliver seamless user experiences and drive real business growth.
                     </p>
                   </div>
@@ -757,7 +710,7 @@ export default function App() {
                   {['Website Development', 'Landing Pages'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -772,38 +725,18 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
-                {/* Sophisticated Gradient Placeholder */}
-                <div className="absolute inset-0 bg-primary/20 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Web Experience
-                  </div>
-                </div>
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774898094/web_dev_video_hoheur.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
             </div>
 
@@ -822,63 +755,43 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Media Container - Left Side (Alternating) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
               >
-                {/* Analytical Gradient Placeholder */}
-                <div className="absolute inset-0 bg-primary/20 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Organic Performance
-                  </div>
-                </div>
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897169/seo_video_dgkbor.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
 
               {/* Text Content - Right Side (Alternating) */}
-              <div className="space-y-8 text-center lg:text-left">
+              <div className="flex-1 w-full space-y-8 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       SEO • SEO • SEO
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Robust SEO</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Elevate your online presence with data-driven SEO strategies, optimized content, and scalable workflows that drive long-term organic growth.
                     </p>
                   </div>
@@ -888,7 +801,7 @@ export default function App() {
                   {['Keyword Research', 'Content Strategy', 'Analytics'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -913,23 +826,23 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
               {/* Text Content - Left Side (Alternating) */}
-              <div className="space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="flex-1 w-full space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] bg-primary/10 px-4 py-1.5 rounded-full">
+                    <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
                       DESIGN • DESIGN • DESIGN
                     </span>
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900">
+                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Visual Branding</span>
                     </h2>
-                    <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       We craft visually stunning designs that connect with your audience, elevate your brand identity, and drive meaningful engagement.
                     </p>
                   </div>
@@ -939,7 +852,7 @@ export default function App() {
                   {['Social Media', 'Ads', 'Videos'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-6 py-3 bg-white/80 backdrop-blur-sm border border-white rounded-2xl text-xs font-bold text-slate-700 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                       >
                         {btn}
                       </button>
@@ -954,38 +867,18 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative aspect-video rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
-                {/* Creative Gradient Placeholder */}
-                <div className="absolute inset-0 bg-primary/20 transition-transform duration-1000 group-hover:scale-110" />
-                
-                {/* Inner Glow Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.2)] pointer-events-none" />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MagneticButton>
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/30 shadow-2xl cursor-pointer group/btn"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:shadow-primary/20">
-                        <Play className="text-primary w-6 h-6 fill-primary ml-1 transition-colors group-hover/btn:text-white group-hover/btn:fill-white" />
-                      </div>
-                    </motion.div>
-                  </MagneticButton>
-                </div>
-
-                {/* Support for future video autoplay integration */}
-                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                  <div className="px-3 py-1 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-bold text-white uppercase tracking-widest">
-                    Video Preview
-                  </div>
-                  <div className="text-white/80 text-[10px] font-bold uppercase tracking-widest">
-                    Creative Showcase
-                  </div>
-                </div>
+                <video
+                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774896151/visual_branding_video_vv9gci.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover block"
+                  style={{ borderRadius: 'inherit' }}
+                />
               </motion.div>
             </div>
 
@@ -1004,7 +897,7 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
             <div className="text-left mb-16 space-y-4 relative z-10">
               <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight">
@@ -1050,7 +943,7 @@ export default function App() {
             whileHover={{ y: -4, scale: 1.01 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[48px] p-6 md:p-12 lg:py-[60px] lg:px-[80px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
             <div className="grid lg:grid-cols-2 gap-24 items-center relative z-10">
               {/* Left Side: Content */}
@@ -1122,7 +1015,7 @@ export default function App() {
       <WhyAdify />
 
       {/* Reviews Section */}
-      <section id="reviews" className="py-24">
+      <section id="reviews" className="py-8">
         <div className="container-custom">
           <div className="text-left mb-20 space-y-6">
             <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight">Client <span className="text-gradient">Success.</span></h2>
@@ -1163,7 +1056,7 @@ export default function App() {
       </section>
 
       {/* FAQs Section */}
-      <section id="faqs" className="py-24 bg-slate-50/50">
+      <section id="faqs" className="py-8 bg-slate-50/50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-[1fr,2fr] gap-16">
             <div className="space-y-6">

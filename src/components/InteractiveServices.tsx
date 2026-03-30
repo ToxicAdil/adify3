@@ -118,7 +118,7 @@ export const InteractiveServices: React.FC = () => {
   const activeService = services.find(s => s.id === activeId);
 
   return (
-    <section id="services" className="py-20 relative overflow-hidden bg-[#F8FAFC]">
+    <section id="services" className="py-8 relative overflow-hidden bg-[#F8FAFC]">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
