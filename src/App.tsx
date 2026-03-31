@@ -308,9 +308,9 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, x: 30 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[550px] lg:min-h-[750px]"
+              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[600px] lg:min-h-[850px]"
               data-cursor-text="Explore"
-              style={{ transform: 'scale(1.6)', transformOrigin: 'center center' }}
+              style={{ transform: 'scale(2)', transformOrigin: 'center center' }}
             >
               <Spline 
                 scene="https://prod.spline.design/1k3jiQf0UnFKbYyR/scene.splinecode"
