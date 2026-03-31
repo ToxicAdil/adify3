@@ -310,7 +310,7 @@ export default function App() {
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[600px] lg:min-h-[850px]"
               data-cursor-text="Explore"
-              style={{ transform: 'scale(2)', transformOrigin: 'center center' }}
+              style={{ transform: 'scale(2.25)', transformOrigin: 'center center' }}
             >
               <Spline 
                 scene="https://prod.spline.design/1k3jiQf0UnFKbYyR/scene.splinecode"
