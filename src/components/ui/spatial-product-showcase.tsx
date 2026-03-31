@@ -49,7 +49,7 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
     label: 'Adil',
     title: 'Adil Ali',
     description: 'Founder & Visionary behind Adify. Spearheading strategic growth, full-stack development, and data-driven marketing systems that scale brands beyond borders.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80', // Placeholder
+    image: 'https://res.cloudinary.com/dtzo88csm/image/upload/v1774977463/IMG_6729_q6mmay.jpg',
     colors: {
       gradient: 'from-slate-900 to-black',
       glow: 'bg-black',
