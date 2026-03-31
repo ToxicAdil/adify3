@@ -27,6 +27,7 @@ import { InteractiveServices } from './components/InteractiveServices';
 import AboutAdify from './components/AboutAdify';
 import { GeometricBackground } from '@/components/ui/shape-landing-hero';
 import Spline from '@splinetool/react-spline';
+
 import { CircularTestimonials } from './components/ui/circular-testimonials';
 import { InteractiveGlobe } from './components/ui/interactive-globe';
 import { ParticleHero } from './components/ui/particle-hero';
@@ -310,7 +311,7 @@ export default function App() {
               data-cursor-text="Explore"
             >
               <Spline 
-                scene="https://prod.spline.design/5GILnYNHh7m1Zme9/scene.splinecode"
+                scene="https://prod.spline.design/5GILnYNHh7m1Zme9/scene.splinecode" 
                 style={{ background: 'transparent', width: '100%', height: '100%' }}
               />
             </motion.div>
