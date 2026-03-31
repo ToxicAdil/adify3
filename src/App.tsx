@@ -23,6 +23,7 @@ import CustomCursor from './components/CustomCursor';
 import MagneticButton from './components/MagneticButton';
 import AdifyLogo from './components/AdifyLogo';
 import { InteractiveServices } from './components/InteractiveServices';
+import AboutAdify from './components/AboutAdify';
 import { GeometricBackground } from '@/components/ui/shape-landing-hero';
 import Spline from '@splinetool/react-spline';
 
@@ -1009,6 +1010,9 @@ export default function App() {
           </motion.div>
         </div>
       </section>
+
+      {/* About Adify Section */}
+      <AboutAdify />
 
       {/* Why Adify Section */}
       <WhyAdify />
