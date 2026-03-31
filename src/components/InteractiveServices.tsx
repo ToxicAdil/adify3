@@ -94,6 +94,7 @@ const services: ServiceNode[] = [
   }
 ];
 
+import { UniqueAccordion } from './ui/interactive-accordion';
 import OrbitingServices from './ui/orbiting-skills';
 
 export const InteractiveServices: React.FC = () => {
@@ -109,31 +110,31 @@ export const InteractiveServices: React.FC = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="premium-card rounded-3xl md:rounded-[32px] overflow-hidden relative"
         >
-          <div className="flex flex-col lg:flex-row items-center justify-between min-h-[500px] md:min-h-[600px] relative z-10 px-6 md:px-12">
-            {/* Left Side: Content & Future Space */}
-            <div className="w-full lg:w-[45%] text-left lg:pl-4 py-12 lg:py-0">
+          <div className="flex flex-col lg:flex-row items-start justify-between min-h-[500px] md:min-h-[600px] relative z-10 px-6 md:px-12 py-12 md:py-16">
+            {/* Left Side: Interactive Accordion Content */}
+            <div className="w-full lg:w-[45%] lg:pl-4">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="space-y-6"
+                className="space-y-8"
               >
-                <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1]">
-                  Our <span className="text-gradient">Services.</span>
-                </h2>
-                <p className="text-slate-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
-                  Explore how we help brands scale with performance-driven systems and high-converting strategies
-                </p>
-                {/* Spacer for the user's future element */}
-                <div className="pt-4">
-                  {/* Your new content will go here */}
+                <div>
+                  <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6">
+                    Our <span className="text-gradient">Services.</span>
+                  </h2>
+                  <p className="text-slate-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
+                    Transforming brands into industry leaders with data-driven creative and technical systems.
+                  </p>
                 </div>
+                
+                <UniqueAccordion />
               </motion.div>
             </div>
 
             {/* Right Side: Circular Animation */}
-            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end">
+            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end mt-12 lg:mt-0">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
