@@ -530,9 +530,9 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               {/* Text Content - Left Side */}
-              <div className="flex-1 w-full space-y-8 order-2 lg:order-1 text-center lg:text-left">
+              <div className="flex-1 w-full lg:max-w-[500px] space-y-8 order-2 lg:order-1 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
                     <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
@@ -569,7 +569,7 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
                 {/* Blurred Background Video Layer */}
                 <video
@@ -614,14 +614,14 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               {/* Media Container - Left Side (Alternating) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
+                className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
               >
                 <video
                   src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897694/automation_video_eevmht.mp4"
@@ -636,7 +636,7 @@ export default function App() {
               </motion.div>
 
               {/* Text Content - Right Side */}
-              <div className="flex-1 w-full space-y-8 text-center lg:text-left">
+              <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
                     <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
@@ -685,9 +685,9 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               {/* Text Content - Left Side (Alternating) */}
-              <div className="flex-1 w-full space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
                     <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
@@ -724,7 +724,7 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
                 <video
                   src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774898094/web_dev_video_hoheur.mp4"
@@ -756,14 +756,14 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               {/* Media Container - Left Side (Alternating) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
+                className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5"
               >
                 <video
                   src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897169/seo_video_dgkbor.mp4"
@@ -778,7 +778,7 @@ export default function App() {
               </motion.div>
 
               {/* Text Content - Right Side (Alternating) */}
-              <div className="flex-1 w-full space-y-8 text-center lg:text-left">
+              <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
                     <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
@@ -827,9 +827,9 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
           >
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between relative z-10">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               {/* Text Content - Left Side (Alternating) */}
-              <div className="flex-1 w-full space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
                   <div className="flex items-center justify-center lg:justify-start">
                     <span className="text-[12px] font-bold text-primary uppercase tracking-[0.2em] bg-primary/10 px-[16px] py-[6px] rounded-full">
@@ -866,7 +866,7 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative w-full aspect-[4/3] lg:w-[440px] lg:min-w-[440px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
+                className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
                 <video
                   src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774896151/visual_branding_video_vv9gci.mp4"
