@@ -304,10 +304,10 @@ export default function App() {
 
           <div className="hero-right relative z-10">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, x: 80 }}
-              animate={{ opacity: 1, scale: 1, x: 30 }}
+              initial={{ opacity: 0, scale: 0.9, x: 130 }}
+              animate={{ opacity: 1, scale: 1.15, x: 90 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[110%] lg:w-[130%] h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[500px] lg:min-h-[700px] -ml-[5%] lg:-ml-[15%]"
+              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[450px] lg:min-h-[550px]"
               data-cursor-text="Explore"
             >
               <Spline 
