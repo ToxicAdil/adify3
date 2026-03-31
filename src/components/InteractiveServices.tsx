@@ -121,7 +121,7 @@ export const InteractiveServices: React.FC = () => {
                 className="space-y-8"
               >
                 <div>
-                  <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6">
+                  <h2 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6">
                     Our <span className="text-gradient">Services.</span>
                   </h2>
                   <p className="text-slate-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">

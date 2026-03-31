@@ -71,7 +71,7 @@ export function UniqueAccordion() {
               >
                 <div className="flex items-center gap-6 py-6 px-1">
                   {/* Number with animated circle */}
-                  <div className="relative flex items-center justify-center w-10 h-10 shrink-0">
+                  <div className="relative flex items-center justify-center w-8 h-8 shrink-0">
                     <motion.div
                       className="absolute inset-0 rounded-full bg-[#3A0F63]"
                       initial={false}
@@ -86,7 +86,7 @@ export function UniqueAccordion() {
                       }}
                     />
                     <motion.span
-                      className="relative z-10 text-sm font-bold tracking-wide"
+                      className="relative z-10 text-xs font-bold tracking-wide"
                       animate={{
                         color: isActive ? "#ffffff" : "#64748b",
                       }}
@@ -98,7 +98,7 @@ export function UniqueAccordion() {
 
                   {/* Title */}
                   <motion.h3
-                    className="text-xl md:text-2xl font-bold tracking-tight text-slate-900"
+                    className="text-lg md:text-xl font-bold tracking-tight text-slate-900"
                     animate={{
                       x: isActive || isHovered ? 4 : 0,
                       color: isActive || isHovered ? "#0f172a" : "#64748b",
@@ -185,7 +185,7 @@ export function UniqueAccordion() {
                     className="overflow-hidden"
                   >
                     <motion.p
-                      className="pl-16 pr-12 pb-8 text-slate-500 leading-relaxed font-medium"
+                      className="pl-14 pr-12 pb-6 text-slate-500 text-sm leading-relaxed font-medium"
                       initial={{ y: -10 }}
                       animate={{ y: 0 }}
                       exit={{ y: -10 }}
