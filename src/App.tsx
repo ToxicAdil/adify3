@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -117,13 +118,13 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
-              <a 
+              <Link 
                 key={item} 
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                to={item === 'About' ? '/about' : `/#${item.toLowerCase().replace(' ', '-')}`}
                 className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
               >
                 {item}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -165,14 +166,14 @@ const Navbar = () => {
           >
             <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
               {navItems.map((item) => (
-                <a 
-                  key={item} 
-                  href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  className="text-lg font-medium text-slate-700"
+                <Link
+                  key={item}
+                  to={item === 'About' ? '/about' : `/#${item.toLowerCase().replace(' ', '-')}`}
+                  className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item}
-                </a>
+                </Link>
               ))}
               <hr className="border-slate-200" />
               <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold">
