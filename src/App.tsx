@@ -126,13 +126,23 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
-              <Link 
-                key={item.label} 
-                to={item.path || `/#${item.id}`}
-                className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
-              >
-                {item.label}
-              </Link>
+              item.path ? (
+                <Link 
+                  key={item.label} 
+                  to={item.path}
+                  className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a 
+                  key={item.label} 
+                  href={`/#${item.id}`}
+                  className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
+                >
+                  {item.label}
+                </a>
+              )
             ))}
           </div>
 
@@ -174,14 +184,25 @@ const Navbar = () => {
           >
             <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
               {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.path || `/#${item.id}`}
-                  className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                item.path ? (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={`/#${item.id}`}
+                    className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                )
               ))}
               <hr className="border-slate-200" />
               <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold">
