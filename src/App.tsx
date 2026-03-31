@@ -103,6 +103,18 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
+    
+    // Check if URL has hash on mount and scroll smoothly
+    if (window.location.hash) {
+      setTimeout(() => {
+        const id = window.location.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -115,6 +127,16 @@ const Navbar = () => {
     { label: 'Reviews', id: 'reviews' },
     { label: 'FAQs', id: 'faqs' }
   ];
+
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState(null, '', `#${id}`);
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'} header`}>
@@ -137,7 +159,8 @@ const Navbar = () => {
               ) : (
                 <a 
                   key={item.label} 
-                  href={`/#${item.id}`}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleScrollTo(e, item.id)}
                   className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
                 >
                   {item.label}
@@ -196,9 +219,9 @@ const Navbar = () => {
                 ) : (
                   <a
                     key={item.label}
-                    href={`/#${item.id}`}
+                    href={`#${item.id}`}
                     className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => handleScrollTo(e, item.id)}
                   >
                     {item.label}
                   </a>

@@ -43,23 +43,13 @@ const AboutPage = () => {
 
             <div className="hidden md:flex items-center gap-10">
               {navItems.map((item) => (
-                item.path === '/about' ? (
-                  <Link 
-                    key={item.label} 
-                    to={item.path}
-                    className={`text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide ${item.label === 'About' ? 'text-[#3A0F63]' : ''}`}
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <a 
-                    key={item.label} 
-                    href={item.path}
-                    className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
-                  >
-                    {item.label}
-                  </a>
-                )
+                <Link 
+                  key={item.label} 
+                  to={item.path}
+                  className={`text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide ${item.label === 'About' ? 'text-[#3A0F63]' : ''}`}
+                >
+                  {item.label}
+                </Link>
               ))}
             </div>
 
