@@ -123,7 +123,6 @@ const Navbar = () => {
     { label: 'Services', id: 'services' },
     { label: 'Clients', id: 'clients' },
     { label: 'About', id: 'about', path: '/about' },
-    { label: 'Why Adify', id: 'why' },
     { label: 'Reviews', id: 'reviews' },
     { label: 'FAQs', id: 'faqs' }
   ];
@@ -236,146 +235,6 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </header>
-  );
-};
-
-const WhyAdify = () => {
-  const othersPoints = [
-    "Slow turnaround time",
-    "Outdated marketing strategies",
-    "Lack of transparency",
-    "Delayed reporting",
-    "Poor communication"
-  ];
-
-  const adifyPoints = [
-    "Fast execution & quick results",
-    "AI-driven marketing strategies",
-    "Full transparency & real-time tracking",
-    "Accurate & detailed reporting",
-    "Dedicated support & communication"
-  ];
-
-  return (
-    <section id="why" className="py-8 relative">
-      <div className="container-custom">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="premium-card rounded-3xl md:rounded-[48px] overflow-hidden"
-        >
-          <ParticleHero>
-            <div className="py-12 md:py-24 px-6 md:px-12 lg:px-[80px] relative z-10">
-              <div className="text-left mb-20 space-y-6">
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="inline-flex items-center gap-2 bg-purple-500/10 text-purple-300 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-purple-500/20"
-                >
-                  WHY CHOOSE US
-                </motion.div>
-                <motion.h2 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                  className="text-4xl md:text-7xl font-bold text-white leading-[1.1]"
-                >
-                  Why <span className="text-purple-400">Adify</span> Stands Out.
-                </motion.h2>
-                <motion.p 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="text-slate-400 font-medium text-lg max-w-2xl"
-                >
-                  See how we deliver better results compared to traditional agencies.
-                </motion.p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-                {/* Others Side */}
-                <motion.div 
-                  initial={{ opacity: 0, x: -40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="p-8 md:p-12 rounded-[30px] bg-white/5 backdrop-blur-sm border border-white/10"
-                >
-                  <div className="flex items-center gap-4 mb-10">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10">
-                      <X className="w-6 h-6 text-slate-400" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-400">Traditional Agencies</h3>
-                  </div>
-                  <div className="space-y-6">
-                    {othersPoints.map((point, i) => (
-                      <div key={i} className="flex items-center gap-4 text-slate-400">
-                        <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10">
-                          <Minus className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="font-medium">{point}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Adify Side */}
-                <motion.div 
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="p-8 md:p-12 rounded-[30px] bg-white/10 backdrop-blur-md relative overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.4)] border border-white/10"
-                >
-                  {/* Glow Effect */}
-                  <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
-                  <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
-
-                  <div className="flex items-center gap-4 mb-10 relative z-10">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center border border-purple-500/30">
-                      <Zap className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">The Adify Way</h3>
-                  </div>
-                  <div className="space-y-6 relative z-10">
-                    {adifyPoints.map((point, i) => (
-                      <motion.div 
-                        key={i} 
-                        whileHover={{ scale: 1.02, x: 4 }}
-                        className="flex items-center gap-4 text-slate-200 group cursor-default"
-                      >
-                        <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 group-hover:bg-purple-500 group-hover:text-white transition-colors border border-purple-500/30">
-                          <Check className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="font-semibold group-hover:text-purple-400 transition-colors">{point}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* CTA Section */}
-              <div className="mt-20 text-center space-y-8">
-                <p className="text-slate-400 font-bold text-sm uppercase tracking-[0.2em]">Still confused? Let’s clear it out.</p>
-                <MagneticButton>
-                  <button 
-                    data-cursor-text="Let's Talk"
-                    className="bg-gradient-to-r from-primary to-purple-600 text-white px-12 py-6 rounded-full font-bold text-lg shadow-[0_20px_40px_-10px_rgba(124,58,237,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(124,58,237,0.5)] transition-all duration-500 flex items-center gap-3 mx-auto border border-white/10"
-                  >
-                    Book a Free Strategy Call <ArrowRight className="w-5 h-5" />
-                  </button>
-                </MagneticButton>
-              </div>
-            </div>
-          </ParticleHero>
-        </motion.div>
-      </div>
-    </section>
   );
 };
 
@@ -1069,8 +928,6 @@ export default function App() {
       {/* About Adify Section */}
       <AboutAdify />
 
-      {/* Why Adify Section */}
-      <WhyAdify />
 
       {/* Reviews Section */}
       <section id="reviews" className="py-8">
