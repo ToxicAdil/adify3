@@ -129,49 +129,8 @@ export const InteractiveServices: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 w-full mt-12">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative backdrop-blur-2xl border border-slate-200 transition-all duration-300 ease-out flex flex-col bg-white/80 p-6 md:p-8 rounded-3xl cursor-pointer group ${activeId === service.id ? 'ring-2 ring-primary/20 bg-white/95 shadow-xl' : 'hover:shadow-lg hover:-translate-y-1'}`}
-                onClick={() => setActiveId(service.id === activeId ? null : service.id)}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300 ${activeId === service.id ? 'bg-[#3A0F63] text-white shadow-md' : 'bg-[#f5f0ff] text-[#3A0F63] group-hover:bg-[#3A0F63] group-hover:text-white'}`}>
-                    {service.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight">{service.title}</h3>
-                </div>
-                
-                <p className="text-slate-600 text-sm leading-relaxed mb-2">
-                  {service.description}
-                </p>
-
-                <AnimatePresence>
-                  {activeId === service.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-4 mt-2 border-t border-slate-100/80 space-y-3">
-                        {service.details.map((detail, i) => (
-                          <div key={i} className="flex items-start gap-3 text-sm text-slate-500 font-medium group/detail">
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#3A0F63]/40 mt-1.5 group-hover/detail:bg-[#3A0F63] transition-colors shrink-0" />
-                            <span>{detail}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+          <div className="relative h-[200px] flex items-center justify-center z-10">
+            {/* Box is now blank as requested */}
           </div>
         </motion.div>
       </div>
