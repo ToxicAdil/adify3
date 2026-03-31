@@ -34,6 +34,7 @@ export interface ProfileData {
     gradient: string; // Tailwind gradient classes
     glow: string;     // Tailwind color class for accents
     ring: string;     // Tailwind border color for rings
+    shadow: string;   // Custom box-shadow for intense glowing effect
   };
   stats: {
     status: string;
@@ -54,6 +55,7 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
       gradient: 'from-slate-900 to-black',
       glow: 'bg-black',
       ring: 'border-slate-900',
+      shadow: 'shadow-[0_0_100px_rgba(0,0,0,0.65)]',
     },
     stats: { status: 'Building Systems', focusLevel: 100 },
     features: [
@@ -71,6 +73,7 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
       gradient: 'from-[#3A0F63] to-purple-800',
       glow: 'bg-[#3A0F63]',
       ring: 'border-[#3A0F63]',
+      shadow: 'shadow-[0_0_100px_rgba(58,15,99,0.7)]',
     },
     stats: { status: 'Crafting Brands', focusLevel: 98 },
     features: [
@@ -160,11 +163,11 @@ const ProfileVisual = ({ data, isLeft }: { data: ProfileData; isLeft: boolean })
     <motion.div
       animate={{ scale: [1, 1.05, 1] }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      className={`absolute inset-[-10%] rounded-full bg-gradient-to-br ${data.colors.gradient} blur-3xl opacity-30`}
+      className={`absolute inset-[-10%] rounded-full bg-gradient-to-br ${data.colors.gradient} blur-3xl opacity-60`}
     />
 
     {/* Image Container */}
-    <div className="relative h-64 w-64 lg:h-80 lg:w-80 rounded-full border border-slate-200/60 shadow-xl flex items-center justify-center overflow-hidden bg-white/50 backdrop-blur-md">
+    <div className={`relative h-64 w-64 lg:h-80 lg:w-80 rounded-full border border-slate-200/60 ${data.colors.shadow} flex items-center justify-center overflow-hidden bg-white/50 backdrop-blur-md transition-shadow duration-700`}>
       <motion.div
         animate={{ y: [-5, 5, -5] }}
         transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
