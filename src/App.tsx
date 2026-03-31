@@ -25,7 +25,6 @@ import AdifyLogo from './components/AdifyLogo';
 import { InteractiveServices } from './components/InteractiveServices';
 import { GeometricBackground } from '@/components/ui/shape-landing-hero';
 import Spline from '@splinetool/react-spline';
-import { SimpleHeader } from './components/SimpleHeader';
 
 import { CircularTestimonials } from './components/ui/circular-testimonials';
 import { InteractiveGlobe } from './components/ui/interactive-globe';
@@ -94,6 +93,97 @@ const testimonialData = [
 ];
 
 // --- Components ---
+
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = ['Services', 'Clients', 'About', 'Why Adify', 'Reviews', 'FAQs'];
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'} header`}>
+      <div className="container-custom">
+        <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? 'glass rounded-full px-12 py-3 shadow-sm' : 'py-2'}`}>
+          <div className="flex items-center group cursor-pointer">
+            <AdifyLogo height={34} className="transition-transform duration-300 group-hover:scale-[1.02]" />
+          </div>
+
+          <div className="hidden md:flex items-center gap-10">
+            {navItems.map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-6">
+            <MagneticButton>
+              <button 
+                data-cursor-text="Chat"
+                className="hidden sm:block text-[13px] font-bold text-slate-900 hover:opacity-70 transition-opacity"
+              >
+                Chat Now
+              </button>
+            </MagneticButton>
+            <MagneticButton>
+              <button 
+                data-cursor-text="Join"
+                className="hidden sm:block bg-slate-900 text-white px-6 py-2.5 rounded-full text-[13px] font-bold btn-premium primary-button"
+              >
+                Get Started
+              </button>
+            </MagneticButton>
+            <button 
+              className="md:hidden p-2 text-slate-600"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-6 right-6 mt-4 md:hidden"
+          >
+            <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
+              {navItems.map((item) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase().replace(' ', '-')}`}
+                  className="text-lg font-medium text-slate-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+              <hr className="border-slate-200" />
+              <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold">
+                Chat Now
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
 
 const WhyAdify = () => {
   const othersPoints = [
@@ -244,7 +334,7 @@ export default function App() {
   return (
     <div className="min-h-screen selection:bg-primary selection:text-white">
       <CustomCursor />
-      <SimpleHeader />
+      <Navbar />
 
       {/* Hero Section */}
       <header className="hero relative overflow-hidden">
