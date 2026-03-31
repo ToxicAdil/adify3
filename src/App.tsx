@@ -121,7 +121,7 @@ const Navbar = () => {
   const navItems = [
     { label: 'Home', id: 'home' },
     { label: 'Services', id: 'services' },
-    { label: 'Clients', id: 'clients', path: '/clients' },
+    { label: 'Clients', id: 'clients' },
     { label: 'About', id: 'about', path: '/about' },
     { label: 'Why Adify', id: 'why' },
     { label: 'Reviews', id: 'reviews' },
@@ -484,7 +484,7 @@ export default function App() {
       </header>
 
       {/* Clients Section (Animated Logo Cloud) */}
-      <section id="clients" className="py-8 border-b border-white relative z-10">
+      <section className="py-8 border-b border-white relative z-10">
         <div className="container-custom">
           <div className="w-full">
             <h2 className="mb-5 text-center">
