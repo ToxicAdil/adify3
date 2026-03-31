@@ -121,7 +121,7 @@ const Navbar = () => {
   const navItems = [
     { label: 'Home', id: 'home' },
     { label: 'Services', id: 'services' },
-    { label: 'Clients', id: 'clients' },
+    { label: 'Clients', id: 'clients', path: '/clients' },
     { label: 'About', id: 'about', path: '/about' },
     { label: 'Why Adify', id: 'why' },
     { label: 'Reviews', id: 'reviews' },

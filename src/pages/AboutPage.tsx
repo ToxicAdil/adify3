@@ -23,7 +23,7 @@ const AboutPage = () => {
   const navItems = [
     { label: 'Home', path: '/' },
     { label: 'Services', path: '/#services' },
-    { label: 'Clients', path: '/#clients' },
+    { label: 'Clients', path: '/clients' },
     { label: 'About', path: '/about' },
     { label: 'Why Adify', path: '/#why' },
     { label: 'Reviews', path: '/#reviews' },
