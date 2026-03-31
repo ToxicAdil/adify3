@@ -109,26 +109,41 @@ export const InteractiveServices: React.FC = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="premium-card rounded-3xl md:rounded-[32px] overflow-hidden relative"
         >
-          {/* Section Header */}
-          <div className="text-center mt-12 mb-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-4 flex flex-col items-center"
-            >
-              <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight">
-                Our <span className="text-gradient">Services.</span>
-              </h2>
-              <p className="text-slate-600 text-lg max-w-2xl font-medium px-6">
-                Explore how we help brands scale with performance-driven systems
-              </p>
-            </motion.div>
-          </div>
+          <div className="flex flex-col lg:flex-row items-center justify-between min-h-[500px] md:min-h-[600px] relative z-10 px-6 md:px-12">
+            {/* Left Side: Content & Future Space */}
+            <div className="w-full lg:w-[45%] text-left lg:pl-4 py-12 lg:py-0">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="space-y-6"
+              >
+                <h2 className="text-4xl md:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1]">
+                  Our <span className="text-gradient">Services.</span>
+                </h2>
+                <p className="text-slate-600 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
+                  Explore how we help brands scale with performance-driven systems and high-converting strategies
+                </p>
+                {/* Spacer for the user's future element */}
+                <div className="pt-4">
+                  {/* Your new content will go here */}
+                </div>
+              </motion.div>
+            </div>
 
-          <div className="relative min-h-[400px] md:min-h-[550px] flex items-center justify-center z-10 -mt-12 md:-mt-16">
-            <OrbitingServices />
+            {/* Right Side: Circular Animation */}
+            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+                className="relative"
+              >
+                <OrbitingServices />
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
