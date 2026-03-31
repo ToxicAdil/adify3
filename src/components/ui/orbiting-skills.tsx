@@ -114,7 +114,8 @@ const serviceIcons: Record<ServiceType, { component: React.ElementType; color: s
 // --- Memoized Icon Component ---
 const ServiceIcon = memo(({ type }: { type: ServiceType }) => {
   const Icon = serviceIcons[type]?.component;
-  return Icon ? <Icon className="w-full h-full" /> : null;
+  const color = serviceIcons[type]?.color;
+  return Icon ? <Icon className="w-full h-full" style={{ color }} /> : null;
 });
 ServiceIcon.displayName = 'ServiceIcon';
 
@@ -155,19 +156,18 @@ const OrbitingService = memo(({ config, angle, onClick, isActive }: OrbitingServ
     >
       <div
         className={`
-          relative w-full h-full p-2.5 backdrop-blur-sm
+          relative w-full h-full p-2.5 bg-slate-900/90 backdrop-blur-sm
           rounded-full flex items-center justify-center
-          transition-all duration-300 cursor-pointer border border-white/20
-          ${isHovered || isActive ? 'scale-125 shadow-2xl ring-2 ring-white/40' : 'shadow-lg'}
+          transition-all duration-300 cursor-pointer border border-white/5
+          ${isHovered || isActive ? 'scale-125 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
         `}
         style={{
-          backgroundColor: color,
           boxShadow: isHovered || isActive
-            ? `0 0 30px ${color}60, 0 0 60px ${color}30`
+            ? `0 0 30px ${color}40, 0 0 60px ${color}20`
             : undefined
         }}
       >
-        <div className="w-full h-full p-0.5 text-white">
+        <div className="w-full h-full p-0.5">
           <ServiceIcon type={serviceType} />
         </div>
         {isHovered && !isActive && (
@@ -269,7 +269,7 @@ export default function OrbitingServices() {
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 20 }}
-              className="absolute z-40 w-full max-w-sm md:max-w-md bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 shadow-2xl shadow-black/40"
+              className="absolute z-40 w-full max-w-sm md:max-w-md bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl p-8 shadow-2xl shadow-black/40"
             >
               <button onClick={() => setActiveId(null)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
