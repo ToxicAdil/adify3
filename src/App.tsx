@@ -1,3 +1,4 @@
+import HeroGlobe from './components/ui/hero';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
@@ -27,7 +28,6 @@ import { InteractiveServices } from './components/InteractiveServices';
 import AboutAdify from './components/AboutAdify';
 import { GeometricBackground } from '@/components/ui/shape-landing-hero';
 import Spline from '@splinetool/react-spline';
-import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
 
 import { CircularTestimonials } from './components/ui/circular-testimonials';
 import { InteractiveGlobe } from './components/ui/interactive-globe';
@@ -250,97 +250,8 @@ export default function App() {
       <CustomCursor />
       <Navbar />
 
-      {/* Hero Section */}
-      <header id="home" className="hero relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <GeometricBackground />
-        </div>
-        <div className="container-custom flex flex-col lg:flex-row items-center justify-start gap-12 lg:gap-24 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-left relative z-10"
-          >
-          <div className="ai-badge bg-white/40 border border-white/60 font-bold text-slate-500 uppercase tracking-[0.15em] shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-primary" /> AI-First Marketing
-          </div>
-          
-          <h1>
-            Scale Smarter. <br />
-            <span className="shimmer-text">Grow Faster.</span>
-          </h1>
-
-          <p>
-            We build high-performing marketing systems that drive real revenue, not just clicks.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-start gap-6 justify-start">
-            <MagneticButton>
-              <button 
-                data-cursor-text="Book Now"
-                className="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-full font-bold text-base btn-premium flex items-center justify-center gap-3 primary-button"
-              >
-                Book a Strategy Call <ArrowRight className="w-5 h-5" />
-              </button>
-            </MagneticButton>
-            <div className="flex items-center gap-2 text-slate-400 font-bold text-xs uppercase tracking-wider h-[60px]">
-              <CheckCircle2 className="text-emerald-500 w-4 h-4" /> Free Audit
-            </div>
-          </div>
-
-          <div className="pt-12 flex flex-wrap items-start gap-x-12 gap-y-6 justify-start">
-            {[
-              { label: 'Experience', val: '5+ Years' },
-              { label: 'Clients', val: '500+' },
-              { label: 'Ad Spend', val: '₹50Cr+' },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="text-2xl font-bold text-slate-900 tracking-tight">{stat.val}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-          <div className="hero-right relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, x: 30 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center"
-              data-cursor-text="Explore"
-            >
-              <InteractiveRobotSpline 
-                scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
-                className="w-full h-full"
-              />
-            </motion.div>
-            
-
-
-            {/* Background Glow - Seamless blend */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-primary/5 blur-[120px] -z-10 rounded-full opacity-40" />
-          </div>
-        </div>
-
-        {/* Curved Divider */}
-        <motion.div 
-          style={{ y }}
-          className="absolute bottom-0 left-0 w-full leading-[0] z-20 pointer-events-none"
-        >
-          <svg 
-            viewBox="0 0 1440 120" 
-            preserveAspectRatio="none" 
-            className="relative block w-full h-[60px] md:h-[100px] lg:h-[120px]"
-          >
-            <path 
-              fill="#f5f0ff" 
-              d="M0,0 C480,120 960,120 1440,0 L1440,120 L0,120 Z"
-            ></path>
-          </svg>
-        </motion.div>
-      </header>
+      {/* Hero Globe Section */}
+      <HeroGlobe />
 
       {/* Clients Section (Animated Logo Cloud) */}
       <section className="py-8 border-b border-white relative z-10">
