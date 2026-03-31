@@ -51,9 +51,9 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
     description: 'Founder & Visionary behind Adify. Spearheading strategic growth, full-stack development, and data-driven marketing systems that scale brands beyond borders.',
     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80', // Placeholder
     colors: {
-      gradient: 'from-[#3A0F63] to-purple-800',
-      glow: 'bg-[#3A0F63]',
-      ring: 'border-l-[#3A0F63]/50',
+      gradient: 'from-slate-900 to-black',
+      glow: 'bg-black',
+      ring: 'border-slate-900',
     },
     stats: { status: 'Building Systems', focusLevel: 100 },
     features: [
@@ -68,9 +68,9 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
     description: 'Co-Founder & Design Lead. Crafting premium visual identities, engaging social experiences, and cohesive brand narratives that convert.',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80', // Placeholder
     colors: {
-      gradient: 'from-violet-600 to-indigo-800',
-      glow: 'bg-violet-600',
-      ring: 'border-r-violet-600/50',
+      gradient: 'from-[#3A0F63] to-purple-800',
+      glow: 'bg-[#3A0F63]',
+      ring: 'border-[#3A0F63]',
     },
     stats: { status: 'Crafting Brands', focusLevel: 98 },
     features: [
@@ -155,12 +155,12 @@ const ProfileVisual = ({ data, isLeft }: { data: ProfileData; isLeft: boolean })
     <motion.div
       animate={{ rotate: 360 }}
       transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-      className={`absolute inset-[-20%] rounded-full border border-dashed border-slate-300 ${data.colors.ring}`}
+      className={`absolute inset-[-15%] rounded-full border-2 border-dashed opacity-50 ${data.colors.ring}`}
     />
     <motion.div
       animate={{ scale: [1, 1.05, 1] }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      className={`absolute inset-0 rounded-full bg-gradient-to-br ${data.colors.gradient} blur-3xl opacity-20`}
+      className={`absolute inset-[-10%] rounded-full bg-gradient-to-br ${data.colors.gradient} blur-3xl opacity-30`}
     />
 
     {/* Image Container */}
