@@ -942,7 +942,7 @@ export default function App() {
 
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden"
+            className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-8 lg:py-[24px] lg:px-[60px] overflow-hidden"
           >
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
               {/* Left Side: Content */}
