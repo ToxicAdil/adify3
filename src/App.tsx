@@ -303,17 +303,16 @@ export default function App() {
           </div>
         </motion.div>
 
-          <div className="hero-right relative z-10 overflow-visible">
+          <div className="hero-right relative z-10">
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, x: 30 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[600px] lg:min-h-[850px]"
+              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center"
               data-cursor-text="Explore"
-              style={{ transform: 'scale(14)', transformOrigin: 'center center' }}
             >
               <Spline 
-                scene="https://prod.spline.design/1k3jiQf0UnFKbYyR/scene.splinecode"
+                scene="https://prod.spline.design/Jhk1LTvUCMVtZoWx/scene.splinecode"
                 style={{ background: 'transparent', width: '100%', height: '100%' }}
               />
             </motion.div>
