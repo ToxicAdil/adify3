@@ -309,7 +309,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="w-full h-full relative z-10 flex items-center justify-center min-h-[600px] lg:min-h-[800px] pointer-events-none"
-              style={{ transform: 'scale(2)', transformOrigin: 'center center' }}
+              style={{ transform: 'scale(2.5)', transformOrigin: 'center center' }}
             >
               <Spline 
                 scene="https://prod.spline.design/Jhk1LTvUCMVtZoWx/scene.splinecode"
