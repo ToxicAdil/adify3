@@ -308,7 +308,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, x: 30 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center"
+              className="w-full h-full cursor-pointer relative z-10 flex items-center justify-center min-h-[400px] lg:min-h-[500px]"
               data-cursor-text="Explore"
             >
               <Spline 
