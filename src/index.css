@@ -29,7 +29,7 @@
   body {
     @apply font-sans;
     color: var(--text-main);
-    background-color: #faf5ff; /* Base light purple */
+    background-color: #fdfaff; /* Lighter base purple/white */
     background-image: 
       radial-gradient(circle at 15% 50%, rgba(167, 139, 250, 0.12) 0%, transparent 50%),
       radial-gradient(circle at 85% 30%, rgba(109, 40, 217, 0.08) 0%, transparent 50%);

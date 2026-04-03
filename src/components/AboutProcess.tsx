@@ -78,7 +78,7 @@ const AboutProcess = () => {
   const svgHeight = cards[cards.length - 1].cy + 80;
 
   return (
-    <section ref={containerRef} className="w-full bg-[#0B0B0F] py-6 relative overflow-hidden" style={{ minHeight: svgHeight }}>
+    <section ref={containerRef} className="w-full bg-transparent py-6 relative overflow-hidden" style={{ minHeight: svgHeight }}>
       {/* Subtle background noise mapping */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none z-0" />
 
@@ -128,12 +128,12 @@ const AboutProcess = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full bg-[#111111] rounded-[16px] border border-[#2a2a2a] py-5 px-6 shadow-2xl z-10"
-              whileHover={{ y: -5, borderColor: '#3a3a3a' }}
+              className="w-full bg-[#3A0F63] rounded-[16px] border border-purple-400/20 py-5 px-6 shadow-[0_0_40px_rgba(58,15,99,0.3)] z-10"
+              whileHover={{ y: -5, borderColor: 'rgba(168,85,247,0.4)' }}
             >
-              <div className="text-[#a0a0a0] text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
+              <div className="text-[#d8b4fe] text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
               <h3 className="text-white text-[20px] font-medium tracking-tight mb-1.5 lowercase">{card.title}</h3>
-              <p className="text-[#888888] text-[13px] leading-snug">{card.desc}</p>
+              <p className="text-[#e9d5ff] text-[13px] leading-snug">{card.desc}</p>
             </motion.div>
           </div>
         ))}
@@ -162,10 +162,10 @@ const AboutProcess = () => {
                 className="pl-12 relative w-full"
               >
                 <div className="absolute left-[16.5px] top-[24px] w-[9px] h-[9px] rounded-full bg-[#111] border-2 border-[#6b21a8]" />
-                <div className="w-full bg-[#111111] rounded-[16px] border border-[#2a2a2a] py-5 px-6 shadow-2xl">
-                  <div className="text-[#a0a0a0] text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
+                <div className="w-full bg-[#3A0F63] rounded-[16px] border border-purple-400/20 py-5 px-6 shadow-[0_0_40px_rgba(58,15,99,0.3)]">
+                  <div className="text-[#d8b4fe] text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
                   <h3 className="text-white text-[18px] font-medium tracking-tight mb-1.5 lowercase">{card.title}</h3>
-                  <p className="text-[#888] text-[13px] leading-snug">{card.desc}</p>
+                  <p className="text-[#e9d5ff] text-[13px] leading-snug">{card.desc}</p>
                 </div>
               </motion.div>
             ))}

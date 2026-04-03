@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 
 const ImpactStatement = () => {
   return (
-    <section className="w-full pt-[80px] pb-[140px] flex flex-col items-center justify-center relative bg-[#0B0B0F] px-[37px] overflow-hidden">
+    <section className="w-full pt-[80px] pb-[140px] flex flex-col items-center justify-center relative bg-transparent px-[37px] overflow-hidden">
 
       {/* Dark premium background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#3A0F63]/15 blur-[150px] rounded-full pointer-events-none z-0" />

@@ -52,10 +52,10 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
     description: 'Founder & Visionary behind Adify. Spearheading strategic growth, full-stack development, and data-driven marketing systems that scale brands beyond borders.',
     image: 'https://res.cloudinary.com/dtzo88csm/image/upload/v1774977463/IMG_6729_q6mmay.jpg',
     colors: {
-      gradient: 'from-slate-900 to-black',
-      glow: 'bg-black',
-      ring: 'border-slate-900',
-      shadow: 'shadow-[0_0_100px_rgba(0,0,0,0.65)]',
+      gradient: 'from-[#3A0F63] to-purple-800',
+      glow: 'bg-[#3A0F63]',
+      ring: 'border-[#3A0F63]',
+      shadow: 'shadow-[0_0_100px_rgba(58,15,99,0.7)]',
     },
     stats: { status: 'Building Systems', focusLevel: 100 },
     features: [
@@ -65,15 +65,15 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
   },
   right: {
     id: 'right',
-    label: 'Co-Founder',
+    label: 'Krish',
     title: 'Creative Director',
-    description: 'Co-Founder & Design Lead. Crafting premium visual identities, engaging social experiences, and cohesive brand narratives that convert.',
+    description: 'Founder & Design Lead. Crafting premium visual identities, engaging social experiences, and cohesive brand narratives that convert.',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80', // Placeholder
     colors: {
-      gradient: 'from-[#3A0F63] to-purple-800',
-      glow: 'bg-[#3A0F63]',
-      ring: 'border-[#3A0F63]',
-      shadow: 'shadow-[0_0_100px_rgba(58,15,99,0.7)]',
+      gradient: 'from-slate-900 to-black',
+      glow: 'bg-black',
+      ring: 'border-slate-900',
+      shadow: 'shadow-[0_0_100px_rgba(0,0,0,0.65)]',
     },
     stats: { status: 'Crafting Brands', focusLevel: 98 },
     features: [
@@ -302,7 +302,7 @@ export default function EarbudShowcase() {
   const isLeft = activeSide === 'left';
 
   return (
-    <div className="relative w-full h-full min-h-[600px] bg-[#faf5ff] text-slate-900 flex flex-col items-center justify-center rounded-[inherit]">
+    <div className="relative w-full h-full min-h-[600px] bg-white/40 text-slate-900 flex flex-col items-center justify-center rounded-[inherit] backdrop-blur-sm">
       
       <BackgroundGradient isLeft={isLeft} />
 

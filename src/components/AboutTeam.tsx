@@ -57,10 +57,7 @@ const teamMembers = [
 const AboutTeam = () => {
   return (
     <section 
-      className="w-full py-6 flex flex-col items-center relative overflow-hidden px-[37px]"
-      style={{
-        background: 'radial-gradient(circle at center, rgba(58,15,99,0.2) 0%, #050308 100%)'
-      }}
+      className="w-full py-6 flex flex-col items-center relative overflow-hidden px-[37px] bg-transparent"
     >
       {/* Texture Overlay */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] mix-blend-overlay pointer-events-none z-0" />
@@ -97,19 +94,19 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
       whileHover={{ y: -6 }}
-      className="group relative w-full rounded-[18px] border border-white/10 overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(58,15,99,0.4)]"
+      className="group relative w-full rounded-[18px] border border-white/10 overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(58,15,99,0.5)]"
       style={{
-        backgroundColor: '#0B0613',
-        backgroundImage: 'linear-gradient(180deg, rgba(58,15,99,0.15) 0%, rgba(0,0,0,0.9) 100%)'
+        backgroundColor: '#3A0F63',
+        backgroundImage: 'linear-gradient(180deg, rgba(168,85,247,0.1) 0%, rgba(58,15,99,1) 100%)'
       }}
     >
       {/* Background Glow behind card content */}
-      <div className="absolute inset-0 bg-[#3A0F63]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0 mix-blend-screen" />
       
       {/* Image Container */}
       <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#050308]">
         {/* Vignette */}
-        <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.9)] z-10 pointer-events-none" />
+        <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(58,15,99,0.5)] z-10 pointer-events-none" />
         
         <img 
           src={member.image} 
@@ -118,7 +115,7 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
         />
         
         {/* Gradient Fade to Bottom Content */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0B0613] to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#3A0F63] to-transparent z-20 pointer-events-none" />
         
         {/* Hover Inner Purple Glow */}
         <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(58,15,99,0)] group-hover:shadow-[inset_0_0_40px_rgba(168,85,247,0.4)] transition-all duration-500 pointer-events-none z-20" />
@@ -128,7 +125,7 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
       <div className="p-5 md:p-6 relative z-30 flex flex-col">
         <h3 className="text-white text-[18px] lg:text-[20px] font-bold tracking-tight mb-0.5">{member.name}</h3>
         {/* Using a legible purple for the accent over dark backgrounds */}
-        <p className="text-[#c084fc] text-[10px] font-bold uppercase tracking-widest mb-4 block">
+        <p className="text-[#e9d5ff] text-[10px] font-bold uppercase tracking-widest mb-4 block">
           {member.role}
         </p>
 
@@ -136,7 +133,7 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
           {member.bullets.map((bullet: string, i: number) => (
             <li key={i} className="flex items-start">
               <span className="w-1.5 h-1.5 rounded-full bg-purple-500/50 mt-1 mr-2.5 flex-shrink-0" />
-              <span className="text-slate-300 text-[12px] leading-[1.4] opacity-70 font-medium">{bullet}</span>
+              <span className="text-slate-200 text-[12px] leading-[1.4] font-medium opacity-80">{bullet}</span>
             </li>
           ))}
         </ul>

@@ -13,7 +13,7 @@ const clients = [
 
 const WhoWeWorkWith = () => {
   return (
-    <section className="w-full h-auto py-6 flex flex-col items-center relative overflow-hidden bg-[#0B0B0F]">
+    <section className="w-full h-auto py-6 flex flex-col items-center relative overflow-hidden bg-transparent">
       
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#3A0F63]/10 blur-[120px] rounded-full pointer-events-none z-0" />

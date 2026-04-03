@@ -9,6 +9,7 @@ import AboutProcess from '../components/AboutProcess';
 import AboutTeam from '../components/AboutTeam';
 import WhoWeWorkWith from '../components/WhoWeWorkWith';
 import ImpactStatement from '../components/ImpactStatement';
+import { AboutBackground } from '../components/AboutBackground';
 
 // Lazy load the Spline component for performance
 const Spline = lazy(() => import('@splinetool/react-spline'));
@@ -37,8 +38,9 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="bg-[#0B0B0F] min-h-screen text-slate-100 selection:bg-[#3A0F63]/40 relative">
+    <div className="relative min-h-screen text-slate-100 selection:bg-[#3A0F63]/40 overflow-hidden">
       <CustomCursor />
+      <AboutBackground />
       
       {/* Dark Theme Header */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'} header`}>
@@ -84,18 +86,13 @@ const AboutPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="overflow-hidden">
+      <main className="relative z-10">
         
         {/* 1. HERO SECTION (CINEMATIC) */}
         <motion.section 
           style={{ scale: heroScale }}
-          className="relative w-full h-screen bg-[#0B0B0F] overflow-hidden flex items-center justify-center transform-gpu origin-center"
+          className="relative w-full h-screen bg-transparent overflow-hidden flex items-center justify-center transform-gpu origin-center"
         >
-          {/* Background Enhancements */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-[#3A0F63]/30 blur-[150px] rounded-full pointer-events-none z-0" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] pointer-events-none z-0" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none z-0" />
-
           {/* BIG TEXT (Layer 2) */}
           <motion.div 
             style={{ opacity: textOpacity }}
@@ -127,14 +124,6 @@ const AboutPage = () => {
               </Suspense>
             </div>
           </motion.div>
-
-          {/* Seamless Dark Gradient Overlay to blend boundaries */}
-          <div 
-            className="absolute inset-0 z-30 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, #0B0B0F 0%, transparent 15%, transparent 85%, #0B0B0F 100%)'
-            }}
-          />
         </motion.section>
 
         {/* 1.5 IMPACT STATEMENT */}

@@ -35,6 +35,9 @@ import { InteractiveGlobe } from './components/ui/interactive-globe';
 import { ParticleHero } from './components/ui/particle-hero';
 import { LogoCloud } from './components/ui/logo-cloud-4';
 import { Footer } from './components/ui/footer-section';
+import { DotGlobeHero } from '@/components/ui/globe-hero';
+import { FloatingPurpleShapes } from '@/components/ui/floating-purple-shapes';
+import { BackgroundGradientGlow } from '@/components/ui/background-gradient-glow';
 
 const services = [
   "Web Development",
@@ -252,89 +255,111 @@ export default function App() {
       <Navbar />
 
       {/* Hero Section */}
-      <header id="home" className="hero relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <GeometricBackground />
-        </div>
-        <div className="container-custom flex flex-col lg:flex-row items-center justify-start gap-12 lg:gap-24 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-left relative z-10"
-          >
-          <div className="ai-badge bg-white/40 border border-white/60 font-bold text-slate-500 uppercase tracking-[0.15em] shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-primary" /> AI-First Marketing
-          </div>
-          
-          <h1>
-            Scale Smarter. <br />
-            <span className="shimmer-text">Grow Faster.</span>
-          </h1>
-
-          <p>
-            We build high-performing marketing systems that drive real revenue, not just clicks.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-start gap-6 justify-start">
-            <MagneticButton>
-              <button 
-                data-cursor-text="Book Now"
-                className="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-full font-bold text-base btn-premium flex items-center justify-center gap-3 primary-button"
+      <header id="home" className="relative">
+        <BackgroundGradientGlow className="min-h-screen">
+          <FloatingPurpleShapes />
+          <DotGlobeHero className="pt-20">
+            <div className="flex flex-col items-center max-w-5xl px-[37px]">
+              {/* Top Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="ai-badge bg-white/40 border border-white/60 font-medium text-slate-500 uppercase tracking-[0.2em] shadow-sm backdrop-blur-md mb-8"
               >
-                Book a Strategy Call <ArrowRight className="w-5 h-5" />
-              </button>
-            </MagneticButton>
-            <div className="flex items-center gap-2 text-slate-400 font-bold text-xs uppercase tracking-wider h-[60px]">
-              <CheckCircle2 className="text-emerald-500 w-4 h-4" /> Free Audit
-            </div>
-          </div>
+                <Sparkles className="w-3.5 h-3.5 text-primary" /> AI-FIRST MARKETING
+              </motion.div>
 
-          <div className="pt-12 flex flex-wrap items-start gap-x-12 gap-y-6 justify-start">
-            {[
-              { label: 'Experience', val: '5+ Years' },
-              { label: 'Clients', val: '500+' },
-              { label: 'Ad Spend', val: '₹50Cr+' },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="text-2xl font-bold text-slate-900 tracking-tight">{stat.val}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.label}</span>
+              {/* Main Headline */}
+              <div className="text-center space-y-2 mb-8">
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="block text-3xl md:text-5xl font-light text-slate-600 tracking-tight"
+                >
+                  Scale Smarter.
+                </motion.span>
+                
+                <div className="relative inline-block">
+                  {/* Blur glow duplicate layer */}
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 0.5, scale: 1 }}
+                    transition={{ duration: 1.2, delay: 0.3 }}
+                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
+                    aria-hidden="true"
+                  >
+                    Grow Your Brand Faster
+                  </motion.span>
+                  
+                  <motion.h1
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
+                  >
+                    Grow Your Brand Faster
+                  </motion.h1>
+
+                  {/* Animated Underline */}
+                  <motion.div
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: "100%", opacity: 1 }}
+                    transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+                    className="h-1.5 md:h-2 bg-gradient-to-r from-primary/80 to-transparent rounded-full mt-2"
+                  />
+                </div>
               </div>
-            ))}
-          </div>
-        </motion.div>
 
-          <div className="hero-right relative z-10 overflow-visible lg:translate-x-[10%] xl:translate-x-[15%]">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, x: 30 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full relative z-10 flex items-center justify-center min-h-[600px] lg:min-h-[800px] pointer-events-none"
-              style={{ transform: 'scale(5.5) translateY(780px)', transformOrigin: 'center center' }}
-            >
-              <Spline 
-                scene="https://prod.spline.design/Jhk1LTvUCMVtZoWx/scene.splinecode"
-                style={{ background: 'transparent', width: '100%', height: '100%', pointerEvents: 'none' }}
-              />
-            </motion.div>
-          </div>
-        </div>
+              {/* Subtext */}
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-12 max-w-3xl"
+              >
+                We build high-performing marketing systems that drive{" "}
+                <span className="relative inline-block px-2 py-0.5 mx-1">
+                  <span className="relative z-10 text-primary">real revenue</span>
+                  <motion.span 
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 0.8, delay: 1.2 }}
+                    className="absolute inset-0 bg-primary/10 rounded-lg -rotate-1"
+                  />
+                </span>
+                , not just clicks.
+              </motion.p>
 
-        {/* Curved Divider */}
-        <div 
-          className="absolute bottom-0 left-0 w-full leading-[0] z-20 pointer-events-none"
-        >
-          <svg 
-            viewBox="0 0 1440 120" 
-            preserveAspectRatio="none" 
-            className="relative block w-full h-[60px] md:h-[100px] lg:h-[120px]"
-          >
-            <path 
-              fill="#f5f0ff" 
-              d="M0,0 C480,120 960,120 1440,0 L1440,120 L0,120 Z"
-            ></path>
-          </svg>
-        </div>
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row items-center gap-6"
+              >
+                <MagneticButton>
+                  <button 
+                    data-cursor-text="Book"
+                    className="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-full font-bold text-base btn-premium flex items-center justify-center gap-3 primary-button"
+                  >
+                    Book a Strategy Call <ArrowRight className="w-5 h-5" />
+                  </button>
+                </MagneticButton>
+                
+                <MagneticButton>
+                  <button 
+                    data-cursor-text="Free"
+                    className="w-full sm:w-auto px-10 py-5 rounded-full font-bold text-base text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group"
+                  >
+                    <CheckCircle2 className="w-5 h-5 group-hover:text-emerald-500 transition-colors" /> Free Audit
+                  </button>
+                </MagneticButton>
+              </motion.div>
+            </div>
+          </DotGlobeHero>
+        </BackgroundGradientGlow>
       </header>
 
       {/* Clients Section (Animated Logo Cloud) */}
