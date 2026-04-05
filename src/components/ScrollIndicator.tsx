@@ -5,9 +5,6 @@ const sections = [
   { id: 'home', label: 'Home' },
   { id: 'services', label: 'Services' },
   { id: 'clients', label: 'Clients' },
-  { id: 'about', label: 'About' },
-  { id: 'global', label: 'Why Adify' },
-  { id: 'reviews', label: 'Reviews' },
   { id: 'faqs', label: 'FAQs' }
 ];
 

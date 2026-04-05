@@ -38,6 +38,8 @@ import { Footer } from './components/ui/footer-section';
 import { DotGlobeHero } from '@/components/ui/globe-hero';
 import { FloatingPurpleShapes } from '@/components/ui/floating-purple-shapes';
 import { BackgroundGradientGlow } from '@/components/ui/background-gradient-glow';
+import { SimpleHeader } from '@/components/ui/simple-header';
+import { AudioCTA } from './components/AudioCTA';
 
 const services = [
   "Web Development",
@@ -102,147 +104,7 @@ const testimonialData = [
 
 // --- Components ---
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    
-    // Check if URL has hash on mount and scroll smoothly
-    if (window.location.hash) {
-      setTimeout(() => {
-        const id = window.location.hash.replace('#', '');
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { label: 'Home', id: 'home' },
-    { label: 'Services', id: 'services' },
-    { label: 'Clients', id: 'clients' },
-    { label: 'About', id: 'about', path: '/about' },
-    { label: 'Reviews', id: 'reviews' },
-    { label: 'FAQs', id: 'faqs' }
-  ];
-
-  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      window.history.pushState(null, '', `#${id}`);
-    }
-    setMobileMenuOpen(false);
-  };
-
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'} header`}>
-      <div className="container-custom">
-        <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? 'glass rounded-full px-12 py-3 shadow-sm' : 'py-2'}`}>
-          <div className="flex items-center group cursor-pointer">
-            <AdifyLogo height={34} className="transition-transform duration-300 group-hover:scale-[1.02]" />
-          </div>
-
-          <div className="hidden md:flex items-center gap-10">
-            {navItems.map((item) => (
-              item.path ? (
-                <Link 
-                  key={item.label} 
-                  to={item.path}
-                  className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <a 
-                  key={item.label} 
-                  href={`#${item.id}`}
-                  onClick={(e) => handleScrollTo(e, item.id)}
-                  className="text-[13px] font-semibold text-slate-500 hover:text-slate-900 transition-colors tracking-wide"
-                >
-                  {item.label}
-                </a>
-              )
-            ))}
-          </div>
-
-          <div className="flex items-center gap-6">
-            <MagneticButton>
-              <button 
-                data-cursor-text="Chat"
-                className="hidden sm:block text-[13px] font-bold text-slate-900 hover:opacity-70 transition-opacity"
-              >
-                Chat Now
-              </button>
-            </MagneticButton>
-            <MagneticButton>
-              <button 
-                data-cursor-text="Join"
-                className="hidden sm:block bg-slate-900 text-white px-6 py-2.5 rounded-full text-[13px] font-bold btn-premium primary-button"
-              >
-                Get Started
-              </button>
-            </MagneticButton>
-            <button 
-              className="md:hidden p-2 text-slate-600"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-6 right-6 mt-4 md:hidden"
-          >
-            <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
-              {navItems.map((item) => (
-                item.path ? (
-                  <Link
-                    key={item.label}
-                    to={item.path}
-                    className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <a
-                    key={item.label}
-                    href={`#${item.id}`}
-                    className="text-2xl font-bold text-slate-900 border-b border-purple-100 pb-4"
-                    onClick={(e) => handleScrollTo(e, item.id)}
-                  >
-                    {item.label}
-                  </a>
-                )
-              ))}
-              <hr className="border-slate-200" />
-              <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold">
-                Chat Now
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
-};
 
 // --- Main App ---
 
@@ -252,7 +114,7 @@ export default function App() {
     <div className="min-h-screen selection:bg-primary selection:text-white relative">
       <CustomCursor />
       <ScrollIndicator />
-      <Navbar />
+      <SimpleHeader />
 
       {/* Hero Section */}
       <header id="home" className="relative">
@@ -822,8 +684,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* Client Success Stories Section */}
-      <section id="clients" className="py-8 relative overflow-hidden">
+      {/* Grouped Clients Section */}
+      <div id="clients">
+        {/* Client Success Stories Section */}
+        <section className="py-8 relative overflow-hidden">
         <div className="container-custom">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -868,8 +732,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* Global Presence Section */}
-      <section id="global" className="py-8 relative overflow-hidden">
+        {/* Global Presence Section */}
+        <section className="py-8 relative overflow-hidden">
         <div className="container-custom">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -949,8 +813,8 @@ export default function App() {
       <AboutAdify />
 
 
-      {/* Reviews Section */}
-      <section id="reviews" className="py-8">
+        {/* Reviews Section */}
+        <section className="py-8">
         <div className="container-custom">
           <div className="text-left mb-20 space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success.</span></h2>
@@ -989,6 +853,7 @@ export default function App() {
           </div>
         </div>
       </section>
+    </div>
 
       {/* FAQs Section */}
       <section id="faqs" className="py-8">
@@ -1030,6 +895,9 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* Final Audio CTA */}
+      <AudioCTA />
 
       {/* Footer */}
       <Footer />

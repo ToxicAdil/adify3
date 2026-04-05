@@ -10,80 +10,21 @@ import AboutTeam from '../components/AboutTeam';
 import WhoWeWorkWith from '../components/WhoWeWorkWith';
 import ImpactStatement from '../components/ImpactStatement';
 import { AboutBackground } from '../components/AboutBackground';
+import { SimpleHeader } from '@/components/ui/simple-header';
 
 // Lazy load the Spline component for performance
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const AboutPage = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
   const { scrollY } = useScroll();
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.9]);
   const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Services', path: '/#services' },
-    { label: 'Clients', path: '/#clients' },
-    { label: 'About', path: '/about' },
-    { label: 'Reviews', path: '/#reviews' },
-    { label: 'FAQs', path: '/#faqs' }
-  ];
-
   return (
     <div className="relative min-h-screen text-slate-100 selection:bg-[#3A0F63]/40 overflow-hidden">
       <CustomCursor />
       <AboutBackground />
       
-      {/* Dark Theme Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'} header`}>
-        <div className="container-custom">
-          <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-12 py-3 shadow-2xl shadow-purple-900/20' : 'py-2'}`}>
-            <Link to="/" className="flex items-center group cursor-pointer">
-              <AdifyLogo height={34} className="transition-transform duration-300 group-hover:scale-[1.02] brightness-0 invert" />
-            </Link>
-
-            <div className="hidden md:flex items-center gap-10">
-              {navItems.map((item) => (
-                <Link 
-                  key={item.label} 
-                  to={item.path}
-                  className={`text-[13px] font-semibold transition-colors tracking-wide ${item.label === 'About' ? 'text-purple-400' : 'text-slate-400 hover:text-white'}`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-6">
-              <MagneticButton>
-                <button className="hidden sm:block text-[13px] font-bold text-slate-300 hover:text-white transition-colors">
-                  Chat Now
-                </button>
-              </MagneticButton>
-              <MagneticButton>
-                <button className="hidden md:flex px-6 py-2.5 bg-[#3A0F63] text-white hover:bg-purple-900 border border-purple-500/30 rounded-full text-[13px] font-bold transition-all items-center gap-2 transform hover:scale-105 shadow-[0_0_20px_rgba(58,15,99,0.5)]">
-                  Get Started <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
-              </MagneticButton>
-              
-              <button 
-                className="md:hidden p-2 text-slate-300" 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <SimpleHeader dark />
 
       {/* Main Content */}
       <main className="relative z-10">

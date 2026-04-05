@@ -50,7 +50,7 @@ const items: AccordionItem[] = [
 ]
 
 export function UniqueAccordion() {
-  const [activeId, setActiveId] = useState<string | null>("strategic")
+  const [activeId, setActiveId] = useState<string | null>(null)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   return (
