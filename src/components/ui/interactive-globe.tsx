@@ -344,8 +344,8 @@ export function InteractiveGlobe({
   return (
     <canvas
       ref={canvasRef}
-      className={cn("w-full h-full cursor-grab active:cursor-grabbing", className)}
-      style={{ width: size, height: size }}
+      className={cn("cursor-grab active:cursor-grabbing", className)}
+      style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}

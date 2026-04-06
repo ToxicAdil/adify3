@@ -771,16 +771,18 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
-                className="h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center relative"
+                className="w-full h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center relative overflow-hidden"
               >
-                <InteractiveGlobe 
-                  size={500}
-                  markers={globeMarkers}
-                  connections={globeConnections}
-                  dotColor="rgba(124, 58, 237, ALPHA)"
-                  arcColor="rgba(124, 58, 237, 0.3)"
-                  markerColor="rgba(58, 15, 99, 1)"
-                />
+                <div className="w-full h-full max-w-[300px] sm:max-w-[400px] md:max-w-none mx-auto">
+                  <InteractiveGlobe 
+                    size={500}
+                    markers={globeMarkers}
+                    connections={globeConnections}
+                    dotColor="rgba(124, 58, 237, ALPHA)"
+                    arcColor="rgba(124, 58, 237, 0.3)"
+                    markerColor="rgba(58, 15, 99, 1)"
+                  />
+                </div>
               </motion.div>
             </div>
             

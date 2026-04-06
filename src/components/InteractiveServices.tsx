@@ -108,7 +108,7 @@ export const InteractiveServices: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="premium-card rounded-3xl md:rounded-[32px] overflow-hidden relative"
+          className="premium-card rounded-3xl md:rounded-[32px] relative"
         >
           {/* Centered Header */}
           <div className="text-center mt-12 mb-8 relative z-10 px-6">
