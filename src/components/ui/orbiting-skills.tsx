@@ -111,6 +111,13 @@ const serviceIcons: Record<ServiceType, { component: React.ElementType; color: s
   seo: { component: Sparkles, color: '#06B6D4' }
 };
 
+interface OrbitingIconProps {
+  config: typeof servicesConfigBase[0];
+  isPaused: boolean;
+  onClick: (id: string) => void;
+  isActive: boolean;
+}
+
 // --- Memoized Icon Component ---
 const ServiceIcon = memo(({ type }: { type: ServiceType }) => {
   const Icon = serviceIcons[type]?.component;
@@ -132,58 +139,84 @@ const servicesConfigBase = [
   { id: 'seo', orbitIndex: 1, size: 40, speed: -0.5, serviceType: 'seo' as ServiceType, phaseShift: (4 * Math.PI) / 3, glowColor: 'purple' as GlowColor, label: 'SEO' },
 ];
 
-// --- Memoized Orbiting Service Component ---
-const OrbitingService = memo(({ config, angle, onClick, isActive }: OrbitingServiceProps) => {
+// --- Modern Orbiting Service Component ---
+const OrbitingService = memo(({ config, isPaused, onClick, isActive }: OrbitingIconProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { id, orbitRadius, size, serviceType, label } = config;
+  const { id, orbitIndex, size, serviceType, label, speed, phaseShift } = config;
 
-  const x = Math.cos(angle) * orbitRadius;
-  const y = Math.sin(angle) * orbitRadius;
-
+  // Percentage-based radii relative to the parent container
+  const radiusPercent = orbitIndex === 0 ? 22 : 40;
   const color = serviceIcons[serviceType]?.color;
 
+  // Convert radians to degrees for Framer Motion
+  const initialRotation = phaseShift * (180 / Math.PI);
+  const rotationDirection = speed > 0 ? 1 : -1;
+  const duration = Math.abs(25 / speed); // Slowed down slightly for better legibility
+
   return (
-    <div
-      className="absolute top-1/2 left-1/2 transition-all duration-300 ease-out"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
-        zIndex: isHovered || isActive ? 20 : 10,
+    <motion.div
+      className="absolute inset-0 pointer-events-none will-change-transform"
+      animate={{
+        rotate: isPaused || isActive ? initialRotation : [initialRotation, initialRotation + 360 * rotationDirection],
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onClick(id)}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        ease: "linear",
+      }}
     >
       <div
-        className={`
-          relative w-full h-full p-2 bg-slate-900/90 backdrop-blur-sm
-          rounded-full flex items-center justify-center
-          transition-all duration-300 cursor-pointer border border-white/5
-          ${isHovered || isActive ? 'scale-110 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
-        `}
+        className="absolute top-1/2 pointer-events-auto"
         style={{
-          boxShadow: isHovered || isActive
-            ? `0 0 30px ${color}40, 0 0 60px ${color}20`
-            : undefined
+          left: `${50 + radiusPercent}%`,
+          width: `${size}px`,
+          height: `${size}px`,
+          transform: 'translate(-50%, -50%)',
+          zIndex: isHovered || isActive ? 50 : 10,
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => onClick(id)}
       >
-        <div className="w-full h-full p-0.5">
-          <ServiceIcon type={serviceType} />
-        </div>
-        {isHovered && !isActive && (
-          <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-900/95 backdrop-blur-sm rounded text-[9px] font-bold text-white whitespace-nowrap pointer-events-none border border-white/10 z-30 uppercase tracking-widest">
-            {label}
+        <motion.div
+          animate={{
+            // Keep the icon upright by counter-rotating
+            rotate: isPaused || isActive ? -initialRotation : [-initialRotation, -initialRotation - 360 * rotationDirection],
+          }}
+          transition={{
+            duration: duration,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className={`
+            relative w-full h-full p-2 bg-slate-900/90 backdrop-blur-sm
+            rounded-full flex items-center justify-center
+            transition-all duration-300 cursor-pointer border border-white/5
+            ${isHovered || isActive ? 'scale-110 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
+          `}
+          style={{
+            boxShadow: isHovered || isActive
+              ? `0 0 30px ${color}40, 0 0 60px ${color}20`
+              : undefined
+          }}
+        >
+          <div className="w-full h-full p-0.5 pointer-events-none">
+            <ServiceIcon type={serviceType} />
           </div>
-        )}
+          {isHovered && !isActive && (
+            <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-900/95 backdrop-blur-sm rounded text-[9px] font-bold text-white whitespace-nowrap pointer-events-none border border-white/10 z-50 uppercase tracking-widest">
+              {label}
+            </div>
+          )}
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 OrbitingService.displayName = 'OrbitingService';
 
 // --- Optimized Orbit Path Component ---
-const GlowingOrbitPath = memo(({ radius, glowColor = 'cyan', animationDelay = 0 }: GlowingOrbitPathProps) => {
+const GlowingOrbitPath = memo(({ radius, glowColor = 'cyan', animationDelay = 0 }: { radius: number; glowColor?: GlowColor; animationDelay?: number }) => {
   const glowColors = {
     cyan: { primary: 'rgba(6, 182, 212, 0.4)', secondary: 'rgba(6, 182, 212, 0.2)', border: 'rgba(6, 182, 212, 0.3)' },
     purple: { primary: 'rgba(147, 51, 234, 0.4)', secondary: 'rgba(147, 51, 234, 0.2)', border: 'rgba(147, 51, 234, 0.3)' }
@@ -193,7 +226,7 @@ const GlowingOrbitPath = memo(({ radius, glowColor = 'cyan', animationDelay = 0 
   return (
     <div
       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-      style={{ width: `${radius * 2}px`, height: `${radius * 2}px` }}
+      style={{ width: `${radius * 2}%`, height: `${radius * 2}%` }}
     >
       <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: `radial-gradient(circle, transparent 30%, ${colors.secondary} 70%, ${colors.primary} 100%)`, boxShadow: `0 0 60px ${colors.primary}, inset 0 0 60px ${colors.secondary}`, animationDuration: '4s', animationDelay: `${animationDelay}s` }} />
       <div className="absolute inset-0 rounded-full" style={{ border: `1px solid ${colors.border}`, boxShadow: `inset 0 0 20px ${colors.secondary}` }} />
@@ -202,71 +235,31 @@ const GlowingOrbitPath = memo(({ radius, glowColor = 'cyan', animationDelay = 0 
 });
 GlowingOrbitPath.displayName = 'GlowingOrbitPath';
 
-// --- Helper to get responsive orbit radii ---
-function getOrbitRadii(width: number): [number, number] {
-  if (width < 400) return [55, 100];   // Small phones (iPhone SE, etc)
-  if (width < 480) return [60, 110];   // Regular phones
-  if (width < 640) return [70, 125];   // Large phones
-  if (width < 768) return [85, 150];   // Tablets
-  return [100, 180];                    // Desktop
-}
-
 // --- Main App Component ---
 export default function OrbitingServices() {
-  const [time, setTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [orbitRadii, setOrbitRadii] = useState<[number, number]>(() => getOrbitRadii(typeof window !== 'undefined' ? window.innerWidth : 1024));
-
-  // Responsive orbit radii
-  useEffect(() => {
-    const handleResize = () => setOrbitRadii(getOrbitRadii(window.innerWidth));
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (isPaused || activeId) return;
-
-    let animationFrameId: number;
-    let lastTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const deltaTime = (currentTime - lastTime) / 1000;
-      lastTime = currentTime;
-      setTime(prevTime => prevTime + deltaTime);
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animationFrameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isPaused, activeId]);
 
   const activeService = services.find(s => s.id === activeId);
 
-  // Build runtime config with responsive radii
-  const servicesConfig: ServiceConfig[] = servicesConfigBase.map(s => ({
-    ...s,
-    orbitRadius: s.orbitIndex === 0 ? orbitRadii[0] : orbitRadii[1],
-  }));
-
-  // Container size based on largest orbit
-  const containerSize = orbitRadii[1] * 2 + 60; // outer orbit diameter + icon padding
-
   return (
-    <div className="w-full flex items-center justify-center overflow-hidden py-4 md:py-8 relative" style={{ minHeight: containerSize + 40 }}>
+    <div className="w-full flex items-center justify-center py-4 md:py-8 relative overflow-visible">
+      {/* 
+          Aspect-ratio locked container:
+          - Percentage based with max-width for large screens
+          - Aspect ratio remains 1:1 for perfect circularity
+      */}
       <div 
-        className="relative flex items-center justify-center"
-        style={{ width: containerSize, height: containerSize }}
+        className="relative w-[90%] max-w-[450px] aspect-square flex items-center justify-center overflow-visible"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div className={`w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-slate-800 to-slate-950 rounded-full flex items-center justify-center z-10 relative shadow-2xl border border-white/10 transition-all duration-500 ${activeId ? 'scale-75 opacity-50 blur-sm' : ''}`}>
+        {/* Core Center Pulse */}
+        <div className={`w-[15%] h-[15%] bg-gradient-to-br from-slate-800 to-slate-950 rounded-full flex items-center justify-center z-10 relative shadow-2xl border border-white/10 transition-all duration-500 ${activeId ? 'scale-75 opacity-50 blur-sm' : ''}`}>
           <div className="absolute inset-0 rounded-full bg-cyan-500/30 blur-xl animate-pulse"></div>
           <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="relative z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#orbit-gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="relative z-10 w-[60%] h-[60%]">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#orbit-gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
               <defs>
                 <linearGradient id="orbit-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#06B6D4" />
@@ -278,27 +271,27 @@ export default function OrbitingServices() {
           </div>
         </div>
 
-        {orbitRadii.map((r, i) => (
-          <GlowingOrbitPath key={`orbit-${i}`} radius={r} glowColor={i === 0 ? 'cyan' : 'purple'} animationDelay={i * 1.5} />
-        ))}
+        {/* Orbit Paths (Percentage based) */}
+        <GlowingOrbitPath radius={22} glowColor="cyan" animationDelay={0} />
+        <GlowingOrbitPath radius={40} glowColor="purple" animationDelay={1.5} />
 
-        {servicesConfig.map((config) => (
+        {servicesConfigBase.map((config) => (
           <OrbitingService
             key={config.id}
             config={config}
-            angle={time * config.speed + (config.phaseShift || 0)}
+            isPaused={isPaused}
             onClick={(id) => setActiveId(activeId === id ? null : id)}
             isActive={activeId === config.id}
           />
         ))}
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {activeId && activeService && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 20 }}
-              className="absolute z-40 w-[calc(100%-20px)] max-w-sm bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/40"
+              className="absolute z-[100] w-[calc(100%-20px)] max-w-sm bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/40"
             >
               <button onClick={() => setActiveId(null)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
