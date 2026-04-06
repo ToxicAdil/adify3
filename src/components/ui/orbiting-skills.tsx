@@ -144,8 +144,8 @@ const OrbitingService = memo(({ config, isPaused, onClick, isActive }: OrbitingI
   const [isHovered, setIsHovered] = useState(false);
   const { id, orbitIndex, size, serviceType, label, speed, phaseShift } = config;
 
-  // Percentage-based radii relative to the parent container
-  const radiusPercent = orbitIndex === 0 ? 22 : 40;
+  // Percentage-based radii relative to the parent container (matched to original 100/180px @ 420px container)
+  const radiusPercent = orbitIndex === 0 ? 24 : 44;
   const color = serviceIcons[serviceType]?.color;
 
   // Convert radians to degrees for Framer Motion
@@ -244,14 +244,9 @@ export default function OrbitingServices() {
   const activeService = services.find(s => s.id === activeId);
 
   return (
-    <div className="w-full flex items-center justify-center py-4 md:py-8 relative overflow-visible">
-      {/* 
-          Aspect-ratio locked container:
-          - Responsive width with a larger max-width for desktop impact
-          - Aspect ratio remains 100% stable 1:1
-      */}
+    <div className="w-full relative overflow-visible">
       <div 
-        className="relative w-full max-w-[500px] aspect-square flex items-center justify-center overflow-visible"
+        className="relative w-full max-w-[600px] aspect-square flex items-center justify-center overflow-visible ml-auto"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -273,8 +268,8 @@ export default function OrbitingServices() {
         </div>
 
         {/* Orbit Paths (Percentage based) */}
-        <GlowingOrbitPath radius={22} glowColor="cyan" animationDelay={0} />
-        <GlowingOrbitPath radius={40} glowColor="purple" animationDelay={1.5} />
+        <GlowingOrbitPath radius={24} glowColor="cyan" animationDelay={0} />
+        <GlowingOrbitPath radius={44} glowColor="purple" animationDelay={1.5} />
 
         {servicesConfigBase.map((config) => (
           <OrbitingService
