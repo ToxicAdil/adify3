@@ -151,7 +151,8 @@ const OrbitingService = memo(({ config, isPaused, onClick, isActive }: OrbitingI
   // Convert radians to degrees for Framer Motion
   const initialRotation = phaseShift * (180 / Math.PI);
   const rotationDirection = speed > 0 ? 1 : -1;
-  const duration = Math.abs(25 / speed); // Slowed down slightly for better legibility
+  // Match original speed exactly: full rotation (2 * PI) / speed
+  const duration = Math.abs((2 * Math.PI) / speed);
 
   return (
     <motion.div
@@ -246,11 +247,11 @@ export default function OrbitingServices() {
     <div className="w-full flex items-center justify-center py-4 md:py-8 relative overflow-visible">
       {/* 
           Aspect-ratio locked container:
-          - Percentage based with max-width for large screens
-          - Aspect ratio remains 1:1 for perfect circularity
+          - Responsive width with a larger max-width for desktop impact
+          - Aspect ratio remains 100% stable 1:1
       */}
       <div 
-        className="relative w-[90%] max-w-[450px] aspect-square flex items-center justify-center overflow-visible"
+        className="relative w-full max-w-[500px] aspect-square flex items-center justify-center overflow-visible"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
