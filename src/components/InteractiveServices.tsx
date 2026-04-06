@@ -142,7 +142,7 @@ export const InteractiveServices: React.FC = () => {
             </div>
 
             {/* Right Side: Circular Animation */}
-            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end mt-8 lg:mt-0">
+            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end mt-8 lg:-mt-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
