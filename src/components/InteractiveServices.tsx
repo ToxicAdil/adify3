@@ -148,7 +148,7 @@ export const InteractiveServices: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
-                className="relative"
+                className="relative w-full flex justify-center lg:justify-end"
               >
                 <OrbitingServices />
               </motion.div>
