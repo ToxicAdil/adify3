@@ -10,7 +10,7 @@ const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   // Configuration for an elegant, slightly elastic feel
-  const TRAIL_COUNT = 16; // 14-18 points for better visibility
+  const TRAIL_COUNT = 10; // Reduced from 16 for memory optimization
   const LERP_FACTOR = 0.8; // Subtle stretch (0.75-0.85 range)
 
   useEffect(() => {

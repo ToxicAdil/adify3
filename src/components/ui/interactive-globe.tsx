@@ -110,13 +110,15 @@ export function InteractiveGlobe({
   }>({ active: false, startX: 0, startY: 0, startRotY: 0, startRotX: 0 });
   const animRef = useRef<number>(0);
   const timeRef = useRef(0);
+  const isVisibleRef = useRef(true);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Generate globe dots (land approximation via density sampling)
   const dotsRef = useRef<[number, number, number][]>([]);
 
   useEffect(() => {
     const dots: [number, number, number][] = [];
-    const numDots = 1200;
+    const numDots = 600; // Reduced from 1200 for memory optimization
     // Fibonacci sphere
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
     for (let i = 0; i < numDots; i++) {
@@ -136,12 +138,18 @@ export function InteractiveGlobe({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     canvas.width = w * dpr;
     canvas.height = h * dpr;
     ctx.scale(dpr, dpr);
+
+    // Skip rendering when off-screen
+    if (!isVisibleRef.current) {
+      animRef.current = requestAnimationFrame(draw);
+      return;
+    }
 
     const cx = w / 2;
     const cy = h / 2;
@@ -283,7 +291,21 @@ export function InteractiveGlobe({
 
   useEffect(() => {
     animRef.current = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(animRef.current);
+    
+    // Add IntersectionObserver to pause when off-screen
+    const canvas = canvasRef.current;
+    if (canvas) {
+      observerRef.current = new IntersectionObserver(
+        ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+        { threshold: 0.05 }
+      );
+      observerRef.current.observe(canvas);
+    }
+    
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      observerRef.current?.disconnect();
+    };
   }, [draw]);
 
   // Mouse drag handlers

@@ -1,45 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import React, { lazy, Suspense } from 'react';
+import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   CheckCircle2, 
-  BarChart3, 
-  Target, 
-  Zap, 
-  Users, 
-  MessageSquare, 
   ChevronDown, 
-  Menu, 
-  X,
-  Minus,
-  Check,
   Sparkles,
-  TrendingUp,
-  Globe,
   Star,
-  Play
 } from 'lucide-react';
 import CustomCursor from './components/CustomCursor';
 import ScrollIndicator from './components/ScrollIndicator';
 import MagneticButton from './components/MagneticButton';
-import AdifyLogo from './components/AdifyLogo';
 import { InteractiveServices } from './components/InteractiveServices';
 import AboutAdify from './components/AboutAdify';
-import { GeometricBackground } from '@/components/ui/shape-landing-hero';
-import Spline from '@splinetool/react-spline';
-
 
 import { CircularTestimonials } from './components/ui/circular-testimonials';
 import { InteractiveGlobe } from './components/ui/interactive-globe';
-import { ParticleHero } from './components/ui/particle-hero';
 import { LogoCloud } from './components/ui/logo-cloud-4';
 import { Footer } from './components/ui/footer-section';
-import { DotGlobeHero } from '@/components/ui/globe-hero';
 import { FloatingPurpleShapes } from '@/components/ui/floating-purple-shapes';
 import { BackgroundGradientGlow } from '@/components/ui/background-gradient-glow';
 import { SimpleHeader } from '@/components/ui/simple-header';
 import { AudioCTA } from './components/AudioCTA';
+
+// Lazy-load the Three.js globe so its heavy bundle (~1MB+) loads after initial render
+const DotGlobeHero = lazy(() => import('@/components/ui/globe-hero').then(m => ({ default: m.DotGlobeHero })));
 
 const services = [
   "Web Development",
@@ -120,8 +105,9 @@ export default function App() {
       <header id="home" className="relative">
         <BackgroundGradientGlow className="min-h-screen">
           <FloatingPurpleShapes />
-          <DotGlobeHero className="pt-20">
-            <div className="flex flex-col items-center max-w-5xl px-[37px]">
+          <Suspense fallback={<div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-center pt-20" />}>
+          <DotGlobeHero className="pt-16 md:pt-20">
+            <div className="flex flex-col items-center max-w-5xl px-4 sm:px-6 md:px-[37px]">
               {/* Top Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -149,7 +135,7 @@ export default function App() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 0.5, scale: 1 }}
                     transition={{ duration: 1.2, delay: 0.3 }}
-                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
+                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-3xl sm:text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
                     aria-hidden="true"
                   >
                     Grow Your Brand Faster
@@ -159,7 +145,7 @@ export default function App() {
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
+                    className="text-3xl sm:text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
                   >
                     Grow Your Brand Faster
                   </motion.h1>
@@ -179,7 +165,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-12 max-w-3xl"
+                className="text-base sm:text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-8 md:mb-12 max-w-3xl"
               >
                 We build high-performing marketing systems that drive{" "}
                 <span className="relative inline-block px-2 py-0.5 mx-1">
@@ -204,7 +190,7 @@ export default function App() {
                 <MagneticButton>
                   <button 
                     data-cursor-text="Book"
-                    className="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-full font-bold text-base btn-premium flex items-center justify-center gap-3 primary-button"
+                    className="w-full sm:w-auto bg-slate-900 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm sm:text-base btn-premium flex items-center justify-center gap-3 primary-button"
                   >
                     Book a Strategy Call <ArrowRight className="w-5 h-5" />
                   </button>
@@ -213,7 +199,7 @@ export default function App() {
                 <MagneticButton>
                   <button 
                     data-cursor-text="Free"
-                    className="w-full sm:w-auto px-10 py-5 rounded-full font-bold text-base text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group"
+                    className="w-full sm:w-auto px-6 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm sm:text-base text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group min-h-[44px]"
                   >
                     <CheckCircle2 className="w-5 h-5 group-hover:text-emerald-500 transition-colors" /> Free Audit
                   </button>
@@ -221,6 +207,7 @@ export default function App() {
               </motion.div>
             </div>
           </DotGlobeHero>
+          </Suspense>
         </BackgroundGradientGlow>
       </header>
 
@@ -271,7 +258,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -287,10 +274,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Strategic Marketing</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Ready to scale your brand with data-driven advertising? We craft high-performing campaigns across platforms that maximize ROI and drive consistent growth.
                     </p>
                   </div>
@@ -300,7 +287,7 @@ export default function App() {
                   {['Facebook Ads', 'Google Ads'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -338,10 +325,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Social Media</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Build a strong online presence with high-performing social media strategies that engage your audience and drive real business growth.
                     </p>
                   </div>
@@ -351,7 +338,7 @@ export default function App() {
                   {['Instagram', 'LinkedIn', 'Content Strategy'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -368,15 +355,9 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5 order-1 lg:order-2"
               >
-                {/* Blurred Background Video Layer */}
-                <video
-                  src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774898952/management_video_j9vvld.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="absolute inset-0 w-full h-full object-cover z-0"
+                {/* Blurred Background — CSS only, no duplicate video */}
+                <div
+                  className="absolute inset-0 w-full h-full z-0 bg-gradient-to-br from-purple-900/30 to-slate-900/30"
                   style={{ filter: 'blur(20px) brightness(0.7)' }}
                 />
 
@@ -387,7 +368,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="relative w-full h-full object-contain z-10 block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -426,7 +407,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -442,10 +423,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Automation</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Automate repetitive tasks, streamline workflows, and scale your operations efficiently while focusing on what truly matters.
                     </p>
                   </div>
@@ -455,7 +436,7 @@ export default function App() {
                   {['CRM', 'Lead Gen', 'Business Flows'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -493,10 +474,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Web Development</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Build fast, scalable, and high-converting websites that deliver seamless user experiences and drive real business growth.
                     </p>
                   </div>
@@ -506,7 +487,7 @@ export default function App() {
                   {['Website Development', 'Landing Pages'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -529,7 +510,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -568,7 +549,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -584,10 +565,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Robust SEO</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       Elevate your online presence with data-driven SEO strategies, optimized content, and scalable workflows that drive long-term organic growth.
                     </p>
                   </div>
@@ -597,7 +578,7 @@ export default function App() {
                   {['Keyword Research', 'Content Strategy', 'Analytics'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -635,10 +616,10 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
+                    <h2 className="text-2xl sm:text-4xl md:text-[42px] font-bold leading-[1.2] tracking-tight text-slate-900">
                       <span className="text-gradient">Visual Branding</span>
                     </h2>
-                    <p className="text-slate-500 text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
+                    <p className="text-slate-500 text-[15px] md:text-[18px] font-medium leading-[1.6] max-lg:max-w-lg max-lg:mx-auto">
                       We craft visually stunning designs that connect with your audience, elevate your brand identity, and drive meaningful engagement.
                     </p>
                   </div>
@@ -648,7 +629,7 @@ export default function App() {
                   {['Social Media', 'Ads', 'Videos'].map((btn) => (
                     <MagneticButton key={btn}>
                       <button 
-                        className="px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                        className="px-[16px] sm:px-[20px] py-[8px] bg-slate-100/50 backdrop-blur-sm border border-slate-200/50 rounded-[6px] text-[13px] font-medium text-slate-900 hover:bg-slate-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 min-h-[44px]"
                       >
                         {btn}
                       </button>
@@ -671,7 +652,7 @@ export default function App() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover block"
                   style={{ borderRadius: 'inherit' }}
                 />
@@ -790,7 +771,7 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
-                className="h-[400px] md:h-[600px] flex items-center justify-center relative"
+                className="h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center relative"
               >
                 <InteractiveGlobe 
                   size={500}
@@ -816,14 +797,14 @@ export default function App() {
         {/* Reviews Section */}
         <section className="py-8">
         <div className="container-custom">
-          <div className="text-left mb-20 space-y-6">
+          <div className="text-left mb-10 md:mb-20 space-y-4 md:space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success.</span></h2>
             <p className="text-slate-500 text-lg font-medium max-w-2xl">
               Don't just take our word for it. See what our clients have to say about their growth journey with Adify.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
             {[1, 2, 3].map(i => (
               <motion.div 
                 key={i} 
@@ -858,7 +839,7 @@ export default function App() {
       {/* FAQs Section */}
       <section id="faqs" className="py-8">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-[1fr,2fr] gap-16">
+          <div className="grid lg:grid-cols-[1fr,2fr] gap-10 lg:gap-16">
             <div className="space-y-6">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Common <span className="text-gradient">Questions.</span></h2>
               <p className="text-slate-500 text-lg font-medium leading-relaxed">

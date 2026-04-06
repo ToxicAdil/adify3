@@ -85,7 +85,7 @@ export function Footer() {
 										<li key={link.title}>
 											<a
 												href={link.href}
-												className="text-slate-400 hover:text-[#3A0F63] inline-flex items-center transition-all duration-300 font-medium"
+												className="text-slate-400 hover:text-[#3A0F63] inline-flex items-center transition-all duration-300 font-medium min-h-[36px] py-1"
 											>
 												{link.icon && <link.icon className="me-1.5 size-3.5" />}
 												{link.title}

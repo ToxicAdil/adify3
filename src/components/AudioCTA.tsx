@@ -131,7 +131,7 @@ export const AudioCTA: React.FC = () => {
                                     </p>
                                 </div>
 
-                                <audio ref={audioRef} src="/audio.mp3" preload="auto" />
+                                <audio ref={audioRef} src="/audio.mp3" preload="metadata" />
                             </div>
 
                             {/* RIGHT SIDE: CONTENT */}

@@ -120,15 +120,16 @@ const ServiceIcon = memo(({ type }: { type: ServiceType }) => {
 ServiceIcon.displayName = 'ServiceIcon';
 
 // --- Configuration for the Orbiting Services ---
+// Mobile uses smaller radius via the component's responsive scaling
 const servicesConfig: ServiceConfig[] = [
   // Inner Orbit
-  { id: 'strategic', orbitRadius: 100, size: 44, speed: 0.8, serviceType: 'strategic', phaseShift: 0, glowColor: 'cyan', label: 'Strategic Marketing' },
-  { id: 'social', orbitRadius: 100, size: 44, speed: 0.8, serviceType: 'social', phaseShift: (2 * Math.PI) / 3, glowColor: 'cyan', label: 'Social Media' },
-  { id: 'ads', orbitRadius: 100, size: 44, speed: 0.8, serviceType: 'ads', phaseShift: (4 * Math.PI) / 3, glowColor: 'cyan', label: 'Paid Ads' },
+  { id: 'strategic', orbitRadius: 100, size: 40, speed: 0.8, serviceType: 'strategic', phaseShift: 0, glowColor: 'cyan', label: 'Strategic Marketing' },
+  { id: 'social', orbitRadius: 100, size: 40, speed: 0.8, serviceType: 'social', phaseShift: (2 * Math.PI) / 3, glowColor: 'cyan', label: 'Social Media' },
+  { id: 'ads', orbitRadius: 100, size: 40, speed: 0.8, serviceType: 'ads', phaseShift: (4 * Math.PI) / 3, glowColor: 'cyan', label: 'Paid Ads' },
   // Outer Orbit
-  { id: 'web', orbitRadius: 180, size: 50, speed: -0.5, serviceType: 'web', phaseShift: 0, glowColor: 'purple', label: 'Web Development' },
-  { id: 'automation', orbitRadius: 180, size: 50, speed: -0.5, serviceType: 'automation', phaseShift: (2 * Math.PI) / 3, glowColor: 'purple', label: 'Automation' },
-  { id: 'seo', orbitRadius: 180, size: 50, speed: -0.5, serviceType: 'seo', phaseShift: (4 * Math.PI) / 3, glowColor: 'purple', label: 'SEO' },
+  { id: 'web', orbitRadius: 180, size: 46, speed: -0.5, serviceType: 'web', phaseShift: 0, glowColor: 'purple', label: 'Web Development' },
+  { id: 'automation', orbitRadius: 180, size: 46, speed: -0.5, serviceType: 'automation', phaseShift: (2 * Math.PI) / 3, glowColor: 'purple', label: 'Automation' },
+  { id: 'seo', orbitRadius: 180, size: 46, speed: -0.5, serviceType: 'seo', phaseShift: (4 * Math.PI) / 3, glowColor: 'purple', label: 'SEO' },
 ];
 
 // --- Memoized Orbiting Service Component ---
@@ -227,9 +228,9 @@ export default function OrbitingServices() {
   const activeService = services.find(s => s.id === activeId);
 
   return (
-    <div className="w-full flex items-center justify-center overflow-hidden py-8 relative min-h-[500px]">
+    <div className="w-full flex items-center justify-center overflow-hidden py-4 md:py-8 relative min-h-[350px] md:min-h-[500px]">
       <div 
-        className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px] flex items-center justify-center"
+        className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px] flex items-center justify-center transform scale-[0.65] sm:scale-[0.8] md:scale-100 origin-center"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >

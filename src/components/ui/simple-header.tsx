@@ -48,15 +48,15 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 					"flex items-center justify-between transition-all duration-500",
 					isScrolled 
 						? dark 
-							? "bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-12 py-3 shadow-2xl shadow-purple-900/20"
-							: "glass rounded-full px-12 py-3 shadow-md"
+							? "bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 sm:px-6 lg:px-12 py-3 shadow-2xl shadow-purple-900/20"
+							: "glass rounded-full px-4 sm:px-6 lg:px-12 py-3 shadow-md"
 						: "py-2"
 				)}>
 					<Link to="/" className="flex items-center group cursor-pointer">
 						<AdifyLogo height={34} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
 					</Link>
 
-					<div className="hidden md:flex items-center gap-8 lg:gap-10">
+					<div className="hidden lg:flex items-center gap-6 xl:gap-10">
 						{navItems.map((item) => {
 							const isHash = item.path?.includes('#');
 							const isActive = window.location.pathname === item.path || (window.location.pathname === '/' && item.id === 'home');
@@ -121,7 +121,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 						</div>
 
 						<Sheet open={open} onOpenChange={setOpen}>
-							<Button size="icon" variant="ghost" className={cn("md:hidden p-2 hover:bg-transparent", dark ? "text-slate-300" : "text-slate-600")}>
+							<Button size="icon" variant="ghost" className={cn("lg:hidden p-2 hover:bg-transparent min-h-[44px] min-w-[44px]", dark ? "text-slate-300" : "text-slate-600")}>
 								<MenuToggle
 									strokeWidth={2.5}
 									open={open}
@@ -143,7 +143,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 											<Link
 												key={item.label}
 												to={item.path}
-												className="text-2xl font-bold text-slate-900 hover:text-primary transition-colors py-2"
+												className="text-xl sm:text-2xl font-bold text-slate-900 hover:text-primary transition-colors py-3 min-h-[48px] flex items-center"
 												onClick={() => setOpen(false)}
 											>
 												{item.label}
@@ -152,7 +152,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 											<a
 												key={item.label}
 												href={item.path}
-												className="text-2xl font-bold text-slate-900 hover:text-primary transition-colors py-2"
+												className="text-xl sm:text-2xl font-bold text-slate-900 hover:text-primary transition-colors py-3 min-h-[48px] flex items-center"
 												onClick={(e) => handleScrollTo(e, item.id)}
 											>
 												{item.label}
