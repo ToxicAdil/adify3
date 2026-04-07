@@ -60,13 +60,12 @@ const AboutTeam = () => {
       className="w-full py-6 flex flex-col items-center relative overflow-hidden px-5 md:px-[37px] bg-transparent"
     >
       {/* Texture Overlay */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] mix-blend-overlay pointer-events-none z-0" />
 
       <div className="w-full max-w-[1400px] mx-auto relative z-10 flex flex-col items-center">
         
         {/* Hero Header */}
         <motion.h2
-          className="text-white text-3xl md:text-5xl lg:text-6xl font-[900] tracking-tight text-center mb-8 md:mb-12 mt-10 select-none uppercase"
+          className="text-slate-900 text-3xl md:text-5xl lg:text-6xl font-[900] tracking-tight text-center mb-8 md:mb-12 mt-10 select-none uppercase"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -94,19 +93,15 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
       whileHover={{ y: -6 }}
-      className="group relative w-full rounded-[18px] border border-white/10 overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(58,15,99,0.5)]"
-      style={{
-        backgroundColor: '#3A0F63',
-        backgroundImage: 'linear-gradient(180deg, rgba(168,85,247,0.1) 0%, rgba(58,15,99,1) 100%)'
-      }}
+      className="group relative w-full bg-white rounded-[18px] border border-slate-200/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-purple-200 hover:shadow-xl"
     >
       {/* Background Glow behind card content */}
-      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0 mix-blend-multiply" />
       
       {/* Image Container */}
-      <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#050308]">
+      <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-100">
         {/* Vignette */}
-        <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(58,15,99,0.5)] z-10 pointer-events-none" />
+        <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.1)] z-10 pointer-events-none" />
         
         <img 
           src={member.image} 
@@ -117,25 +112,25 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
         />
         
         {/* Gradient Fade to Bottom Content */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#3A0F63] to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white to-transparent z-20 pointer-events-none" />
         
         {/* Hover Inner Purple Glow */}
-        <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(58,15,99,0)] group-hover:shadow-[inset_0_0_40px_rgba(168,85,247,0.4)] transition-all duration-500 pointer-events-none z-20" />
+        <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0)] group-hover:shadow-[inset_0_0_40px_rgba(58,15,99,0.1)] transition-all duration-500 pointer-events-none z-20" />
       </div>
 
       {/* Content Container */}
       <div className="p-5 md:p-6 relative z-30 flex flex-col">
-        <h3 className="text-white text-[18px] lg:text-[20px] font-bold tracking-tight mb-0.5">{member.name}</h3>
+        <h3 className="text-slate-900 text-[18px] lg:text-[20px] font-bold tracking-tight mb-0.5">{member.name}</h3>
         {/* Using a legible purple for the accent over dark backgrounds */}
-        <p className="text-[#e9d5ff] text-[10px] font-bold uppercase tracking-widest mb-4 block">
+        <p className="text-primary text-[10px] font-bold uppercase tracking-widest mb-4 block">
           {member.role}
         </p>
 
         <ul className="space-y-2.5">
           {member.bullets.map((bullet: string, i: number) => (
             <li key={i} className="flex items-start">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-500/50 mt-1 mr-2.5 flex-shrink-0" />
-              <span className="text-slate-200 text-[12px] leading-[1.4] font-medium opacity-80">{bullet}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-1 mr-2.5 flex-shrink-0" />
+              <span className="text-slate-600 text-[12px] leading-[1.4] font-medium">{bullet}</span>
             </li>
           ))}
         </ul>

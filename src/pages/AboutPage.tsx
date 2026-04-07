@@ -9,20 +9,18 @@ import AboutProcess from '../components/AboutProcess';
 import AboutTeam from '../components/AboutTeam';
 import WhoWeWorkWith from '../components/WhoWeWorkWith';
 import ImpactStatement from '../components/ImpactStatement';
-import { AboutBackground } from '../components/AboutBackground';
 import { SimpleHeader } from '@/components/ui/simple-header';
-
+import { Footer } from '@/components/ui/footer-section';
 
 const AboutPage = () => {
   const { scrollY } = useScroll();
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.9]);
   const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   return (
-    <div className="relative min-h-screen text-slate-100 selection:bg-[#3A0F63]/40 overflow-hidden">
+    <div className="min-h-screen selection:bg-primary selection:text-white relative">
       <CustomCursor />
-      <AboutBackground />
       
-      <SimpleHeader dark />
+      <SimpleHeader />
 
       {/* Main Content */}
       <main className="relative z-10">
@@ -77,9 +75,9 @@ const AboutPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className="py-8 text-center text-sm font-medium text-slate-500 border-t border-white/5 bg-black/50 backdrop-blur-xl relative z-20">
-        <p>© {new Date().getFullYear()} Adify. All rights reserved.</p>
-      </footer>
+      <Suspense fallback={<div style={{ minHeight: '300px' }} />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

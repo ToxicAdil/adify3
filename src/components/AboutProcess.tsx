@@ -79,16 +79,15 @@ const AboutProcess = () => {
 
   return (
     <section ref={containerRef} className="w-full bg-transparent py-6 relative overflow-hidden" style={{ minHeight: svgHeight }}>
-      {/* Subtle background noise mapping */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none z-0" />
+
 
       {/* --- DESKTOP LAYOUT --- */}
       <div className="hidden xl:block w-[1200px] h-full mx-auto relative z-10" style={{ height: svgHeight }}>
         
         {/* Process Pill Header */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
-          <div className="px-6 py-2 rounded-[12px] border border-[#333] bg-[#0a0a0a]">
-            <span className="text-white text-[15px] font-medium tracking-wide lowercase">process</span>
+          <div className="px-6 py-2 rounded-[12px] border border-slate-200 bg-white shadow-sm">
+            <span className="text-slate-900 text-[15px] font-medium tracking-wide lowercase">process</span>
           </div>
         </div>
 
@@ -98,13 +97,13 @@ const AboutProcess = () => {
             <path 
               d={pathD}
               fill="none"
-              stroke="#222"
+              stroke="#e2e8f0"
               strokeWidth="2"
             />
             <motion.path 
               d={pathD}
               fill="none"
-              stroke="#6b21a8" 
+              stroke="#9333ea" 
               strokeWidth="2"
               style={{ pathLength }}
             />
@@ -128,12 +127,12 @@ const AboutProcess = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full bg-[#3A0F63] rounded-[16px] border border-purple-400/20 py-5 px-6 shadow-[0_0_40px_rgba(58,15,99,0.3)] z-10"
-              whileHover={{ y: -5, borderColor: 'rgba(168,85,247,0.4)' }}
+              className="w-full bg-white rounded-[16px] border border-slate-200/60 py-5 px-6 shadow-sm z-10"
+              whileHover={{ y: -5, borderColor: '#d8b4fe', boxShadow: '0 10px 40px -10px rgba(107,33,168,0.1)' }}
             >
-              <div className="text-[#d8b4fe] text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
-              <h3 className="text-white text-[20px] font-medium tracking-tight mb-1.5 lowercase">{card.title}</h3>
-              <p className="text-[#e9d5ff] text-[13px] leading-snug">{card.desc}</p>
+              <div className="text-primary font-bold text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
+              <h3 className="text-slate-900 text-[20px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
+              <p className="text-slate-500 font-medium text-[13px] leading-snug">{card.desc}</p>
             </motion.div>
           </div>
         ))}
@@ -142,14 +141,14 @@ const AboutProcess = () => {
       {/* --- MOBILE LAYOUT --- */}
       <div className="xl:hidden flex flex-col items-center gap-12 w-full px-6 relative z-10">
         <div className="flex justify-center mb-4">
-          <div className="px-6 py-2 rounded-[12px] border border-[#333] bg-[#0a0a0a]">
-            <span className="text-white text-[15px] font-medium tracking-wide lowercase">process</span>
+          <div className="px-6 py-2 rounded-[12px] border border-slate-200 bg-white shadow-sm">
+            <span className="text-slate-900 text-[15px] font-medium tracking-wide lowercase">process</span>
           </div>
         </div>
 
         <div className="w-full max-w-sm relative">
-          <div className="absolute left-[20px] top-[24px] bottom-0 w-[2px] bg-[#222]">
-            <motion.div className="w-full bg-[#6b21a8] origin-top" style={{ scaleY: pathLength, height: '100%' }} />
+          <div className="absolute left-[20px] top-[24px] bottom-0 w-[2px] bg-slate-200">
+            <motion.div className="w-full bg-primary origin-top" style={{ scaleY: pathLength, height: '100%' }} />
           </div>
 
           <div className="flex flex-col gap-4">
@@ -161,11 +160,11 @@ const AboutProcess = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 className="pl-12 relative w-full"
               >
-                <div className="absolute left-[16.5px] top-[24px] w-[9px] h-[9px] rounded-full bg-[#111] border-2 border-[#6b21a8]" />
-                <div className="w-full bg-[#3A0F63] rounded-[16px] border border-purple-400/20 py-5 px-6 shadow-[0_0_40px_rgba(58,15,99,0.3)]">
-                  <div className="text-[#d8b4fe] text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
-                  <h3 className="text-white text-[18px] font-medium tracking-tight mb-1.5 lowercase">{card.title}</h3>
-                  <p className="text-[#e9d5ff] text-[13px] leading-snug">{card.desc}</p>
+                <div className="absolute left-[16.5px] top-[24px] w-[9px] h-[9px] rounded-full bg-white border-2 border-primary" />
+                <div className="w-full bg-white rounded-[16px] border border-slate-200/60 py-5 px-6 shadow-sm">
+                  <div className="text-primary font-bold text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
+                  <h3 className="text-slate-900 text-[18px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
+                  <p className="text-slate-500 font-medium text-[13px] leading-snug">{card.desc}</p>
                 </div>
               </motion.div>
             ))}
