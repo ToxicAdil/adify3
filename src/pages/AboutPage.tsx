@@ -32,7 +32,7 @@ const AboutPage = () => {
         {/* 1. HERO SECTION (CINEMATIC) */}
         <motion.section 
           style={{ scale: heroScale }}
-          className="relative w-full h-screen bg-transparent overflow-hidden flex items-center justify-center transform-gpu origin-center"
+          className="relative w-full h-[60vh] md:h-screen bg-transparent overflow-hidden flex items-center justify-center transform-gpu origin-center"
         >
           {/* BIG TEXT (Layer 2) */}
           <motion.div 
@@ -43,7 +43,7 @@ const AboutPage = () => {
               initial={{ opacity: 0, filter: "blur(10px)" }}
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 2, ease: "easeOut" }}
-              className="text-[22vw] md:text-[17.5vw] font-[900] text-white leading-none tracking-tighter select-none whitespace-nowrap opacity-90"
+              className="text-[18vw] md:text-[17.5vw] font-[900] text-white leading-none tracking-tighter select-none whitespace-nowrap opacity-90"
               style={{
                 textShadow: '0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2)'
               }}
@@ -59,7 +59,7 @@ const AboutPage = () => {
             transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
           >
-            <div className="w-full h-[105%] md:h-[115%] max-w-[1300px] flex items-center justify-center pointer-events-auto transform translate-y-10 md:translate-y-20 scale-100">
+            <div className="w-full h-[105%] md:h-[115%] max-w-[1300px] flex items-center justify-center pointer-events-none md:pointer-events-auto transform translate-y-5 md:translate-y-20 scale-75 md:scale-100">
               <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
                 <Spline scene="https://prod.spline.design/oC7n6seueKPBIcUA/scene.splinecode" />
               </Suspense>

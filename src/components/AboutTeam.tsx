@@ -57,7 +57,7 @@ const teamMembers = [
 const AboutTeam = () => {
   return (
     <section 
-      className="w-full py-6 flex flex-col items-center relative overflow-hidden px-[37px] bg-transparent"
+      className="w-full py-6 flex flex-col items-center relative overflow-hidden px-5 md:px-[37px] bg-transparent"
     >
       {/* Texture Overlay */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] mix-blend-overlay pointer-events-none z-0" />
@@ -66,7 +66,7 @@ const AboutTeam = () => {
         
         {/* Hero Header */}
         <motion.h2
-          className="text-white text-5xl md:text-6xl font-[900] tracking-tight text-center mb-12 mt-10 select-none uppercase"
+          className="text-white text-3xl md:text-5xl lg:text-6xl font-[900] tracking-tight text-center mb-8 md:mb-12 mt-10 select-none uppercase"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}

@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 
 const ImpactStatement = () => {
   return (
-    <section className="w-full pt-[80px] pb-[140px] flex flex-col items-center justify-center relative bg-transparent px-[37px] overflow-hidden">
+    <section className="w-full pt-[40px] pb-[60px] md:pt-[80px] md:pb-[140px] flex flex-col items-center justify-center relative bg-transparent px-5 md:px-[37px] overflow-hidden">
 
       {/* Dark premium background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#3A0F63]/15 blur-[150px] rounded-full pointer-events-none z-0" />
@@ -30,7 +30,7 @@ const ImpactStatement = () => {
            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         >
           <h2 
-            className="text-white text-[36px] md:text-[56px] lg:text-[76px] font-[500] leading-[1.3] -rotate-1"
+            className="text-white text-[26px] sm:text-[36px] md:text-[56px] lg:text-[76px] font-[500] leading-[1.3] -rotate-1"
             style={{ 
               fontFamily: "'Caveat', cursive",
               letterSpacing: '0.05em'
