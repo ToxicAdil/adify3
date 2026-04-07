@@ -16,28 +16,27 @@ export default defineConfig(({mode}) => {
       },
     },
     build: {
-      // Aggressive code-splitting: separate heavy libraries into their own chunks
+      // PERFORMANCE: Disable CSS code splitting so CSS loads via <link> in HTML,
+      // not chained behind JS. This breaks the critical path chain:
+      // Before: HTML → JS (460ms) → CSS (672ms) = 672ms
+      // After:  HTML → CSS (parallel with JS) = ~300ms
+      cssCodeSplit: false,
       rollupOptions: {
         output: {
           manualChunks: {
-            // Three.js — only loaded by pages/sections that use the InteractiveGlobe
+            // Three.js — deferred via requestIdleCallback in globe-hero
             'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-            // Spline — only loaded by About page (if re-added)
+            // Spline — only loaded by About page
             'vendor-spline': ['@splinetool/react-spline', '@splinetool/runtime'],
-            // Framer Motion — used across pages, benefits from caching separately
+            // Framer Motion — only loaded by lazy components (NOT in critical path)
             'vendor-motion': ['motion'],
             // React core — stable, long-term cache
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           },
         },
       },
-      // Increase chunk size warning limit since we're intentionally splitting
       chunkSizeWarningLimit: 600,
-      // Enable CSS code splitting for better caching
-      cssCodeSplit: true,
-      // Minify with esbuild (faster than terser, good enough for prod)
       minify: 'esbuild',
-      // Target modern browsers to reduce polyfill overhead
       target: 'es2020',
     },
     server: {

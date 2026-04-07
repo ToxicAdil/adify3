@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 function ElegantShape({
@@ -19,37 +18,19 @@ function ElegantShape({
     gradient?: string;
 }) {
     return (
-        <motion.div
-            initial={{
-                opacity: 0,
-                y: -100,
-                rotate: rotate - 15,
-            }}
-            animate={{
-                opacity: 0.55,
-                y: 0,
-                rotate: rotate,
-            }}
-            transition={{
-                duration: 2.4,
-                delay,
-                ease: [0.23, 0.86, 0.39, 0.96],
-                opacity: { duration: 1.2 },
-            }}
+        <div
             className={cn("absolute", className)}
+            style={{
+                animation: `shapeEnter 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) ${delay}s both`,
+                '--end-rotate': `${rotate}deg`,
+                '--start-rotate': `${rotate - 15}deg`,
+            } as React.CSSProperties}
         >
-            <motion.div
-                animate={{
-                    y: [0, 10, 0], 
-                }}
-                transition={{
-                    duration: 12,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
-                }}
+            <div
                 style={{
                     width,
                     height,
+                    animation: 'shapeBob 12s ease-in-out infinite',
                     willChange: 'transform',
                 }}
                 className="relative"
@@ -65,15 +46,14 @@ function ElegantShape({
                         "after:bg-[radial-gradient(circle_at_50%_50%,rgba(124,58,237,0.2),transparent_70%)]"
                     )}
                 />
-            </motion.div>
-        </motion.div>
+            </div>
+        </div>
     );
 }
 
 export function FloatingPurpleShapes() {
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-            {/* Subtle background glow - updated for multi-tonal blend */}
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-violet-500/[0.05] blur-3xl" />
 
             <div className="absolute inset-0 overflow-hidden">
@@ -85,7 +65,6 @@ export function FloatingPurpleShapes() {
                     gradient="from-[#C4B5FD]/[0.35]"
                     className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
                 />
-
                 <ElegantShape
                     delay={0.5}
                     width={500}
@@ -94,7 +73,6 @@ export function FloatingPurpleShapes() {
                     gradient="from-[#A78BFA]/[0.32]"
                     className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
                 />
-
                 <ElegantShape
                     delay={0.4}
                     width={300}
@@ -103,7 +81,6 @@ export function FloatingPurpleShapes() {
                     gradient="from-[#8B5CF6]/[0.30]"
                     className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
                 />
-
                 <ElegantShape
                     delay={0.6}
                     width={200}
@@ -112,7 +89,6 @@ export function FloatingPurpleShapes() {
                     gradient="from-[#7C3AED]/[0.28]"
                     className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
                 />
-
                 <ElegantShape
                     delay={0.7}
                     width={150}
