@@ -28,14 +28,8 @@ const ImpactStatement = () => {
            viewport={{ once: true, margin: "-100px" }}
            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         >
-          <h2 
-            className="text-slate-900 text-[26px] sm:text-[36px] md:text-[56px] lg:text-[76px] font-[500] leading-[1.3] -rotate-1"
-            style={{ 
-              fontFamily: "'Caveat', cursive",
-              letterSpacing: '0.05em'
-            }}
-          >
-            We build scalable growth systems for brands that want real results.
+          <h2 className="text-slate-900 text-[26px] sm:text-[36px] md:text-[56px] lg:text-[70px] font-[900] leading-[1.1] tracking-tight">
+            We build scalable growth systems for brands that want <span className="text-gradient">real results.</span>
           </h2>
         </motion.div>
 
