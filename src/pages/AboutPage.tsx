@@ -12,8 +12,6 @@ import ImpactStatement from '../components/ImpactStatement';
 import { AboutBackground } from '../components/AboutBackground';
 import { SimpleHeader } from '@/components/ui/simple-header';
 
-// Lazy load the Spline component for performance
-const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const AboutPage = () => {
   const { scrollY } = useScroll();
@@ -52,19 +50,6 @@ const AboutPage = () => {
             </motion.h1>
           </motion.div>
 
-          {/* 3D ROBOT (Layer 3) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
-          >
-            <div className="w-full h-[105%] md:h-[115%] max-w-[1300px] flex items-center justify-center pointer-events-none md:pointer-events-auto transform translate-y-5 md:translate-y-20 scale-75 md:scale-100">
-              <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
-                <Spline scene="https://prod.spline.design/oC7n6seueKPBIcUA/scene.splinecode" />
-              </Suspense>
-            </div>
-          </motion.div>
         </motion.section>
 
         {/* 1.5 IMPACT STATEMENT */}
