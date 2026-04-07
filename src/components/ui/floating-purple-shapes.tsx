@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 function ElegantShape({
@@ -26,7 +26,7 @@ function ElegantShape({
                 rotate: rotate - 15,
             }}
             animate={{
-                opacity: 0.55, // Increased visibility as requested (0.45 - 0.65)
+                opacity: 0.55,
                 y: 0,
                 rotate: rotate,
             }}
@@ -50,6 +50,7 @@ function ElegantShape({
                 style={{
                     width,
                     height,
+                    willChange: 'transform',
                 }}
                 className="relative"
             >
@@ -58,8 +59,8 @@ function ElegantShape({
                         "absolute inset-0 rounded-full",
                         "bg-gradient-to-r to-transparent",
                         gradient,
-                        "backdrop-blur-sm border border-white/[0.35]", // Reduced blur and increased border visibility
-                        "shadow-[0_10px_40px_rgba(124,58,237,0.25)]", // Enhanced glow
+                        "backdrop-blur-sm border border-white/[0.35]",
+                        "shadow-[0_10px_40px_rgba(124,58,237,0.25)]",
                         "after:absolute after:inset-0 after:rounded-full",
                         "after:bg-[radial-gradient(circle_at_50%_50%,rgba(124,58,237,0.2),transparent_70%)]"
                     )}

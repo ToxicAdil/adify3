@@ -16,28 +16,31 @@ export default defineConfig(({mode}) => {
       },
     },
     build: {
-      // Code-splitting: separate heavy 3D/animation libraries into their own chunks
-      // so they only load when actually needed (e.g. About page loads Spline, hero loads Three.js)
+      // Aggressive code-splitting: separate heavy libraries into their own chunks
       rollupOptions: {
         output: {
           manualChunks: {
-            // Three.js ecosystem — only loaded by pages that use 3D globe
+            // Three.js — only loaded by pages/sections that use the InteractiveGlobe
             'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-            // Spline — only loaded by About page 
+            // Spline — only loaded by About page (if re-added)
             'vendor-spline': ['@splinetool/react-spline', '@splinetool/runtime'],
-            // Framer Motion — used everywhere but tree-shaking helps
-            'vendor-motion': ['framer-motion', 'motion'],
-            // React core
+            // Framer Motion — used across pages, benefits from caching separately
+            'vendor-motion': ['motion'],
+            // React core — stable, long-term cache
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           },
         },
       },
       // Increase chunk size warning limit since we're intentionally splitting
-      chunkSizeWarningLimit: 800,
+      chunkSizeWarningLimit: 600,
+      // Enable CSS code splitting for better caching
+      cssCodeSplit: true,
+      // Minify with esbuild (faster than terser, good enough for prod)
+      minify: 'esbuild',
+      // Target modern browsers to reduce polyfill overhead
+      target: 'es2020',
     },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
