@@ -93,22 +93,23 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
       whileHover={{ y: -6 }}
-      className="group relative w-full rounded-[18px] border border-white/20 shadow-md overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-white/40"
-      style={{
-        background: 'linear-gradient(180deg, #ffffff 0%, #f3e8ff 40%, #a855f7 75%, #3a0f63 100%)'
-      }}
+      className="group relative w-full bg-white rounded-[18px] border border-slate-200/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-purple-300 hover:shadow-xl"
     >
-      {/* Texture Overlay to create the painted/wavy grain effect */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-overlay pointer-events-none z-0" />
+      {/* Soft Blurred Gradient SaaS Effect */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Base light color at top */}
+        <div className="absolute inset-0 bg-white" />
+        {/* Smooth blur transition */}
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-b from-transparent via-[#c084fc]/30 to-[#3A0F63] opacity-90 blur-[30px]" />
+        {/* Deep purple base so text is totally legible */}
+        <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-[#3A0F63]/80 to-[#22093a]" />
+      </div>
 
-      {/* Image Container with CSS Mask for perfect blending into the gradient */}
-      <div 
-        className="relative w-full aspect-[4/5] overflow-hidden z-10"
-        style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-          maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-        }}
-      >
+      {/* Image Container */}
+      <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-100 z-10">
+        {/* Vignette */}
+        <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.1)] z-10 pointer-events-none" />
+        
         <img 
           src={member.image} 
           alt={member.name}
@@ -117,23 +118,22 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
           className="w-full h-full object-cover object-center filter grayscale contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.03]"
         />
         
-        {/* Hover Inner Purple Glow over the image */}
-        <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0)] group-hover:shadow-[inset_0_0_40px_rgba(58,15,99,0.3)] transition-all duration-500 pointer-events-none z-20" />
+        {/* Gradient Fade flowing into the purple bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#3A0F63]/80 to-transparent z-20 pointer-events-none" />
       </div>
 
       {/* Content Container */}
-      <div className="p-5 md:p-6 relative z-30 flex flex-col mt-[-20px]">
-        <h3 className="text-white text-[18px] lg:text-[20px] font-bold tracking-tight mb-0.5" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.2)' }}>{member.name}</h3>
-        {/* Using a legible light purple for the accent over dark backgrounds */}
-        <p className="text-purple-200 text-[10px] font-bold uppercase tracking-widest mb-4 block">
+      <div className="p-5 md:p-6 relative z-30 flex flex-col">
+        <h3 className="text-white text-[18px] lg:text-[20px] font-bold tracking-tight mb-0.5">{member.name}</h3>
+        <p className="text-[#e9d5ff] text-[10px] font-bold uppercase tracking-widest mb-4 block">
           {member.role}
         </p>
 
         <ul className="space-y-2.5">
           {member.bullets.map((bullet: string, i: number) => (
             <li key={i} className="flex items-start">
-              <span className="w-1.5 h-1.5 rounded-full bg-white mt-1 mr-2.5 flex-shrink-0 shadow-[0_0_5px_rgba(255,255,255,0.5)]" />
-              <span className="text-purple-50 text-[12px] leading-[1.4] font-medium">{bullet}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1 mr-2.5 flex-shrink-0" />
+              <span className="text-purple-100/80 text-[12px] leading-[1.4] font-medium">{bullet}</span>
             </li>
           ))}
         </ul>
