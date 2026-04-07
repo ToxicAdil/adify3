@@ -11,7 +11,7 @@ import WhoWeWorkWith from '../components/WhoWeWorkWith';
 import ImpactStatement from '../components/ImpactStatement';
 import { SimpleHeader } from '@/components/ui/simple-header';
 import { Footer } from '@/components/ui/footer-section';
-import { LampContainer } from '@/components/ui/lamp';
+
 const AboutPage = () => {
   const { scrollY } = useScroll();
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.9]);
@@ -28,38 +28,37 @@ const AboutPage = () => {
         {/* 1. HERO SECTION (CINEMATIC) */}
         <motion.section 
           style={{ scale: heroScale }}
-          className="relative w-full min-h-[70vh] md:min-h-[90vh] bg-transparent overflow-hidden flex items-center justify-center transform-gpu origin-center"
+          className="relative w-full h-[60vh] md:h-screen bg-transparent overflow-hidden flex items-center justify-center transform-gpu origin-center"
         >
-          <LampContainer className="pt-20">
-            {/* BIG TEXT (Layer 2) */}
-            <motion.div 
-              style={{ opacity: textOpacity }}
-              className="relative z-10 w-full flex justify-center items-center pointer-events-none mt-20 md:mt-32"
-            >
-              <div className="relative inline-block">
-                {/* Blur Glow duplicate layer */}
-                <motion.span
-                  initial={{ opacity: 0, filter: "blur(20px)" }}
-                  animate={{ opacity: 0.6, filter: "blur(30px)" }}
-                  transition={{ duration: 2, ease: "easeOut" }}
-                  className="absolute inset-0 text-[18vw] md:text-[17.5vw] font-[900] text-gradient leading-none tracking-tighter select-none whitespace-nowrap pointer-events-none"
-                  aria-hidden="true"
-                >
-                  ABOUT US
-                </motion.span>
-                
-                {/* Main clear gradient layer */}
-                <motion.h1 
-                  initial={{ opacity: 0, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 2, ease: "easeOut" }}
-                  className="text-[18vw] md:text-[17.5vw] font-[900] text-gradient leading-none tracking-tighter select-none whitespace-nowrap relative z-10 opacity-90"
-                >
-                  ABOUT US
-                </motion.h1>
-              </div>
-            </motion.div>
-          </LampContainer>
+          {/* BIG TEXT (Layer 2) */}
+          <motion.div 
+            style={{ opacity: textOpacity }}
+            className="absolute z-10 w-full flex justify-center items-center pointer-events-none"
+          >
+            <div className="relative inline-block">
+              {/* Blur Glow duplicate layer */}
+              <motion.span
+                initial={{ opacity: 0, filter: "blur(20px)" }}
+                animate={{ opacity: 0.6, filter: "blur(30px)" }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="absolute inset-0 text-[18vw] md:text-[17.5vw] font-[900] text-gradient leading-none tracking-tighter select-none whitespace-nowrap pointer-events-none"
+                aria-hidden="true"
+              >
+                ABOUT US
+              </motion.span>
+              
+              {/* Main clear gradient layer */}
+              <motion.h1 
+                initial={{ opacity: 0, filter: "blur(10px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="text-[18vw] md:text-[17.5vw] font-[900] text-gradient leading-none tracking-tighter select-none whitespace-nowrap relative z-10 opacity-90"
+              >
+                ABOUT US
+              </motion.h1>
+            </div>
+          </motion.div>
+
         </motion.section>
 
         {/* 1.5 IMPACT STATEMENT */}
