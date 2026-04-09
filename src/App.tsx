@@ -219,7 +219,7 @@ export default function App() {
           <FloatingPurpleShapes />
           <Suspense fallback={<div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-center pt-20" />}>
           <DotGlobeHero className="pt-16 md:pt-20">
-            <div className="flex flex-col items-center max-w-5xl px-4 sm:px-6 md:px-[37px] relative top-28 md:top-0">
+            <div className="flex flex-col items-center max-w-5xl px-4 sm:px-6 md:px-[37px]">
               {/* Top Badge — CSS animation */}
               <div
                 className="ai-badge bg-white/40 border border-white/60 font-medium text-slate-500 uppercase tracking-[0.2em] shadow-sm backdrop-blur-md mb-8"
