@@ -231,7 +231,7 @@ export default function App() {
               {/* Main Headline */}
               <div className="text-center space-y-2 mb-8">
                 <span
-                  className="block text-3xl md:text-5xl font-light text-slate-600 tracking-tight"
+                  className="block text-5xl md:text-5xl font-light text-slate-600 tracking-tight"
                   style={{ animation: 'heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both' }}
                 >
                   Scale Smarter.
@@ -240,7 +240,7 @@ export default function App() {
                 <div className="relative inline-block">
                   {/* Blur glow duplicate layer */}
                   <span
-                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-3xl sm:text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
+                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-5xl sm:text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
                     aria-hidden="true"
                     style={{ animation: 'heroBlurIn 1.2s ease 0.3s both' }}
                   >
@@ -248,7 +248,7 @@ export default function App() {
                   </span>
                   
                   <h1
-                    className="text-3xl sm:text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
+                    className="text-5xl sm:text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
                     style={{ animation: 'heroScaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}
                   >
                     Grow Your Brand Faster
@@ -264,7 +264,7 @@ export default function App() {
 
               {/* Subtext */}
               <p
-                className="text-base sm:text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-8 md:mb-12 max-w-3xl"
+                className="text-lg sm:text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-8 md:mb-12 max-w-3xl"
                 style={{ animation: 'heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both' }}
               >
                 We build high-performing marketing systems that drive{" "}
