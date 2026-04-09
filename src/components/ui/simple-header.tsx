@@ -53,7 +53,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 						: "py-2"
 				)}>
 					<Link to="/" className="flex items-center group cursor-pointer">
-						<AdifyLogo height={56} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
+						<AdifyLogo height={34} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
 					</Link>
 
 					<div className="hidden lg:flex items-center gap-6 xl:gap-10">
@@ -136,7 +136,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 							>
 								<div className="flex flex-col gap-y-4 px-6 pt-20 pb-10 overflow-y-auto">
 									<div className="flex items-center gap-2 mb-8 border-b border-slate-100 pb-6">
-										<AdifyLogo height={56} className={cn(dark && "brightness-0 invert")} />
+										<AdifyLogo height={34} className={cn(dark && "brightness-0 invert")} />
 									</div>
 									{navItems.map((item) => (
 										item.path && !item.path.includes('#') ? (

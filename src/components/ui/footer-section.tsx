@@ -66,7 +66,7 @@ export function Footer() {
 			<div className="w-full max-w-6xl mx-auto">
 			<div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
 				<AnimatedContainer className="space-y-4">
-					<AdifyLogo height={52} />
+					<AdifyLogo height={32} />
 					<p className="text-slate-400 mt-8 text-sm font-medium md:mt-0">
 						We build high-performing marketing systems that drive real revenue, not just clicks.
 					</p>
