@@ -71,7 +71,7 @@ export function Footer() {
 						We build high-performing marketing systems that drive real revenue, not just clicks.
 					</p>
 					<p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
-						© {new Date().getFullYear()} Adify. All rights reserved.
+						© {new Date().getFullYear()} Adibuz. All rights reserved.
 					</p>
 				</AnimatedContainer>
 

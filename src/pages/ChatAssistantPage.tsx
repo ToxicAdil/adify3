@@ -27,7 +27,7 @@ interface Message {
 const STEPS = [
   {
     id: 'welcome',
-    content: "Hi there! I'm the Adify Assistant. I'm here to help you scale your business with AI-driven marketing. What's your name?",
+    content: "Hi there! I'm the Adibuz Assistant. I'm here to help you scale your business with AI-driven marketing. What's your name?",
     field: 'name',
     type: 'input'
   },
@@ -150,7 +150,7 @@ export default function ChatAssistantPage() {
               <Bot className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold tracking-tight">Adify Assistant</h1>
+              <h1 className="text-sm font-bold tracking-tight">Adibuz Assistant</h1>
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10px] text-emerald-500/80 font-bold uppercase tracking-widest">Active Now</span>
@@ -337,7 +337,7 @@ export default function ChatAssistantPage() {
               </button>
             </form>
             <p className="text-center text-[10px] text-slate-500 mt-4 uppercase tracking-[0.2em]">
-              Powered by Adify AI
+              Powered by Adibuz AI
             </p>
           </div>
         </div>
