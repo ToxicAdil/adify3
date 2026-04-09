@@ -143,7 +143,7 @@ export default function ChatAssistantPage() {
           <span>Back to Home</span>
         </button>
         <div className="flex items-center gap-6">
-          <AdifyLogo height={28} className="brightness-200" />
+          <AdifyLogo height={48} className="brightness-200" />
           <div className="h-6 w-px bg-white/10 hidden sm:block" />
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
