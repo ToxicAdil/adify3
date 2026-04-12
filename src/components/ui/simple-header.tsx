@@ -22,9 +22,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 		{ label: 'Services', id: 'services', path: '/#services' },
 		{ label: 'Work', id: 'work', path: '/work' },
 		{ label: 'Clients', id: 'clients', path: '/#clients' },
-		{ label: 'About', id: 'about', path: '/about' },
-		{ label: 'Reviews', id: 'reviews', path: '/#reviews' },
-		{ label: 'FAQs', id: 'faqs', path: '/#faqs' }
+		{ label: 'About', id: 'about', path: '/about' }
 	];
 
 	const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
