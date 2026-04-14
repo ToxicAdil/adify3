@@ -37,8 +37,16 @@ export default function ChatFAB() {
           <div className="flex flex-col items-center gap-1.5 sm:gap-2 relative z-10 pt-0.5">
             {/* Eyes */}
             <div className="flex gap-2.5 sm:gap-3">
-              <div className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
-              <div className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+              <motion.div 
+                animate={{ x: [0, -2.5, 2.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, times: [0, 0.1, 0.2, 1] }}
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
+              />
+              <motion.div 
+                animate={{ x: [0, -2.5, 2.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, times: [0, 0.1, 0.2, 1] }}
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
+              />
             </div>
             {/* Smile */}
             <svg 
