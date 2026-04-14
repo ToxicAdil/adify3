@@ -34,24 +34,24 @@ export default function ChatFAB() {
           {/* Subtle inner glow */}
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
           
-          <div className="flex flex-col items-center gap-1 sm:gap-1.5 relative z-10 pt-0.5">
+          <div className="flex flex-col items-center gap-1.5 sm:gap-2 relative z-10 pt-0.5">
             {/* Eyes */}
-            <div className="flex gap-2 sm:gap-2.5">
-              <div className="w-[4px] h-[4px] sm:w-[6px] sm:h-[6px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
-              <div className="w-[4px] h-[4px] sm:w-[6px] sm:h-[6px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+            <div className="flex gap-2.5 sm:gap-3">
+              <div className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+              <div className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
             </div>
             {/* Smile */}
             <svg 
-              width="16" 
-              height="5" 
+              width="20" 
+              height="6" 
               viewBox="0 0 20 6" 
               fill="none" 
-              className="sm:w-[20px] sm:h-[6px]"
+              className="sm:w-[28px] sm:h-[8px]"
             >
               <path 
                 d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
                 stroke="white" 
-                strokeWidth="2.5" 
+                strokeWidth="3.5" 
                 strokeLinecap="round"
                 className="drop-shadow-[0_0_2px_rgba(255,255,255,0.3)]"
               />
