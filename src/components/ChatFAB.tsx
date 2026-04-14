@@ -28,19 +28,41 @@ export default function ChatFAB() {
           onClick={() => navigate('/assistant')}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#3A0F63] to-[#2D0B4D] border border-white/20 shadow-[0_20px_40px_rgba(58,15,99,0.3)] flex items-center justify-center relative overflow-hidden"
+          className="w-[56px] h-[44px] sm:w-[72px] sm:h-[56px] bg-[#3A0F63] border-2 border-white/30 shadow-[0_10px_30px_rgba(58,15,99,0.4)] flex flex-col items-center justify-center relative overflow-hidden group-hover/btn:border-white/50 transition-all duration-300"
+          style={{ borderRadius: '38%' }}
         >
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.2)_0%,transparent_70%)]" />
+          {/* Subtle inner glow */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
           
-          <Bot className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white relative z-10 drop-shadow-lg" />
-          
-          {/* Animated Glow Halo */}
+          <div className="flex flex-col items-center gap-1.5 sm:gap-2 relative z-10 pt-1">
+            {/* Eyes */}
+            <div className="flex gap-2.5 sm:gap-3">
+              <div className="w-[5px] h-[5px] sm:w-2 sm:h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+              <div className="w-[5px] h-[5px] sm:w-2 sm:h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+            </div>
+            {/* Smile */}
+            <svg 
+              width="20" 
+              height="6" 
+              viewBox="0 0 20 6" 
+              fill="none" 
+              className="sm:w-[24px] sm:h-[7px]"
+            >
+              <path 
+                d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
+                stroke="white" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                className="drop-shadow-[0_0_2px_rgba(255,255,255,0.3)]"
+              />
+            </svg>
+          </div>
+
+          {/* Background Pulse */}
           <motion.div
-            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 bg-purple-400/20 rounded-full blur-md"
+            animate={{ opacity: [0, 0.2, 0] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute inset-0 bg-white"
           />
         </motion.button>
       </div>
