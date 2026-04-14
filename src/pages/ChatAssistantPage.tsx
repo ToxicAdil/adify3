@@ -253,7 +253,7 @@ export default function ChatAssistantPage() {
               {/* Soft glow behind the robot to replace the hard shadow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full -z-10" />
               
-              <div className="relative w-72 h-72 overflow-visible">
+              <div className="relative w-96 h-96 overflow-visible">
                 <img 
                   ref={robotRef}
                   src="/assets/assistant-bot.png" 
