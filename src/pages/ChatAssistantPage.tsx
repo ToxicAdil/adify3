@@ -173,7 +173,7 @@ export default function ChatAssistantPage() {
             transition={{ duration: 1 }}
             className="relative"
           >
-            {/* 3D Robot Character Image */}
+            {/* 3D Robot Character Image Container */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ 
@@ -188,13 +188,18 @@ export default function ChatAssistantPage() {
                 },
                 opacity: { duration: 0.8 }
               }}
-              className="relative z-10"
+              className="relative z-10 flex flex-col items-center"
             >
-              <img 
-                src="/assets/assistant-bot.png" 
-                alt="Adify Assistant" 
-                className="w-72 h-72 object-contain drop-shadow-[0_20px_50px_rgba(58,15,99,0.3)]"
-              />
+              {/* Soft glow behind the robot to replace the hard shadow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full -z-10" />
+              
+              <div className="relative w-72 h-72 overflow-visible">
+                <img 
+                  src="/assets/assistant-bot.png" 
+                  alt="Adify Assistant" 
+                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)]"
+                />
+              </div>
             </motion.div>
           </motion.div>
 
