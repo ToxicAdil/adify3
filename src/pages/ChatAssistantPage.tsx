@@ -173,64 +173,29 @@ export default function ChatAssistantPage() {
             transition={{ duration: 1 }}
             className="relative"
           >
-            {/* Robot Core */}
-            <div className="w-64 h-64 relative z-10">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-slate-800">
-                <motion.path
-                  d="M40,60 Q100,20 160,60 L160,140 Q100,180 40,140 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.5"
-                  className="opacity-10"
-                />
-                {/* Eyes */}
-                <motion.circle 
-                  cx="70" cy="90" r="8" 
-                  fill="#c084fc"
-                  animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.1, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <motion.circle 
-                  cx="130" cy="90" r="8" 
-                  fill="#c084fc"
-                  animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.1, 1] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-                />
-                {/* Mouth Pulse */}
-                <motion.rect
-                  x="80" y="125" width="40" height="4" rx="2"
-                  fill="#c084fc"
-                  animate={{ scaleX: isTyping ? [1, 1.5, 1] : 1 }}
-                  transition={{ duration: 0.5, repeat: isTyping ? Infinity : 0 }}
-                />
-              </svg>
-            </div>
-
-            {/* Floating Icons Around */}
-            {[Zap, Target, BarChart3, Globe].map((Icon, i) => (
-              <motion.div
-                key={i}
-                animate={{ 
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  delay: i * 0.8 
-                }}
-                className="absolute"
-                style={{
-                  top: `${20 + (i % 2) * 60}%`,
-                  left: `${10 + Math.floor(i / 2) * 70}%`,
-                }}
-              >
-                <Icon className="w-8 h-8 text-primary/40" />
-              </motion.div>
-            ))}
-            
-            {/* Base Glow */}
-            <div className="absolute inset-0 bg-primary/20 blur-[100px] -z-10 rounded-full" />
+            {/* 3D Robot Character Image */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ 
+                y: [0, -15, 0],
+                opacity: 1
+              }}
+              transition={{ 
+                y: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                opacity: { duration: 0.8 }
+              }}
+              className="relative z-10"
+            >
+              <img 
+                src="/assets/assistant-bot.png" 
+                alt="Adify Assistant" 
+                className="w-72 h-72 object-contain drop-shadow-[0_20px_50px_rgba(58,15,99,0.3)]"
+              />
+            </motion.div>
           </motion.div>
 
           <div className="mt-12 text-center max-w-sm space-y-4">
