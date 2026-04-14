@@ -857,8 +857,8 @@
 /* Disable heavy animations on mobile */
 @media (max-width: 768px) {
   .css-globe {
-    width: min(300px, 60vw);
-    height: min(300px, 60vw);
+    width: min(200px, 50vw);
+    height: min(200px, 50vw);
     animation-duration: 30s;
   }
 }
@@ -890,4 +890,45 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ============================
+   RICH PURPLE TEXTURED BOX
+   ============================ */
+.rich-purple-textured-box {
+  background: linear-gradient(135deg, #1A0B2E 0%, #3A0F63 50%, #6D28D9 100%);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px -10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rich-purple-textured-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.rich-purple-textured-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(58, 15, 99, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.rich-purple-textured-box:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 
+    0 30px 60px -12px rgba(0, 0, 0, 0.5),
+    0 10px 20px -5px rgba(109, 40, 217, 0.2);
 }
