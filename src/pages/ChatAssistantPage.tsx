@@ -75,13 +75,20 @@ export default function ChatAssistantPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const robotRef = useRef<HTMLDivElement>(null);
 
-  // Mouse tracking for robot tilt effect
-  const mouseX = useRef(0);
-  const mouseY = useRef(0);
-  const rotateX = useRef(0);
-  const rotateY = useRef(0);
-
+  // Mouse tracking for robot face-follow effect
   useEffect(() => {
+    let animFrame: number;
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let targetTranslateX = 0;
+    let targetTranslateY = 0;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+    let currentTranslateX = 0;
+    let currentTranslateY = 0;
+
+    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!robotRef.current) return;
       
@@ -91,18 +98,40 @@ export default function ChatAssistantPage() {
       
       const offsetX = e.clientX - centerX;
       const offsetY = e.clientY - centerY;
+
+      const maxDist = 400;
+      const clampedX = Math.max(-maxDist, Math.min(maxDist, offsetX));
+      const clampedY = Math.max(-maxDist, Math.min(maxDist, offsetY));
       
-      // Calculate rotation (capped)
-      rotateY.current = (offsetX / (window.innerWidth / 2)) * 15; // Max 15 degrees
-      rotateX.current = -(offsetY / (window.innerHeight / 2)) * 15;
+      // Rotation: robot "looks" at cursor
+      targetRotateY = (clampedX / maxDist) * 25;
+      targetRotateX = -(clampedY / maxDist) * 15;
       
+      // Translation: robot slightly shifts toward cursor  
+      targetTranslateX = (clampedX / maxDist) * 12;
+      targetTranslateY = (clampedY / maxDist) * 8;
+    };
+
+    const animate = () => {
+      // Smooth interpolation for natural movement
+      currentRotateX = lerp(currentRotateX, targetRotateX, 0.08);
+      currentRotateY = lerp(currentRotateY, targetRotateY, 0.08);
+      currentTranslateX = lerp(currentTranslateX, targetTranslateX, 0.08);
+      currentTranslateY = lerp(currentTranslateY, targetTranslateY, 0.08);
+
       if (robotRef.current) {
-        robotRef.current.style.transform = `perspective(1000px) rotateX(${rotateX.current}deg) rotateY(${rotateY.current}deg) translateZ(0)`;
+        robotRef.current.style.transform = `perspective(800px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translate(${currentTranslateX}px, ${currentTranslateY}px)`;
       }
+      animFrame = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    animFrame = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animFrame);
+    };
   }, []);
 
   useEffect(() => {
@@ -226,7 +255,7 @@ export default function ChatAssistantPage() {
               
               <div 
                 ref={robotRef}
-                className="relative w-72 h-72 overflow-visible transition-transform duration-150 ease-out will-change-transform"
+                className="relative w-72 h-72 overflow-visible will-change-transform"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <img 
