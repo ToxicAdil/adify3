@@ -73,7 +73,7 @@ export default function ChatAssistantPage() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const robotRef = useRef<HTMLDivElement>(null);
+  const robotRef = useRef<HTMLImageElement>(null);
 
   // Mouse tracking for robot face-follow effect
   useEffect(() => {
@@ -253,15 +253,13 @@ export default function ChatAssistantPage() {
               {/* Soft glow behind the robot to replace the hard shadow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full -z-10" />
               
-              <div 
-                ref={robotRef}
-                className="relative w-72 h-72 overflow-visible will-change-transform"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
+              <div className="relative w-72 h-72 overflow-visible">
                 <img 
+                  ref={robotRef}
                   src="/assets/assistant-bot.png" 
                   alt="Adify Assistant" 
-                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)] pointer-events-none select-none"
+                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)] select-none will-change-transform"
+                  style={{ transformStyle: 'preserve-3d' }}
                 />
               </div>
             </motion.div>
