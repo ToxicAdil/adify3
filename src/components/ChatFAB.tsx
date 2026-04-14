@@ -36,7 +36,7 @@ export default function ChatFAB() {
           
           <div className="flex flex-col items-center gap-1 relative z-10 pt-0.5">
             {/* Eyes */}
-            <div className="flex gap-2 sm:gap-2.5">
+            <div className="flex gap-2.5 sm:gap-3">
               <motion.div 
                 animate={{ 
                   scaleY: [1, 0.1, 1],
@@ -48,7 +48,7 @@ export default function ChatFAB() {
                   repeatDelay: 4,
                   ease: "easeInOut"
                 }}
-                className="w-[3px] h-[3px] sm:w-[5px] sm:h-[5px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
               <motion.div 
                 animate={{ 
@@ -61,7 +61,7 @@ export default function ChatFAB() {
                   repeatDelay: 4,
                   ease: "easeInOut"
                 }}
-                className="w-[3px] h-[3px] sm:w-[5px] sm:h-[5px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
             </div>
             {/* Smile */}
