@@ -164,8 +164,8 @@ export default function ChatAssistantPage() {
 
       <main className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full relative overflow-hidden">
         {/* Left Side: Visual Character (Scaledek Style) */}
-        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 border-r border-slate-200 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent opacity-50" />
+        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 relative bg-[#F8FAFC]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(58,15,99,0.03),transparent_70%)]" />
           
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
