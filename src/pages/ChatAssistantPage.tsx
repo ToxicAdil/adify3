@@ -73,6 +73,37 @@ export default function ChatAssistantPage() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const robotRef = useRef<HTMLDivElement>(null);
+
+  // Mouse tracking for robot tilt effect
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
+  const rotateX = useRef(0);
+  const rotateY = useRef(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!robotRef.current) return;
+      
+      const rect = robotRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const offsetX = e.clientX - centerX;
+      const offsetY = e.clientY - centerY;
+      
+      // Calculate rotation (capped)
+      rotateY.current = (offsetX / (window.innerWidth / 2)) * 15; // Max 15 degrees
+      rotateX.current = -(offsetY / (window.innerHeight / 2)) * 15;
+      
+      if (robotRef.current) {
+        robotRef.current.style.transform = `perspective(1000px) rotateX(${rotateX.current}deg) rotateY(${rotateY.current}deg) translateZ(0)`;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   useEffect(() => {
     // Initial message
@@ -193,11 +224,15 @@ export default function ChatAssistantPage() {
               {/* Soft glow behind the robot to replace the hard shadow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full -z-10" />
               
-              <div className="relative w-72 h-72 overflow-visible">
+              <div 
+                ref={robotRef}
+                className="relative w-72 h-72 overflow-visible transition-transform duration-150 ease-out will-change-transform"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
                 <img 
                   src="/assets/assistant-bot.png" 
                   alt="Adify Assistant" 
-                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)]"
+                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)] pointer-events-none select-none"
                 />
               </div>
             </motion.div>
