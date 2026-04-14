@@ -132,28 +132,29 @@ export default function ChatAssistantPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col font-sans selection:bg-primary selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col font-sans selection:bg-primary selection:text-white">
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(58,15,99,0.04),transparent_60%)] pointer-events-none" />
       {/* Header */}
-      <header className="p-6 flex items-center justify-between border-b border-white/5 backdrop-blur-md sticky top-0 z-50">
+      <header className="p-6 flex items-center justify-between border-b border-slate-200 backdrop-blur-md sticky top-0 z-50 bg-white/70">
         <button 
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
+          className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           <span>Back to Home</span>
         </button>
         <div className="flex items-center gap-6">
-          <AdifyLogo height={28} className="brightness-200" />
-          <div className="h-6 w-px bg-white/10 hidden sm:block" />
+          <AdifyLogo height={28} />
+          <div className="h-6 w-px bg-slate-200 hidden sm:block" />
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
               <Bot className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold tracking-tight">Adify Assistant</h1>
+              <h1 className="text-sm font-bold tracking-tight text-slate-900">Adify Assistant</h1>
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] text-emerald-500/80 font-bold uppercase tracking-widest">Active Now</span>
+                <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Active Now</span>
               </div>
             </div>
           </div>
@@ -163,8 +164,8 @@ export default function ChatAssistantPage() {
 
       <main className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full relative overflow-hidden">
         {/* Left Side: Visual Character (Scaledek Style) */}
-        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 border-r border-white/5 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-50" />
+        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 border-r border-slate-200 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent opacity-50" />
           
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -174,13 +175,13 @@ export default function ChatAssistantPage() {
           >
             {/* Robot Core */}
             <div className="w-64 h-64 relative z-10">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-white">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-slate-800">
                 <motion.path
                   d="M40,60 Q100,20 160,60 L160,140 Q100,180 40,140 Z"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="0.5"
-                  className="opacity-20"
+                  className="opacity-10"
                 />
                 {/* Eyes */}
                 <motion.circle 
@@ -233,8 +234,8 @@ export default function ChatAssistantPage() {
           </motion.div>
 
           <div className="mt-12 text-center max-w-sm space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight">Project Qualification</h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">Project Qualification</h2>
+            <p className="text-slate-500 text-sm leading-relaxed">
               Answer a few questions to help us understand your business needs and route your request to the right specialist.
             </p>
           </div>
@@ -257,15 +258,15 @@ export default function ChatAssistantPage() {
                 >
                   <div className={`flex gap-4 max-w-[85%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1 ${
-                      msg.type === 'user' ? 'bg-slate-800' : 'bg-primary/20 border border-primary/30'
+                      msg.type === 'user' ? 'bg-slate-100 border border-slate-200' : 'bg-primary/10 border border-primary/20'
                     }`}>
-                      {msg.type === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-primary" />}
+                      {msg.type === 'user' ? <User className="w-4 h-4 text-slate-600" /> : <Bot className="w-4 h-4 text-primary" />}
                     </div>
                     <div className="space-y-4">
-                      <div className={`p-4 rounded-2xl text-sm leading-relaxed ${
+                      <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
                         msg.type === 'user' 
-                          ? 'bg-primary text-white rounded-tr-none' 
-                          : 'bg-white/5 border border-white/10 text-slate-200 rounded-tl-none'
+                          ? 'bg-[#3A0F63] text-white rounded-tr-none' 
+                          : 'bg-white border border-slate-200 text-slate-700 rounded-tl-none'
                       }`}>
                         {msg.content}
                       </div>
@@ -278,7 +279,7 @@ export default function ChatAssistantPage() {
                               key={option}
                               onClick={() => handleOptionClick(option)}
                               disabled={messages[messages.length - 1].id !== msg.id}
-                              className="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-primary/20 hover:border-primary/50 transition-all text-xs font-medium disabled:opacity-50 disabled:pointer-events-none"
+                              className="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-primary/5 hover:border-primary/40 hover:text-primary transition-all text-xs font-medium shadow-sm disabled:opacity-50 disabled:pointer-events-none"
                             >
                               {option}
                             </button>
@@ -298,13 +299,13 @@ export default function ChatAssistantPage() {
                 className="flex justify-start"
               >
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 shadow-sm">
                     <Bot className="w-4 h-4 text-primary" />
                   </div>
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none flex gap-1 items-center">
-                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                  <div className="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none flex gap-1 items-center shadow-sm">
+                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                    <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
                   </div>
                 </div>
               </motion.div>
@@ -312,7 +313,7 @@ export default function ChatAssistantPage() {
           </div>
 
           {/* Input Area */}
-          <div className="p-6 border-t border-white/5 bg-[#0a0a0a]/50 backdrop-blur-md">
+          <div className="p-6 border-t border-slate-200 bg-white/70 backdrop-blur-md relative z-10">
             <form 
               onSubmit={(e) => {
                 e.preventDefault();
@@ -326,17 +327,17 @@ export default function ChatAssistantPage() {
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your message..."
                 disabled={isTyping || !!STEPS[currentStepIndex].options}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+                className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-6 pr-14 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all disabled:opacity-50 text-slate-900 placeholder:text-slate-400 shadow-sm"
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isTyping || !!STEPS[currentStepIndex].options}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-primary flex items-center justify-center hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-[#3A0F63] flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:pointer-events-none shadow-lg"
               >
                 <Send className="w-5 h-5 text-white" />
               </button>
             </form>
-            <p className="text-center text-[10px] text-slate-500 mt-4 uppercase tracking-[0.2em]">
+            <p className="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-[0.2em] font-bold">
               Powered by Adify AI
             </p>
           </div>
