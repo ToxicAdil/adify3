@@ -38,18 +38,35 @@ export default function ChatFAB() {
             {/* Eyes */}
             <div className="flex gap-2.5 sm:gap-3">
               <motion.div 
-                animate={{ x: [0, -2.5, 2.5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, times: [0, 0.1, 0.2, 1] }}
+                animate={{ 
+                  scaleY: [1, 1, 0.1, 1, 1],
+                  opacity: [1, 1, 0.5, 1, 1]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity,
+                  times: [0, 0.8, 0.85, 0.9, 1]
+                }}
                 className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
               />
               <motion.div 
-                animate={{ x: [0, -2.5, 2.5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, repeatDelay: 2, times: [0, 0.1, 0.2, 1] }}
+                animate={{ 
+                  scaleY: [1, 1, 1, 1, 1], // Stays open for the "one eye" effect
+                }}
                 className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
               />
             </div>
             {/* Smile */}
-            <svg 
+            <motion.svg 
+              animate={{ 
+                scale: [1, 1.05, 1],
+                rotate: [0, 1, 0]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                times: [0, 0.85, 1]
+              }}
               width="20" 
               height="6" 
               viewBox="0 0 20 6" 
@@ -63,7 +80,7 @@ export default function ChatFAB() {
                 strokeLinecap="round"
                 className="drop-shadow-[0_0_2px_rgba(255,255,255,0.3)]"
               />
-            </svg>
+            </motion.svg>
           </div>
 
           {/* Background Pulse */}
