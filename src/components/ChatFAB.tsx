@@ -39,34 +39,33 @@ export default function ChatFAB() {
             <div className="flex gap-2.5 sm:gap-3">
               <motion.div 
                 animate={{ 
-                  scaleY: [1, 1, 0.1, 1, 1],
-                  opacity: [1, 1, 0.5, 1, 1]
+                  scaleY: [1, 0.1, 1],
+                  opacity: [1, 0.5, 1]
                 }}
                 transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  times: [0, 0.8, 0.85, 0.9, 1]
+                  duration: 0.2, 
+                  repeat: Infinity, 
+                  repeatDelay: 4,
+                  ease: "easeInOut"
                 }}
-                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
               <motion.div 
                 animate={{ 
-                  scaleY: [1, 1, 1, 1, 1], // Stays open for the "one eye" effect
+                  scaleY: [1, 0.1, 1],
+                  opacity: [1, 0.5, 1]
                 }}
-                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" 
+                transition={{ 
+                  duration: 0.2, 
+                  repeat: Infinity, 
+                  repeatDelay: 4,
+                  ease: "easeInOut"
+                }}
+                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
             </div>
             {/* Smile */}
-            <motion.svg 
-              animate={{ 
-                scale: [1, 1.05, 1],
-                rotate: [0, 1, 0]
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity,
-                times: [0, 0.85, 1]
-              }}
+            <svg 
               width="20" 
               height="6" 
               viewBox="0 0 20 6" 
@@ -80,7 +79,7 @@ export default function ChatFAB() {
                 strokeLinecap="round"
                 className="drop-shadow-[0_0_2px_rgba(255,255,255,0.3)]"
               />
-            </motion.svg>
+            </svg>
           </div>
 
           {/* Background Pulse */}
