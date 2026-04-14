@@ -11,19 +11,22 @@ export default function ChatFAB() {
   if (location.pathname === '/assistant') return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-[9999] flex flex-col items-end gap-2 sm:gap-3 pointer-events-auto">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-[9999] flex flex-col items-center gap-0 pointer-events-auto group/btn">
       <AnimatePresence mode="wait">
         <motion.div
-          initial={{ opacity: 0, y: 10, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          className="hidden sm:flex bg-white text-slate-800 px-4 py-2 rounded-2xl shadow-xl items-center gap-2 border border-slate-200 font-bold text-sm"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="hidden sm:flex flex-col items-center mb-[-4px] group-hover/btn:translate-y-[-2px] transition-transform duration-300"
         >
-          <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          Let's Talk
+          <div className="bg-[#1a1a1a] text-white px-2.5 py-1 rounded-full shadow-2xl border border-white/10 flex items-center justify-center">
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] whitespace-nowrap">Let's Talk</span>
+          </div>
+          {/* Arrow */}
+          <div className="w-2 h-2 bg-[#1a1a1a] rotate-45 -mt-1.5 border-r border-b border-white/10" />
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative group/btn">
+      <div className="relative">
         <motion.button
           onClick={() => navigate('/assistant')}
           whileHover={{ scale: 1.05 }}
