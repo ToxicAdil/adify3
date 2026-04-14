@@ -127,10 +127,10 @@ const AboutProcess = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE] rounded-[16px] border border-[#DDD6FE] py-5 px-6 shadow-sm z-10"
-              whileHover={{ y: -5, borderColor: '#C4B5FD', boxShadow: '0 10px 40px -10px rgba(107,33,168,0.15)' }}
+              className="w-full bg-gradient-to-br from-[#EDE9FE] to-[#DDD6FE] rounded-[16px] border border-[#C4B5FD] py-5 px-6 shadow-sm z-10"
+              whileHover={{ y: -5, borderColor: '#A78BFA', boxShadow: '0 10px 40px -10px rgba(107,33,168,0.2)' }}
             >
-              <div className="text-[#7C3AED] font-bold text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
+              <div className="text-[#6D28D9] font-bold text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
               <h3 className="text-[#1E1B4B] text-[20px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
               <p className="text-[#475569] font-medium text-[13px] leading-snug">{card.desc}</p>
             </motion.div>
@@ -161,8 +161,8 @@ const AboutProcess = () => {
                 className="pl-12 relative w-full"
               >
                 <div className="absolute left-[16.5px] top-[24px] w-[9px] h-[9px] rounded-full bg-white border-2 border-primary" />
-                <div className="w-full bg-gradient-to-br from-[#F5F3FF] to-[#EDE9FE] rounded-[16px] border border-[#DDD6FE] py-5 px-6 shadow-sm">
-                  <div className="text-[#7C3AED] font-bold text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
+                <div className="w-full bg-gradient-to-br from-[#EDE9FE] to-[#DDD6FE] rounded-[16px] border border-[#C4B5FD] py-5 px-6 shadow-sm">
+                  <div className="text-[#6D28D9] font-bold text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
                   <h3 className="text-[#1E1B4B] text-[18px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
                   <p className="text-[#475569] font-medium text-[13px] leading-snug">{card.desc}</p>
                 </div>
