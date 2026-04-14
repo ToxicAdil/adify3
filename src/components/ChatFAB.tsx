@@ -51,7 +51,7 @@ export default function ChatFAB() {
               <path 
                 d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
                 stroke="white" 
-                strokeWidth="3.5" 
+                strokeWidth="2.5" 
                 strokeLinecap="round"
                 className="drop-shadow-[0_0_2px_rgba(255,255,255,0.3)]"
               />
