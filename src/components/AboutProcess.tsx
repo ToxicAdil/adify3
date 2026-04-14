@@ -127,14 +127,12 @@ const AboutProcess = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full rich-purple-textured-box py-6 px-8 relative z-10"
-              whileHover={{ y: -8 }}
+              className="w-full bg-gradient-to-br from-[#3A0F63] to-[#2D0B4D] rounded-[16px] border border-white/20 py-5 px-6 shadow-xl backdrop-blur-md z-10"
+              whileHover={{ y: -5, borderColor: 'rgba(255,255,255,0.4)', boxShadow: '0 20px 40px -10px rgba(58,15,99,0.4)' }}
             >
-              <div className="relative z-10">
-                <div className="text-purple-300/80 font-bold text-[12px] font-mono tracking-wider mb-2">{card.num}.</div>
-                <h3 className="text-white text-[22px] font-bold tracking-tight mb-2 lowercase">{card.title}</h3>
-                <p className="text-purple-100/70 font-medium text-[14px] leading-relaxed">{card.desc}</p>
-              </div>
+              <div className="text-purple-300 font-bold text-[11px] font-mono tracking-wider mb-1.5">{card.num}.</div>
+              <h3 className="text-white text-[20px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
+              <p className="text-slate-300 font-medium text-[13px] leading-snug">{card.desc}</p>
             </motion.div>
           </div>
         ))}
@@ -163,12 +161,10 @@ const AboutProcess = () => {
                 className="pl-12 relative w-full"
               >
                 <div className="absolute left-[16.5px] top-[24px] w-[9px] h-[9px] rounded-full bg-white border-2 border-primary" />
-                <div className="w-full rich-purple-textured-box py-6 px-7">
-                  <div className="relative z-10">
-                    <div className="text-purple-300/80 font-bold text-[12px] font-mono tracking-widest mb-2">{card.num}.</div>
-                    <h3 className="text-white text-[20px] font-bold tracking-tight mb-2 lowercase">{card.title}</h3>
-                    <p className="text-purple-100/70 font-medium text-[14px] leading-relaxed">{card.desc}</p>
-                  </div>
+                <div className="w-full bg-gradient-to-br from-[#3A0F63] to-[#2D0B4D] rounded-[16px] border border-white/20 py-5 px-6 shadow-lg">
+                  <div className="text-purple-300 font-bold text-[11px] font-mono tracking-widest mb-1.5">{card.num}.</div>
+                  <h3 className="text-white text-[18px] font-bold tracking-tight mb-1.5 lowercase">{card.title}</h3>
+                  <p className="text-slate-300 font-medium text-[13px] leading-snug">{card.desc}</p>
                 </div>
               </motion.div>
             ))}
