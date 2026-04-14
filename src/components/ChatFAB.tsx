@@ -18,14 +18,14 @@ export default function ChatFAB() {
           animate={{ opacity: 1, scale: 1 }}
           className="hidden sm:flex flex-col items-center mb-1 group-hover/btn:translate-y-[-4px] transition-transform duration-300"
         >
-          <div className="bg-[#1a1a1a] text-white px-2.5 py-1 rounded-full shadow-2xl border border-white/10 flex items-center justify-center">
+          <div className="bg-gradient-to-br from-[#EDE9FE] to-[#DDD6FE] text-[#1E1B4B] px-2.5 py-1 rounded-full shadow-xl border border-[#C4B5FD]/50 flex items-center justify-center">
             <span className="text-[9px] font-black uppercase tracking-[0.2em] whitespace-nowrap">Let's Talk</span>
           </div>
           {/* V-Shape Connector */}
-          <svg width="10" height="6" viewBox="0 0 12 8" fill="none" className="-mt-0.5 opacity-80">
+          <svg width="10" height="6" viewBox="0 0 12 8" fill="none" className="-mt-0.5 opacity-60">
             <path 
               d="M1 1L6 6L11 1" 
-              stroke="#1a1a1a" 
+              stroke="#6D28D9" 
               strokeWidth="2.5" 
               strokeLinecap="round" 
               strokeLinejoin="round" 
