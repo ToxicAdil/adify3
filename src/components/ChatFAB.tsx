@@ -28,25 +28,25 @@ export default function ChatFAB() {
           onClick={() => navigate('/assistant')}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-[56px] h-[44px] sm:w-[72px] sm:h-[56px] bg-[#3A0F63] border-2 border-white/30 shadow-[0_10px_30px_rgba(58,15,99,0.4)] flex flex-col items-center justify-center relative overflow-hidden group-hover/btn:border-white/50 transition-all duration-300"
+          className="w-[48px] h-[38px] sm:w-[60px] sm:h-[48px] bg-[#3A0F63] border-2 border-white/30 shadow-[0_10px_30px_rgba(58,15,99,0.4)] flex flex-col items-center justify-center relative overflow-hidden group-hover/btn:border-white/50 transition-all duration-300"
           style={{ borderRadius: '38%' }}
         >
           {/* Subtle inner glow */}
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
           
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2 relative z-10 pt-1">
+          <div className="flex flex-col items-center gap-1 sm:gap-1.5 relative z-10 pt-0.5">
             {/* Eyes */}
-            <div className="flex gap-2.5 sm:gap-3">
-              <div className="w-[5px] h-[5px] sm:w-2 sm:h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
-              <div className="w-[5px] h-[5px] sm:w-2 sm:h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+            <div className="flex gap-2 sm:gap-2.5">
+              <div className="w-[4px] h-[4px] sm:w-[6px] sm:h-[6px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+              <div className="w-[4px] h-[4px] sm:w-[6px] sm:h-[6px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
             </div>
             {/* Smile */}
             <svg 
-              width="20" 
-              height="6" 
+              width="16" 
+              height="5" 
               viewBox="0 0 20 6" 
               fill="none" 
-              className="sm:w-[24px] sm:h-[7px]"
+              className="sm:w-[20px] sm:h-[6px]"
             >
               <path 
                 d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
