@@ -28,15 +28,15 @@ export default function ChatFAB() {
           onClick={() => navigate('/assistant')}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-[48px] h-[38px] sm:w-[60px] sm:h-[48px] bg-[#3A0F63] border-2 border-white/30 shadow-[0_10px_30px_rgba(58,15,99,0.4)] flex flex-col items-center justify-center relative overflow-hidden group-hover/btn:border-white/50 transition-all duration-300"
+          className="w-[40px] h-[32px] sm:w-[50px] sm:h-[40px] bg-[#3A0F63] border-2 border-white/30 shadow-[0_10px_30px_rgba(58,15,99,0.4)] flex flex-col items-center justify-center relative overflow-hidden group-hover/btn:border-white/50 transition-all duration-300"
           style={{ borderRadius: '38%' }}
         >
           {/* Subtle inner glow */}
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
           
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2 relative z-10 pt-0.5">
+          <div className="flex flex-col items-center gap-1 relative z-10 pt-0.5">
             {/* Eyes */}
-            <div className="flex gap-2.5 sm:gap-3">
+            <div className="flex gap-2 sm:gap-2.5">
               <motion.div 
                 animate={{ 
                   scaleY: [1, 0.1, 1],
@@ -48,7 +48,7 @@ export default function ChatFAB() {
                   repeatDelay: 4,
                   ease: "easeInOut"
                 }}
-                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
+                className="w-[3px] h-[3px] sm:w-[5px] sm:h-[5px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
               <motion.div 
                 animate={{ 
@@ -61,16 +61,16 @@ export default function ChatFAB() {
                   repeatDelay: 4,
                   ease: "easeInOut"
                 }}
-                className="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
+                className="w-[3px] h-[3px] sm:w-[5px] sm:h-[5px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] origin-center" 
               />
             </div>
             {/* Smile */}
             <svg 
-              width="20" 
-              height="6" 
+              width="14" 
+              height="4" 
               viewBox="0 0 20 6" 
               fill="none" 
-              className="sm:w-[28px] sm:h-[8px]"
+              className="sm:w-[18px] sm:h-[5px]"
             >
               <path 
                 d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
