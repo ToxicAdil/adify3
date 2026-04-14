@@ -66,11 +66,11 @@ export default function ChatFAB() {
             </div>
             {/* Smile */}
             <svg 
-              width="14" 
-              height="4" 
+              width="18" 
+              height="5" 
               viewBox="0 0 20 6" 
               fill="none" 
-              className="sm:w-[18px] sm:h-[5px]"
+              className="sm:w-[22px] sm:h-[6px]"
             >
               <path 
                 d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
