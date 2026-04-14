@@ -36,7 +36,7 @@ export default function ChatFAB() {
           
           <div className="flex flex-col items-center gap-1 relative z-10 pt-0.5">
             {/* Eyes */}
-            <div className="flex gap-2.5 sm:gap-3">
+            <div className="flex gap-1.5 sm:gap-2">
               <motion.div 
                 animate={{ 
                   scaleY: [1, 0.1, 1],
