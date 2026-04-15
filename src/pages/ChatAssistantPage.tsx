@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Send, 
   User, 
@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdifyLogo from '../components/AdifyLogo';
+
+const Robot3D = lazy(() => import('../components/Robot3D'));
 
 interface Message {
   id: string;
@@ -73,34 +75,7 @@ export default function ChatAssistantPage() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const robotRef = useRef<HTMLImageElement>(null);
 
-  // Mouse tracking MotionValues for smooth eye follow
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 25, stiffness: 150 };
-  const eyeX = useSpring(useTransform(mouseX, [-400, 400], [-12, 12]), springConfig);
-  const eyeY = useSpring(useTransform(mouseY, [-400, 400], [-8, 8]), springConfig);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!robotRef.current) return;
-      
-      const rect = robotRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const offsetX = e.clientX - centerX;
-      const offsetY = e.clientY - centerY;
-
-      // Update MotionValues
-      mouseX.set(offsetX);
-      mouseY.set(offsetY);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
 
   useEffect(() => {
     // Initial message
@@ -191,76 +166,27 @@ export default function ChatAssistantPage() {
       </header>
 
       <main className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full relative overflow-hidden">
-        {/* Left Side: Visual Character (Scaledek Style) */}
-        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 relative bg-[#F8FAFC]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(58,15,99,0.03),transparent_70%)]" />
+        {/* Left Side: 3D Robot Character */}
+        <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-8 relative bg-[#F8FAFC]" style={{ minHeight: '600px' }}>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(58,15,99,0.05),transparent_70%)]" />
           
-            {/* 3D Robot Character Image Container */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ 
-                y: [0, -12, 0],
-                opacity: 1,
-                scale: [1, 1.01, 1]
-              }}
-              transition={{ 
-                y: {
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                },
-                scale: {
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                },
-                opacity: { duration: 0.8 }
-              }}
-              className="relative z-10 flex flex-col items-center"
-            >
-              {/* Soft purple glow behind the robot */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#6D28D9]/10 blur-[80px] rounded-full -z-10" />
-              
-              <div className="relative w-96 h-96 overflow-visible">
-                <img 
-                  src="/assets/assistant-bot.png" 
-                  alt="Adify Assistant" 
-                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_70%,transparent_98%)] select-none pointer-events-none"
-                />
-
-                {/* Interactive Following Eyes */}
-                <div className="absolute top-[31%] left-0 w-full flex justify-center gap-[58px] pointer-events-none">
-                  {[0, 1].map((i) => (
-                    <motion.div
-                      key={i}
-                      style={{
-                        x: eyeX,
-                        y: eyeY,
-                      }}
-                      className="relative w-12 h-12 flex items-center justify-center"
-                    >
-                      {/* Inner Glowing Eye */}
-                      <motion.div 
-                        animate={{ 
-                          scaleY: [1, 1, 0.1, 1, 1],
-                          opacity: [1, 1, 0.8, 1, 1]
-                        }}
-                        transition={{ 
-                          duration: 0.3, 
-                          repeat: Infinity, 
-                          repeatDelay: Math.random() * 2 + 3,
-                          times: [0, 0.45, 0.5, 0.55, 1],
-                          ease: "easeInOut"
-                        }}
-                        className="w-10 h-10 bg-white rounded-full blur-[1px] shadow-[0_0_15px_rgba(255,255,255,0.8),0_0_30px_rgba(255,255,255,0.4)]" 
-                      />
-                    </motion.div>
-                  ))}
-                </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="relative w-full"
+            style={{ height: '420px' }}
+          >
+            <Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full border-2 border-[#3A0F63]/20 border-t-[#3A0F63] animate-spin" />
               </div>
-            </motion.div>
+            }>
+              <Robot3D />
+            </Suspense>
+          </motion.div>
 
-          <div className="mt-12 text-center max-w-sm space-y-4">
+          <div className="mt-6 text-center max-w-sm space-y-4 relative z-10">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">Project Qualification</h2>
             <p className="text-slate-500 text-sm leading-relaxed">
               Answer a few questions to help us understand your business needs and route your request to the right specialist.
