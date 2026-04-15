@@ -261,38 +261,6 @@ export default function ChatAssistantPage() {
                   className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_60%,transparent_95%)] select-none will-change-transform"
                   style={{ transformStyle: 'preserve-3d' }}
                 />
-                
-                {/* Digital Eye Blinks Overlay */}
-                <div className="absolute top-[34.5%] left-0 w-full flex justify-center gap-[62px] pointer-events-none">
-                  <motion.div 
-                    animate={{ 
-                      scaleY: [0, 1.2, 0],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ 
-                      duration: 0.2, 
-                      repeat: Infinity, 
-                      repeatDelay: 3,
-                      times: [0, 0.5, 1],
-                      ease: "easeInOut"
-                    }}
-                    className="w-10 h-1.5 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_20px_#4af2ff,0_0_40px_#4af2ff]" 
-                  />
-                  <motion.div 
-                    animate={{ 
-                      scaleY: [0, 1.2, 0],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ 
-                      duration: 0.2, 
-                      repeat: Infinity, 
-                      repeatDelay: 3,
-                      times: [0, 0.5, 1],
-                      ease: "easeInOut"
-                    }}
-                    className="w-10 h-1.5 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_20px_#4af2ff,0_0_40px_#4af2ff]" 
-                  />
-                </div>
               </div>
             </motion.div>
           </motion.div>
