@@ -266,29 +266,31 @@ export default function ChatAssistantPage() {
                 <div className="absolute top-[34.5%] left-0 w-full flex justify-center gap-[62px] pointer-events-none">
                   <motion.div 
                     animate={{ 
-                      scaleY: [0, 0, 1, 0, 0],
-                      opacity: [0, 0, 1, 0, 0]
+                      scaleY: [0, 1.2, 0],
+                      opacity: [0, 1, 0]
                     }}
                     transition={{ 
-                      duration: 0.25, 
+                      duration: 0.2, 
                       repeat: Infinity, 
-                      repeatDelay: 3.5,
-                      times: [0, 0.45, 0.5, 0.55, 1]
+                      repeatDelay: 3,
+                      times: [0, 0.5, 1],
+                      ease: "easeInOut"
                     }}
-                    className="w-8 h-8 bg-[#4af2ff] rounded-full blur-[4px] shadow-[0_0_15px_#4af2ff]" 
+                    className="w-10 h-1.5 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_20px_#4af2ff,0_0_40px_#4af2ff]" 
                   />
                   <motion.div 
                     animate={{ 
-                      scaleY: [0, 0, 1, 0, 0],
-                      opacity: [0, 0, 1, 0, 0]
+                      scaleY: [0, 1.2, 0],
+                      opacity: [0, 1, 0]
                     }}
                     transition={{ 
-                      duration: 0.25, 
+                      duration: 0.2, 
                       repeat: Infinity, 
-                      repeatDelay: 3.5,
-                      times: [0, 0.45, 0.5, 0.55, 1]
+                      repeatDelay: 3,
+                      times: [0, 0.5, 1],
+                      ease: "easeInOut"
                     }}
-                    className="w-8 h-8 bg-[#4af2ff] rounded-full blur-[4px] shadow-[0_0_15px_#4af2ff]" 
+                    className="w-10 h-1.5 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_20px_#4af2ff,0_0_40px_#4af2ff]" 
                   />
                 </div>
               </div>
