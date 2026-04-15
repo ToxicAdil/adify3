@@ -1,407 +1,286 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
+import { Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-/* ───────────────────────── helpers ───────────────────────── */
+/* ═══════════════════ Helpers ═══════════════════ */
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
+function dampLerp(a: number, b: number, s: number, dt: number) {
+  return a + (b - a) * (1 - Math.exp(-s * dt));
 }
 
-/* ───────────────────────── Mouse tracker (shared state) ───── */
+/* ═══════════════════ Mouse ════════════════════ */
 
-const mouseState = { x: 0, y: 0 };
+const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
 
 function MouseTracker() {
   const { viewport } = useThree();
-
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      mouseState.x = ((e.clientX / window.innerWidth) * 2 - 1) * viewport.width * 0.5;
-      mouseState.y = (-(e.clientY / window.innerHeight) * 2 + 1) * viewport.height * 0.5;
+      mouse.x = ((e.clientX / window.innerWidth) * 2 - 1) * viewport.width * 0.5;
+      mouse.y = (-(e.clientY / window.innerHeight) * 2 + 1) * viewport.height * 0.5;
     };
     const onTouch = (e: TouchEvent) => {
       if (e.touches.length > 0) {
-        mouseState.x = ((e.touches[0].clientX / window.innerWidth) * 2 - 1) * viewport.width * 0.5;
-        mouseState.y = (-(e.touches[0].clientY / window.innerHeight) * 2 + 1) * viewport.height * 0.5;
+        mouse.x = ((e.touches[0].clientX / window.innerWidth) * 2 - 1) * viewport.width * 0.5;
+        mouse.y = (-(e.touches[0].clientY / window.innerHeight) * 2 + 1) * viewport.height * 0.5;
       }
     };
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onTouch);
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('touchmove', onTouch);
-    };
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('touchmove', onTouch); };
   }, [viewport]);
-
+  useFrame((_, dt) => {
+    mouse.sx = dampLerp(mouse.sx, mouse.x, 5, dt);
+    mouse.sy = dampLerp(mouse.sy, mouse.y, 5, dt);
+  });
   return null;
 }
 
-/* ───────────────────────── Eye component ──────────────────── */
+/* ═══════════════════ Flat Eye ═════════════════ */
 
-function Eye({ position, baseColor }: { position: [number, number, number]; baseColor: string }) {
-  const groupRef = useRef<THREE.Group>(null!);
-  const pupilRef = useRef<THREE.Mesh>(null!);
+function FlatEye({ position }: { position: [number, number, number] }) {
+  const pupilRef = useRef<THREE.Group>(null!);
+  const glowRef = useRef<THREE.Mesh>(null!);
+  const [blink, setBlink] = useState(false);
   const lidRef = useRef<THREE.Mesh>(null!);
-  const [blinkPhase, setBlinkPhase] = useState(0);
 
-  // Blink timer
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    const scheduleBlink = () => {
-      const delay = 2500 + Math.random() * 4000;
-      timeout = setTimeout(() => {
-        setBlinkPhase(1);
-        setTimeout(() => setBlinkPhase(0), 150);
-        scheduleBlink();
-      }, delay);
+    let t: ReturnType<typeof setTimeout>;
+    const go = () => {
+      t = setTimeout(() => { setBlink(true); setTimeout(() => setBlink(false), 110); go(); }, 3000 + Math.random() * 2500);
     };
-    scheduleBlink();
-    return () => clearTimeout(timeout);
+    go();
+    return () => clearTimeout(t);
   }, []);
 
-  useFrame(() => {
-    if (!pupilRef.current) return;
-    // Pupil follows mouse
-    const targetX = THREE.MathUtils.clamp(mouseState.x * 0.06, -0.08, 0.08);
-    const targetY = THREE.MathUtils.clamp(mouseState.y * 0.06, -0.06, 0.06);
-    pupilRef.current.position.x = lerp(pupilRef.current.position.x, targetX, 0.1);
-    pupilRef.current.position.y = lerp(pupilRef.current.position.y, targetY, 0.1);
-
-    // Blink: scale Y of lid
-    if (lidRef.current) {
-      const targetScale = blinkPhase === 1 ? 1 : 0;
-      lidRef.current.scale.y = lerp(lidRef.current.scale.y, targetScale, 0.35);
-    }
-  });
-
-  return (
-    <group ref={groupRef} position={position}>
-      {/* Eye socket (slightly inset dark circle) */}
-      <mesh position={[0, 0, -0.02]}>
-        <circleGeometry args={[0.18, 32]} />
-        <meshStandardMaterial color="#1a0a2e" />
-      </mesh>
-      {/* Eye white / glow */}
-      <mesh>
-        <circleGeometry args={[0.16, 32]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          emissive="#c4b5fd"
-          emissiveIntensity={0.6}
-        />
-      </mesh>
-      {/* Pupil */}
-      <mesh ref={pupilRef} position={[0, 0, 0.01]}>
-        <circleGeometry args={[0.07, 32]} />
-        <meshStandardMaterial color="#1E1B4B" emissive="#3A0F63" emissiveIntensity={0.3} />
-      </mesh>
-      {/* Inner pupil highlight */}
-      <mesh position={[0.03, 0.03, 0.02]}>
-        <circleGeometry args={[0.025, 16]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1} />
-      </mesh>
-      {/* Eyelid (blink) */}
-      <mesh ref={lidRef} position={[0, 0.08, 0.03]} scale={[1, 0, 1]}>
-        <planeGeometry args={[0.4, 0.35]} />
-        <meshStandardMaterial color="#2d1054" />
-      </mesh>
-    </group>
-  );
-}
-
-/* ───────────────────────── Antenna ────────────────────────── */
-
-function Antenna({ position, delay = 0 }: { position: [number, number, number]; delay?: number }) {
-  const tipRef = useRef<THREE.Mesh>(null!);
-  const time = useRef(delay);
-
   useFrame((_, dt) => {
-    time.current += dt;
-    if (tipRef.current) {
-      tipRef.current.position.y = 0.18 + Math.sin(time.current * 3) * 0.03;
-      const intensity = 0.5 + Math.sin(time.current * 2) * 0.4;
-      (tipRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity = intensity;
+    if (pupilRef.current) {
+      const tx = THREE.MathUtils.clamp(mouse.sx * 0.035, -0.04, 0.04);
+      const ty = THREE.MathUtils.clamp(mouse.sy * 0.035, -0.03, 0.03);
+      pupilRef.current.position.x = dampLerp(pupilRef.current.position.x, tx, 4, dt);
+      pupilRef.current.position.y = dampLerp(pupilRef.current.position.y, ty, 4, dt);
+    }
+    if (lidRef.current) {
+      lidRef.current.scale.y = dampLerp(lidRef.current.scale.y, blink ? 1 : 0, 24, dt);
+    }
+    if (glowRef.current) {
+      const mat = glowRef.current.material as THREE.MeshStandardMaterial;
+      mat.emissiveIntensity = 0.6 + Math.sin(Date.now() * 0.0015) * 0.15;
     }
   });
 
   return (
     <group position={position}>
-      {/* Stalk */}
-      <mesh position={[0, 0.08, 0]}>
-        <cylinderGeometry args={[0.015, 0.025, 0.16, 8]} />
-        <meshStandardMaterial color="#4c1d95" metalness={0.8} roughness={0.2} />
-      </mesh>
-      {/* Tip (glowing orb) */}
-      <mesh ref={tipRef} position={[0, 0.18, 0]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
+      {/* Outer glow — soft halo */}
+      <mesh ref={glowRef} position={[0, 0, -0.005]}>
+        <circleGeometry args={[0.14, 32]} />
         <meshStandardMaterial
-          color="#a78bfa"
-          emissive="#7c3aed"
+          color="#C4B5FD"
+          emissive="#A855F7"
           emissiveIntensity={0.6}
+          transparent
+          opacity={0.2}
           toneMapped={false}
         />
       </mesh>
+
+      {/* Eye white — flat circle, embedded in head */}
+      <mesh>
+        <circleGeometry args={[0.11, 32]} />
+        <meshStandardMaterial color="#FFFFFF" emissive="#F5F3FF" emissiveIntensity={0.3} toneMapped={false} />
+      </mesh>
+
+      {/* Pupil group — follows cursor */}
+      <group ref={pupilRef}>
+        {/* Dark pupil */}
+        <mesh position={[0, 0, 0.003]}>
+          <circleGeometry args={[0.06, 32]} />
+          <meshStandardMaterial color="#1E1030" />
+        </mesh>
+        {/* Big sparkle */}
+        <mesh position={[0.025, 0.025, 0.005]}>
+          <circleGeometry args={[0.022, 16]} />
+          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={2} toneMapped={false} />
+        </mesh>
+        {/* Small sparkle */}
+        <mesh position={[-0.015, -0.015, 0.005]}>
+          <circleGeometry args={[0.01, 12]} />
+          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={1.2} toneMapped={false} transparent opacity={0.6} />
+        </mesh>
+      </group>
+
+      {/* Eyelid */}
+      <mesh ref={lidRef} position={[0, 0.06, 0.008]} scale={[1, 0, 1]}>
+        <planeGeometry args={[0.28, 0.24]} />
+        <meshStandardMaterial color="#2D1B4E" />
+      </mesh>
     </group>
   );
 }
 
-/* ───────────────────────── Ear panels ─────────────────────── */
+/* ═══════════════════ Antenna ═════════════════ */
 
-function EarPanel({ position, side }: { position: [number, number, number]; side: 'left' | 'right' }) {
-  const ref = useRef<THREE.Mesh>(null!);
-  const time = useRef(0);
-
+function Antenna({ position, delay = 0 }: { position: [number, number, number]; delay?: number }) {
+  const tipRef = useRef<THREE.Mesh>(null!);
+  const t = useRef(delay);
   useFrame((_, dt) => {
-    time.current += dt;
-    if (ref.current) {
-      const glow = 0.3 + Math.sin(time.current * 1.5 + (side === 'left' ? 0 : Math.PI)) * 0.3;
-      (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = glow;
-    }
+    t.current += dt;
+    if (tipRef.current) tipRef.current.position.y = 0.18 + Math.sin(t.current * 2.5) * 0.025;
   });
-
   return (
-    <mesh ref={ref} position={position} rotation={[0, side === 'left' ? -0.3 : 0.3, 0]}>
-      <boxGeometry args={[0.04, 0.22, 0.15]} />
-      <meshStandardMaterial
-        color="#4c1d95"
-        emissive="#7c3aed"
-        emissiveIntensity={0.3}
-        metalness={0.7}
-        roughness={0.3}
-      />
-    </mesh>
+    <group position={position}>
+      <mesh position={[0, 0.08, 0]}>
+        <cylinderGeometry args={[0.012, 0.018, 0.16, 8]} />
+        <meshStandardMaterial color="#7C3AED" metalness={0.6} roughness={0.3} />
+      </mesh>
+      <mesh ref={tipRef} position={[0, 0.18, 0]}>
+        <sphereGeometry args={[0.035, 16, 16]} />
+        <meshStandardMaterial color="#E9D5FF" emissive="#A855F7" emissiveIntensity={0.35} toneMapped={false} />
+      </mesh>
+    </group>
   );
 }
 
-/* ───────────────────────── Mouth ──────────────────────────── */
+/* ═══════════════════ Smile ═══════════════════ */
 
-function Mouth() {
-  const ref = useRef<THREE.Group>(null!);
-  const time = useRef(0);
-
-  // Create mouth shape
-  const { dotPositions } = useMemo(() => {
+function Smile() {
+  const obj = useMemo(() => {
     const curve = new THREE.QuadraticBezierCurve3(
-      new THREE.Vector3(-0.15, 0, 0),
-      new THREE.Vector3(0, -0.06, 0),
-      new THREE.Vector3(0.15, 0, 0)
+      new THREE.Vector3(-0.07, 0, 0),
+      new THREE.Vector3(0, -0.04, 0),
+      new THREE.Vector3(0.07, 0, 0)
     );
-    // LED dots along the mouth
-    const dots = curve.getPoints(5).map((p) => [p.x, p.y, 0.01] as [number, number, number]);
-    return { dotPositions: dots };
+    const geom = new THREE.TubeGeometry(curve, 20, 0.008, 8, false);
+    const mat = new THREE.MeshStandardMaterial({ color: '#E9D5FF', emissive: '#A855F7', emissiveIntensity: 0.35, toneMapped: false });
+    return new THREE.Mesh(geom, mat);
   }, []);
-
-  useFrame((_, dt) => {
-    time.current += dt;
-  });
-
-  return (
-    <group ref={ref} position={[0, -0.22, 0.42]}>
-      {dotPositions.map((pos, i) => (
-        <DotLED key={i} position={pos} delay={i * 0.15} />
-      ))}
-    </group>
-  );
+  return <group position={[0, -0.15, 0.475]}><primitive object={obj} /></group>;
 }
 
-function DotLED({ position, delay }: { position: [number, number, number]; delay: number }) {
-  const ref = useRef<THREE.Mesh>(null!);
-  const time = useRef(delay);
+/* ═══════════════════ Robot ═══════════════════ */
 
-  useFrame((_, dt) => {
-    time.current += dt;
-    if (ref.current) {
-      const intensity = 0.4 + Math.sin(time.current * 2) * 0.4;
-      (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = intensity;
-    }
-  });
-
-  return (
-    <mesh ref={ref} position={position}>
-      <sphereGeometry args={[0.02, 8, 8]} />
-      <meshStandardMaterial
-        color="#c4b5fd"
-        emissive="#a78bfa"
-        emissiveIntensity={0.5}
-        toneMapped={false}
-      />
-    </mesh>
-  );
-}
-
-/* ───────────────────────── Main Robot ─────────────────────── */
-
-function RobotModel() {
+function CuteBot() {
   const headRef = useRef<THREE.Group>(null!);
   const bodyRef = useRef<THREE.Group>(null!);
-  const time = useRef(0);
 
-  // Head tracks cursor with smooth lerp
   useFrame((_, dt) => {
-    time.current += dt;
-
     if (headRef.current) {
-      const targetRotY = THREE.MathUtils.clamp(mouseState.x * 0.15, -0.4, 0.4);
-      const targetRotX = THREE.MathUtils.clamp(-mouseState.y * 0.1, -0.25, 0.25);
-
-      headRef.current.rotation.y = lerp(headRef.current.rotation.y, targetRotY, 0.06);
-      headRef.current.rotation.x = lerp(headRef.current.rotation.x, targetRotX, 0.06);
-      // Subtle head tilt
-      headRef.current.rotation.z = lerp(
-        headRef.current.rotation.z,
-        -targetRotY * 0.15,
-        0.04
-      );
+      const tY = THREE.MathUtils.clamp(mouse.sx * 0.1, -0.22, 0.22);
+      const tX = THREE.MathUtils.clamp(-mouse.sy * 0.06, -0.12, 0.12);
+      headRef.current.rotation.y = dampLerp(headRef.current.rotation.y, tY, 3, dt);
+      headRef.current.rotation.x = dampLerp(headRef.current.rotation.x, tX, 3, dt);
+      headRef.current.rotation.z = dampLerp(headRef.current.rotation.z, -tY * 0.08, 2, dt);
+    }
+    if (bodyRef.current) {
+      bodyRef.current.rotation.y = dampLerp(bodyRef.current.rotation.y, THREE.MathUtils.clamp(mouse.sx * 0.02, -0.04, 0.04), 1.5, dt);
     }
   });
 
+  const bodyColor = '#4C1D95';
+  const headColor = '#3B0764';
+  const accentColor = '#6D28D9';
+
   return (
-    <Float
-      speed={1.5}
-      rotationIntensity={0.1}
-      floatIntensity={0.4}
-      floatingRange={[-0.06, 0.06]}
-    >
-      <group scale={1.8}>
-        {/* ─── BODY ─── */}
-        <group ref={bodyRef} position={[0, -0.65, 0]}>
-          {/* Torso */}
-          <mesh position={[0, 0, 0]}>
-            <boxGeometry args={[0.6, 0.5, 0.35]} />
-            <meshStandardMaterial
-              color="#2d1054"
-              metalness={0.6}
-              roughness={0.35}
-            />
-          </mesh>
-          {/* Chest plate */}
-          <mesh position={[0, 0.02, 0.176]}>
-            <boxGeometry args={[0.42, 0.35, 0.01]} />
-            <meshStandardMaterial
-              color="#3A0F63"
-              emissive="#7c3aed"
-              emissiveIntensity={0.15}
-              metalness={0.8}
-              roughness={0.2}
-            />
-          </mesh>
-          {/* Chest core light */}
-          <mesh position={[0, 0.02, 0.185]}>
-            <circleGeometry args={[0.06, 16]} />
-            <meshStandardMaterial
-              color="#a78bfa"
-              emissive="#7c3aed"
-              emissiveIntensity={1.2}
-              toneMapped={false}
-            />
-          </mesh>
-          {/* Chest arc reactor rings */}
-          <mesh position={[0, 0.02, 0.186]}>
-            <ringGeometry args={[0.07, 0.09, 24]} />
-            <meshStandardMaterial
-              color="#c4b5fd"
-              emissive="#a78bfa"
-              emissiveIntensity={0.6}
-              toneMapped={false}
-            />
+    <Float speed={1.2} rotationIntensity={0.05} floatIntensity={0.45} floatingRange={[-0.06, 0.06]}>
+      <group scale={1.55}>
+
+        {/* ═══ BODY ═══ */}
+        <group ref={bodyRef} position={[0, -0.6, 0]}>
+          {/* Torso — rounded capsule */}
+          <mesh>
+            <capsuleGeometry args={[0.2, 0.18, 16, 32]} />
+            <meshStandardMaterial color={bodyColor} metalness={0.5} roughness={0.25} />
           </mesh>
 
-          {/* Neck connector */}
-          <mesh position={[0, 0.3, 0]}>
-            <cylinderGeometry args={[0.1, 0.12, 0.1, 12]} />
-            <meshStandardMaterial color="#3A0F63" metalness={0.7} roughness={0.3} />
+          {/* Chest light */}
+          <mesh position={[0, 0.02, 0.201]}>
+            <circleGeometry args={[0.04, 16]} />
+            <meshStandardMaterial color="#E9D5FF" emissive="#A855F7" emissiveIntensity={0.5} toneMapped={false} />
+          </mesh>
+          {/* Chest ring */}
+          <mesh position={[0, 0.02, 0.2]}>
+            <ringGeometry args={[0.045, 0.055, 24]} />
+            <meshStandardMaterial color="#7C3AED" emissive="#A855F7" emissiveIntensity={0.2} toneMapped={false} transparent opacity={0.6} />
           </mesh>
 
-          {/* Shoulder joints */}
-          {[-1, 1].map((side) => (
-            <group key={side} position={[side * 0.38, 0.15, 0]}>
+          {/* Neck */}
+          <mesh position={[0, 0.2, 0]}>
+            <cylinderGeometry args={[0.09, 0.1, 0.06, 16]} />
+            <meshStandardMaterial color={accentColor} metalness={0.6} roughness={0.2} />
+          </mesh>
+
+          {/* Arms */}
+          {([-1, 1] as const).map((s) => (
+            <group key={s} position={[s * 0.26, 0.04, 0]}>
               <mesh>
-                <sphereGeometry args={[0.08, 16, 16]} />
-                <meshStandardMaterial color="#4c1d95" metalness={0.7} roughness={0.3} />
+                <sphereGeometry args={[0.05, 12, 12]} />
+                <meshStandardMaterial color={accentColor} metalness={0.5} roughness={0.25} />
               </mesh>
-              {/* Upper arm */}
-              <mesh position={[side * 0.05, -0.18, 0]} rotation={[0, 0, side * 0.15]}>
-                <capsuleGeometry args={[0.045, 0.2, 8, 16]} />
-                <meshStandardMaterial color="#2d1054" metalness={0.5} roughness={0.4} />
+              <mesh position={[s * 0.02, -0.12, 0]} rotation={[0.1, 0, s * 0.2]}>
+                <capsuleGeometry args={[0.035, 0.1, 8, 16]} />
+                <meshStandardMaterial color={bodyColor} metalness={0.5} roughness={0.25} />
               </mesh>
-              {/* Forearm */}
-              <mesh position={[side * 0.08, -0.42, 0.02]} rotation={[0.2, 0, side * 0.1]}>
-                <capsuleGeometry args={[0.04, 0.18, 8, 16]} />
-                <meshStandardMaterial color="#3A0F63" metalness={0.6} roughness={0.3} />
+              <mesh position={[s * 0.04, -0.2, 0.01]}>
+                <sphereGeometry args={[0.035, 12, 12]} />
+                <meshStandardMaterial color={accentColor} metalness={0.4} roughness={0.3} />
               </mesh>
             </group>
           ))}
         </group>
 
-        {/* ─── HEAD ─── */}
-        <group ref={headRef} position={[0, 0.05, 0]}>
-          {/* Main head shell */}
+        {/* ═══ HEAD ═══ */}
+        <group ref={headRef} position={[0, 0.08, 0]}>
+          {/* Main head — big sphere */}
           <mesh>
-            <boxGeometry args={[0.7, 0.55, 0.5]} />
-            <meshStandardMaterial
-              color="#3A0F63"
-              metalness={0.5}
-              roughness={0.35}
-            />
-          </mesh>
-          {/* Rounded top */}
-          <mesh position={[0, 0.15, 0]}>
-            <sphereGeometry args={[0.35, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
-            <meshStandardMaterial color="#3A0F63" metalness={0.5} roughness={0.35} />
+            <sphereGeometry args={[0.48, 32, 32]} />
+            <meshStandardMaterial color={headColor} metalness={0.45} roughness={0.22} />
           </mesh>
 
-          {/* Face plate */}
-          <mesh position={[0, -0.02, 0.251]}>
-            <planeGeometry args={[0.58, 0.42]} />
-            <meshStandardMaterial
-              color="#1E1B4B"
-              metalness={0.3}
-              roughness={0.5}
-            />
+          {/* Face visor — dark recessed screen area */}
+          <mesh position={[0, -0.02, 0.42]}>
+            <circleGeometry args={[0.3, 32]} />
+            <meshStandardMaterial color="#1A0530" metalness={0.7} roughness={0.15} />
           </mesh>
 
-          {/* Visor/screen bezel */}
-          <mesh position={[0, 0.02, 0.245]}>
-            <boxGeometry args={[0.62, 0.35, 0.02]} />
+          {/* Visor border glow */}
+          <mesh position={[0, -0.02, 0.418]}>
+            <ringGeometry args={[0.29, 0.31, 48]} />
             <meshStandardMaterial
-              color="#2d1054"
-              metalness={0.8}
-              roughness={0.15}
-            />
-          </mesh>
-
-          {/* Eyes */}
-          <Eye position={[-0.14, 0.04, 0.26]} baseColor="#7c3aed" />
-          <Eye position={[0.14, 0.04, 0.26]} baseColor="#7c3aed" />
-
-          {/* Mouth */}
-          <Mouth />
-
-          {/* Antennas */}
-          <Antenna position={[-0.12, 0.32, 0]} delay={0} />
-          <Antenna position={[0.12, 0.32, 0]} delay={1.5} />
-
-          {/* Ear panels */}
-          <EarPanel position={[-0.38, 0, 0]} side="left" />
-          <EarPanel position={[0.38, 0, 0]} side="right" />
-
-          {/* Forehead detail strip */}
-          <mesh position={[0, 0.2, 0.252]}>
-            <boxGeometry args={[0.3, 0.03, 0.01]} />
-            <meshStandardMaterial
-              color="#7c3aed"
-              emissive="#7c3aed"
-              emissiveIntensity={0.8}
+              color="#7C3AED"
+              emissive="#A855F7"
+              emissiveIntensity={0.2}
+              transparent
+              opacity={0.35}
               toneMapped={false}
             />
           </mesh>
 
-          {/* Chin detail */}
-          <mesh position={[0, -0.28, 0.2]}>
-            <boxGeometry args={[0.25, 0.04, 0.12]} />
-            <meshStandardMaterial color="#2d1054" metalness={0.7} roughness={0.3} />
+          {/* Eyes — flat, glowing, on the visor */}
+          <FlatEye position={[-0.12, 0.02, 0.43]} />
+          <FlatEye position={[0.12, 0.02, 0.43]} />
+
+          {/* Smile — on visor */}
+          <Smile />
+
+          {/* Antennas */}
+          <Antenna position={[-0.1, 0.44, 0]} delay={0} />
+          <Antenna position={[0.1, 0.44, 0]} delay={1.2} />
+
+          {/* Ears — small cylindrical */}
+          {([-1, 1] as const).map((s) => (
+            <group key={`ear-${s}`} position={[s * 0.48, 0, 0]}>
+              <mesh rotation={[0, 0, s * Math.PI / 2]}>
+                <cylinderGeometry args={[0.04, 0.04, 0.06, 12]} />
+                <meshStandardMaterial color={accentColor} metalness={0.5} roughness={0.25} />
+              </mesh>
+            </group>
+          ))}
+
+          {/* Top highlight strip */}
+          <mesh position={[0, 0.32, 0.3]}>
+            <circleGeometry args={[0.03, 12]} />
+            <meshStandardMaterial color="#E9D5FF" emissive="#A855F7" emissiveIntensity={0.3} toneMapped={false} />
           </mesh>
         </group>
       </group>
@@ -409,90 +288,58 @@ function RobotModel() {
   );
 }
 
-/* ───────────────────────── Particles ──────────────────────── */
+/* ═══════════════════ Particles ═══════════════ */
 
-function FloatingParticles() {
-  const count = 30;
-  const meshRef = useRef<THREE.InstancedMesh>(null!);
+function Particles() {
+  const count = 18;
+  const ref = useRef<THREE.InstancedMesh>(null!);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const speeds = useMemo(() => Array.from({ length: count }, () => 0.3 + Math.random() * 0.7), []);
-  const offsets = useMemo(() => Array.from({ length: count }, () => Math.random() * Math.PI * 2), []);
-
-  const positions = useMemo(() => {
-    return Array.from({ length: count }, () => [
-      (Math.random() - 0.5) * 4,
-      (Math.random() - 0.5) * 4,
-      (Math.random() - 0.5) * 2 - 1,
-    ]);
-  }, []);
-
+  const data = useMemo(() => Array.from({ length: count }, () => ({
+    p: [(Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, -1.5 + (Math.random() - 0.5) * 2],
+    s: 0.1 + Math.random() * 0.3,
+    o: Math.random() * Math.PI * 2,
+    sz: 0.004 + Math.random() * 0.006,
+  })), []);
   useFrame(({ clock }) => {
-    if (!meshRef.current) return;
+    if (!ref.current) return;
     const t = clock.getElapsedTime();
     for (let i = 0; i < count; i++) {
-      dummy.position.set(
-        positions[i][0] + Math.sin(t * speeds[i] + offsets[i]) * 0.3,
-        positions[i][1] + Math.cos(t * speeds[i] * 0.7 + offsets[i]) * 0.4,
-        positions[i][2]
-      );
-      const s = 0.01 + Math.sin(t * speeds[i] + offsets[i]) * 0.008;
-      dummy.scale.setScalar(s);
+      const d = data[i];
+      dummy.position.set(d.p[0] + Math.sin(t * d.s + d.o) * 0.2, d.p[1] + Math.cos(t * d.s * 0.7 + d.o) * 0.25, d.p[2]);
+      dummy.scale.setScalar(d.sz + Math.sin(t * d.s + d.o) * d.sz * 0.3);
       dummy.updateMatrix();
-      meshRef.current.setMatrixAt(i, dummy.matrix);
+      ref.current.setMatrixAt(i, dummy.matrix);
     }
-    meshRef.current.instanceMatrix.needsUpdate = true;
+    ref.current.instanceMatrix.needsUpdate = true;
   });
-
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      <sphereGeometry args={[1, 8, 8]} />
-      <meshStandardMaterial
-        color="#a78bfa"
-        emissive="#7c3aed"
-        emissiveIntensity={1}
-        toneMapped={false}
-        transparent
-        opacity={0.6}
-      />
+    <instancedMesh ref={ref} args={[undefined, undefined, count]}>
+      <sphereGeometry args={[1, 6, 6]} />
+      <meshStandardMaterial color="#C4B5FD" emissive="#A855F7" emissiveIntensity={0.5} toneMapped={false} transparent opacity={0.3} />
     </instancedMesh>
   );
 }
 
-/* ───────────────────────── Exported Component ─────────────── */
+/* ═══════════════════ Export ═══════════════════ */
 
 export default function Robot3D() {
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        minHeight: 320,
-        position: 'relative',
-      }}
-    >
+    <div style={{ width: '100%', height: '100%', minHeight: 320, position: 'relative' }}>
+      <div style={{ position: 'absolute', inset: 0, borderRadius: 24, background: 'radial-gradient(ellipse at 50% 45%, rgba(168,85,247,0.06) 0%, transparent 65%)', pointerEvents: 'none' }} />
       <Canvas
-        camera={{ position: [0, 0, 3.2], fov: 45 }}
-        dpr={[1, 1.5]}
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: 'high-performance',
-        }}
+        camera={{ position: [0, 0, 3.4], fov: 42 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
         style={{ background: 'transparent' }}
       >
         <MouseTracker />
-
-        {/* Lighting */}
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[3, 5, 4]} intensity={1.2} color="#f0e6ff" />
-        <directionalLight position={[-3, 2, 2]} intensity={0.4} color="#c4b5fd" />
-        <pointLight position={[0, 0, 3]} intensity={0.6} color="#a78bfa" />
-
-        {/* Robot */}
-        <RobotModel />
-
-        {/* Ambient particles */}
-        <FloatingParticles />
+        <ambientLight intensity={0.5} color="#F5F3FF" />
+        <directionalLight position={[-2, 4, 5]} intensity={1.1} color="#FEFCE8" />
+        <directionalLight position={[3, 1, 3]} intensity={0.4} color="#EDE9FE" />
+        <pointLight position={[0, 0, 4]} intensity={0.3} color="#DDD6FE" distance={8} decay={2} />
+        <CuteBot />
+        <ContactShadows position={[0, -1.85, 0]} opacity={0.15} scale={3} blur={3} far={4} color="#4C1D95" />
+        <Particles />
       </Canvas>
     </div>
   );

@@ -218,7 +218,7 @@ export default function App() {
         <BackgroundGradientGlow className="min-h-screen">
           <FloatingPurpleShapes />
           <Suspense fallback={<div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-center pt-20" />}>
-          <DotGlobeHero className="pt-16 md:pt-20">
+          <DotGlobeHero className="pt-16 md:pt-20" globeRadius={isMobile ? 0.8 : 1.3}>
             <div className="flex flex-col items-center max-w-5xl px-4 sm:px-6 md:px-[37px]">
               {/* Top Badge — CSS animation */}
               <div
