@@ -75,20 +75,14 @@ export default function ChatAssistantPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const robotRef = useRef<HTMLImageElement>(null);
 
-  // Mouse tracking for robot face-follow effect
+  // Mouse tracking MotionValues for smooth eye follow
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 25, stiffness: 150 };
+  const eyeX = useSpring(useTransform(mouseX, [-400, 400], [-12, 12]), springConfig);
+  const eyeY = useSpring(useTransform(mouseY, [-400, 400], [-8, 8]), springConfig);
+
   useEffect(() => {
-    let animFrame: number;
-    let targetRotateX = 0;
-    let targetRotateY = 0;
-    let targetTranslateX = 0;
-    let targetTranslateY = 0;
-    let currentRotateX = 0;
-    let currentRotateY = 0;
-    let currentTranslateX = 0;
-    let currentTranslateY = 0;
-
-    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
-
     const handleMouseMove = (e: MouseEvent) => {
       if (!robotRef.current) return;
       
@@ -99,40 +93,14 @@ export default function ChatAssistantPage() {
       const offsetX = e.clientX - centerX;
       const offsetY = e.clientY - centerY;
 
-      const maxDist = 400;
-      const clampedX = Math.max(-maxDist, Math.min(maxDist, offsetX));
-      const clampedY = Math.max(-maxDist, Math.min(maxDist, offsetY));
-      
-      // Rotation: robot "looks" at cursor
-      targetRotateY = (clampedX / maxDist) * 25;
-      targetRotateX = -(clampedY / maxDist) * 15;
-      
-      // Translation: robot slightly shifts toward cursor  
-      targetTranslateX = (clampedX / maxDist) * 12;
-      targetTranslateY = (clampedY / maxDist) * 8;
-    };
-
-    const animate = () => {
-      // Smooth interpolation for natural movement
-      currentRotateX = lerp(currentRotateX, targetRotateX, 0.08);
-      currentRotateY = lerp(currentRotateY, targetRotateY, 0.08);
-      currentTranslateX = lerp(currentTranslateX, targetTranslateX, 0.08);
-      currentTranslateY = lerp(currentTranslateY, targetTranslateY, 0.08);
-
-      if (robotRef.current) {
-        robotRef.current.style.transform = `perspective(800px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translate(${currentTranslateX}px, ${currentTranslateY}px)`;
-      }
-      animFrame = requestAnimationFrame(animate);
+      // Update MotionValues
+      mouseX.set(offsetX);
+      mouseY.set(offsetY);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    animFrame = requestAnimationFrame(animate);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animFrame);
-    };
-  }, []);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
     // Initial message
@@ -227,13 +195,70 @@ export default function ChatAssistantPage() {
         <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12 relative bg-[#F8FAFC]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(58,15,99,0.03),transparent_70%)]" />
           
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="relative"
-          >
-          </motion.div>
+            {/* 3D Robot Character Image Container */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ 
+                y: [0, -12, 0],
+                opacity: 1,
+                scale: [1, 1.01, 1]
+              }}
+              transition={{ 
+                y: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                scale: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                opacity: { duration: 0.8 }
+              }}
+              className="relative z-10 flex flex-col items-center"
+            >
+              {/* Soft purple glow behind the robot */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#6D28D9]/10 blur-[80px] rounded-full -z-10" />
+              
+              <div className="relative w-96 h-96 overflow-visible">
+                <img 
+                  src="/assets/assistant-bot.png" 
+                  alt="Adify Assistant" 
+                  className="w-full h-full object-contain [mask-image:radial-gradient(circle,black_70%,transparent_98%)] select-none pointer-events-none"
+                />
+
+                {/* Interactive Following Eyes */}
+                <div className="absolute top-[31%] left-0 w-full flex justify-center gap-[58px] pointer-events-none">
+                  {[0, 1].map((i) => (
+                    <motion.div
+                      key={i}
+                      style={{
+                        x: eyeX,
+                        y: eyeY,
+                      }}
+                      className="relative w-12 h-12 flex items-center justify-center"
+                    >
+                      {/* Inner Glowing Eye */}
+                      <motion.div 
+                        animate={{ 
+                          scaleY: [1, 1, 0.1, 1, 1],
+                          opacity: [1, 1, 0.8, 1, 1]
+                        }}
+                        transition={{ 
+                          duration: 0.3, 
+                          repeat: Infinity, 
+                          repeatDelay: Math.random() * 2 + 3,
+                          times: [0, 0.45, 0.5, 0.55, 1],
+                          ease: "easeInOut"
+                        }}
+                        className="w-10 h-10 bg-white rounded-full blur-[1px] shadow-[0_0_15px_rgba(255,255,255,0.8),0_0_30px_rgba(255,255,255,0.4)]" 
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
 
           <div className="mt-12 text-center max-w-sm space-y-4">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">Project Qualification</h2>
