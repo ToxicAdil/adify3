@@ -263,7 +263,7 @@ export default function ChatAssistantPage() {
                 />
                 
                 {/* Digital Eye Blinks Overlay */}
-                <div className="absolute top-[31%] left-0 w-full flex justify-center gap-[44px] pointer-events-none">
+                <div className="absolute top-[34.5%] left-0 w-full flex justify-center gap-[62px] pointer-events-none">
                   <motion.div 
                     animate={{ 
                       scaleY: [0, 0, 1, 0, 0],
@@ -275,7 +275,7 @@ export default function ChatAssistantPage() {
                       repeatDelay: 3.5,
                       times: [0, 0.45, 0.5, 0.55, 1]
                     }}
-                    className="w-10 h-1 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_10px_#4af2ff]" 
+                    className="w-8 h-8 bg-[#4af2ff] rounded-full blur-[4px] shadow-[0_0_15px_#4af2ff]" 
                   />
                   <motion.div 
                     animate={{ 
@@ -288,7 +288,7 @@ export default function ChatAssistantPage() {
                       repeatDelay: 3.5,
                       times: [0, 0.45, 0.5, 0.55, 1]
                     }}
-                    className="w-10 h-1 bg-[#4af2ff] rounded-full blur-[2px] shadow-[0_0_10px_#4af2ff]" 
+                    className="w-8 h-8 bg-[#4af2ff] rounded-full blur-[4px] shadow-[0_0_15px_#4af2ff]" 
                   />
                 </div>
               </div>
