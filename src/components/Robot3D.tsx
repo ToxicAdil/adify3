@@ -110,7 +110,6 @@ const robotState = { isSpeaking: false };
 
 function Mouth() {
   const fillRef = useRef<THREE.Mesh>(null!);
-  const glowRef = useRef<THREE.Mesh>(null!);
   const openAmt = useRef(0.5);
 
   useEffect(() => {
@@ -122,16 +121,17 @@ function Mouth() {
   }, []);
 
   useFrame((_, dt) => {
-    // Resting = 50% open (cute default), Speaking = oscillates 30–100%
-    const target = robotState.isSpeaking
-      ? 0.30 + 0.70 * Math.abs(Math.sin(Date.now() * 0.007))
-      : 0.50;
-    openAmt.current = dampLerp(openAmt.current, target, 14, dt);
-    if (fillRef.current) fillRef.current.scale.y = openAmt.current;
-    if (glowRef.current) {
-      const mat = glowRef.current.material as THREE.MeshStandardMaterial;
-      mat.emissiveIntensity = 1.5 + Math.sin(Date.now() * 0.002) * 0.25;
+    // Resting = 50% open. Speaking = fast oscillation 0.1 -> 1.1 to simulate syllables.
+    if (robotState.isSpeaking) {
+      // Direct assignment instead of dampLerp so the fast sine wave isn't smoothed out
+      openAmt.current = 0.15 + 0.95 * Math.abs(Math.sin(Date.now() * 0.012));
+    } else {
+      // Smooth return to resting state
+      openAmt.current = dampLerp(openAmt.current, 0.50, 15, dt);
     }
+    
+    if (fillRef.current) fillRef.current.scale.y = openAmt.current;
+
   });
 
   return (
@@ -142,20 +142,7 @@ function Mouth() {
      *   scale.y animates Y-height, making it open/close like a real mouth.
      */
     <group position={[0, -0.155, 0.515]}>
-      {/* Soft glow halo behind — same technique as eyes */}
-      <mesh ref={glowRef} scale={[1.0, 0.50, 1]} position={[0, 0, -0.005]}>
-        <circleGeometry args={[0.082, 48, Math.PI, Math.PI]} />
-        <meshStandardMaterial
-          color="#9333EA"
-          emissive="#A855F7"
-          emissiveIntensity={0.5}
-          transparent
-          opacity={0.30}
-          toneMapped={false}
-        />
-      </mesh>
-
-      {/* Main filled glowing semicircle — matches eye material exactly */}
+      {/* Filled glowing semicircle — matches eye glow exactly */}
       <mesh ref={fillRef} scale={[1, 0.50, 1]}>
         <circleGeometry args={[0.068, 60, Math.PI, Math.PI]} />
         <meshStandardMaterial
@@ -281,8 +268,8 @@ function CuteBot() {
           </mesh>
 
           {/* ── Eyes — 3-D glowing purple spheres on visor ── */}
-          <Eye position={[-0.115, 0.095, 0.515]} />
-          <Eye position={[ 0.115, 0.095, 0.515]} />
+          <Eye position={[-0.115, 0.035, 0.515]} />
+          <Eye position={[ 0.115, 0.035, 0.515]} />
 
           {/* ── Mouth with lip-sync ── */}
           <Mouth />
