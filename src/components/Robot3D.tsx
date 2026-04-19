@@ -242,24 +242,7 @@ function CuteBot() {
             <meshStandardMaterial color={headColor} metalness={0.45} roughness={0.22} />
           </mesh>
 
-          {/* Face visor — dark recessed screen area */}
-          <mesh position={[0, -0.02, 0.42]}>
-            <circleGeometry args={[0.3, 32]} />
-            <meshStandardMaterial color="#1A0530" metalness={0.7} roughness={0.15} />
-          </mesh>
 
-          {/* Visor border glow */}
-          <mesh position={[0, -0.02, 0.418]}>
-            <ringGeometry args={[0.29, 0.31, 48]} />
-            <meshStandardMaterial
-              color="#7C3AED"
-              emissive="#A855F7"
-              emissiveIntensity={0.2}
-              transparent
-              opacity={0.35}
-              toneMapped={false}
-            />
-          </mesh>
 
           {/* Eyes — flat, glowing, on the visor */}
           <FlatEye position={[-0.12, 0.05, 0.46]} />
