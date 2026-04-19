@@ -185,9 +185,21 @@ function Mouth() {
 /* ═══════════════════ Robot ═══════════════════ */
 
 function CuteBot() {
-  const headRef = useRef<THREE.Group>(null!);
-  const bodyRef = useRef<THREE.Group>(null!);
-  const waveRef = useRef<THREE.Mesh>(null!);
+  const headRef  = useRef<THREE.Group>(null!);
+  const bodyRef  = useRef<THREE.Group>(null!);
+  const waveRef  = useRef<THREE.Mesh>(null!);   // left arm (waving)
+  const armRRef  = useRef<THREE.Mesh>(null!);   // right arm (idle)
+
+  // Pre-build LatheGeometry for the bell-shaped body (narrow top → wide middle → round bottom)
+  const bodyGeom = useMemo(() => new THREE.LatheGeometry([
+    new THREE.Vector2(0.000, -0.265),  // bottom centre
+    new THREE.Vector2(0.090, -0.240),  // bottom curve
+    new THREE.Vector2(0.185, -0.150),  // lower side
+    new THREE.Vector2(0.245, -0.040),  // widest
+    new THREE.Vector2(0.230,  0.070),  // narrowing up
+    new THREE.Vector2(0.175,  0.160),  // upper side
+    new THREE.Vector2(0.095,  0.225),  // top (connects to neck)
+  ], 48), []);
 
   useFrame((_, dt) => {
     if (headRef.current) {
@@ -204,9 +216,13 @@ function CuteBot() {
         1.5, dt,
       );
     }
-    // Slow, gentle waving animation
+    // Left arm — active wave
     if (waveRef.current) {
-      waveRef.current.rotation.z = 1.05 + Math.sin(Date.now() * 0.0025) * 0.18;
+      waveRef.current.rotation.z = 1.05 + Math.sin(Date.now() * 0.0025) * 0.20;
+    }
+    // Right arm — gentle idle sway
+    if (armRRef.current) {
+      armRRef.current.rotation.z = -0.95 - Math.sin(Date.now() * 0.0018 + 1.2) * 0.10;
     }
   });
 
@@ -218,22 +234,30 @@ function CuteBot() {
       <group scale={1.52}>
 
         {/* ══════════════════ BODY ══════════════════ */}
-        <group ref={bodyRef} position={[0, -0.70, 0]}>
+        <group ref={bodyRef} position={[0, -0.712, 0]}>
 
-          {/* Main torso — white smooth egg / bell shape */}
-          <mesh scale={[1, 1.12, 0.96]}>
-            <sphereGeometry args={[0.225, 48, 48]} />
+          {/* Bell / triangular body — narrow top, wide middle, rounded bottom */}
+          <mesh geometry={bodyGeom}>
+            <meshStandardMaterial {...W} side={THREE.FrontSide} />
+          </mesh>
+
+          {/* Left arm — raised, waving (viewer's left = robot's right) */}
+          <mesh
+            ref={waveRef}
+            position={[-0.26, 0.06, 0.06]}
+            rotation={[0.18, 0.10, 1.08]}
+          >
+            <capsuleGeometry args={[0.055, 0.22, 8, 20]} />
             <meshStandardMaterial {...W} />
           </mesh>
 
-          {/* Single waving arm — viewer's left (robot's right) */}
-          {/* Simple oval capsule angled ~55° from horizontal */}
+          {/* Right arm — relaxed, idle sway (viewer's right = robot's left) */}
           <mesh
-            ref={waveRef}
-            position={[-0.30, -0.08, 0.06]}
-            rotation={[0.18, 0.08, 1.05]}
+            ref={armRRef}
+            position={[0.26, 0.02, 0.06]}
+            rotation={[0.18, -0.10, -0.95]}
           >
-            <capsuleGeometry args={[0.054, 0.22, 8, 20]} />
+            <capsuleGeometry args={[0.055, 0.20, 8, 20]} />
             <meshStandardMaterial {...W} />
           </mesh>
 
