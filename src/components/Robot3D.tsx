@@ -160,7 +160,7 @@ function Smile() {
     const mat = new THREE.MeshStandardMaterial({ color: '#E9D5FF', emissive: '#A855F7', emissiveIntensity: 0.35, toneMapped: false });
     return new THREE.Mesh(geom, mat);
   }, []);
-  return <group position={[0, -0.15, 0.475]}><primitive object={obj} /></group>;
+  return <group position={[0, -0.15, 0.52]}><primitive object={obj} /></group>;
 }
 
 /* ═══════════════════ Robot ═══════════════════ */
@@ -236,17 +236,17 @@ function CuteBot() {
 
         {/* ═══ HEAD ═══ */}
         <group ref={headRef} position={[0, 0.08, 0]}>
-          {/* Main head — big sphere */}
-          <mesh>
-            <sphereGeometry args={[0.48, 32, 32]} />
+          {/* Main head — slightly flattened sphere so the front face is recessed */}
+          <mesh scale={[1, 1, 0.82]}>
+            <sphereGeometry args={[0.48, 48, 48]} />
             <meshStandardMaterial color={headColor} metalness={0.45} roughness={0.22} />
           </mesh>
 
 
 
-          {/* Eyes — flat, glowing, on the visor */}
-          <FlatEye position={[-0.12, 0.05, 0.46]} />
-          <FlatEye position={[0.12, 0.05, 0.46]} />
+          {/* Eyes — fully in front of the head sphere */}
+          <FlatEye position={[-0.13, 0.06, 0.52]} />
+          <FlatEye position={[0.13, 0.06, 0.52]} />
 
           {/* Smile — on visor */}
           <Smile />
