@@ -74,45 +74,50 @@ function FlatEye({ position }: { position: [number, number, number] }) {
     <group position={position}>
       {/* Outer glow — soft halo */}
       <mesh ref={glowRef} position={[0, 0, -0.005]}>
-        <circleGeometry args={[0.14, 32]} />
+        <circleGeometry args={[0.17, 64]} />
         <meshStandardMaterial
           color="#C4B5FD"
           emissive="#A855F7"
-          emissiveIntensity={0.6}
+          emissiveIntensity={0.7}
           transparent
-          opacity={0.2}
+          opacity={0.25}
           toneMapped={false}
         />
       </mesh>
 
       {/* Eye white — flat circle, embedded in head */}
       <mesh>
-        <circleGeometry args={[0.11, 32]} />
-        <meshStandardMaterial color="#FFFFFF" emissive="#F5F3FF" emissiveIntensity={0.3} toneMapped={false} />
+        <circleGeometry args={[0.13, 64]} />
+        <meshStandardMaterial color="#FFFFFF" emissive="#F5F3FF" emissiveIntensity={0.4} toneMapped={false} />
       </mesh>
 
       {/* Pupil group — follows cursor */}
       <group ref={pupilRef}>
         {/* Dark pupil */}
         <mesh position={[0, 0, 0.003]}>
-          <circleGeometry args={[0.06, 32]} />
+          <circleGeometry args={[0.07, 64]} />
           <meshStandardMaterial color="#1E1030" />
         </mesh>
+        {/* Iris ring */}
+        <mesh position={[0, 0, 0.002]}>
+          <ringGeometry args={[0.068, 0.075, 64]} />
+          <meshStandardMaterial color="#7C3AED" emissive="#A855F7" emissiveIntensity={0.5} toneMapped={false} />
+        </mesh>
         {/* Big sparkle */}
-        <mesh position={[0.025, 0.025, 0.005]}>
-          <circleGeometry args={[0.022, 16]} />
-          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={2} toneMapped={false} />
+        <mesh position={[0.028, 0.028, 0.005]}>
+          <circleGeometry args={[0.024, 16]} />
+          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={2.5} toneMapped={false} />
         </mesh>
         {/* Small sparkle */}
-        <mesh position={[-0.015, -0.015, 0.005]}>
-          <circleGeometry args={[0.01, 12]} />
-          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={1.2} toneMapped={false} transparent opacity={0.6} />
+        <mesh position={[-0.018, -0.018, 0.005]}>
+          <circleGeometry args={[0.012, 12]} />
+          <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={1.5} toneMapped={false} transparent opacity={0.7} />
         </mesh>
       </group>
 
-      {/* Eyelid */}
-      <mesh ref={lidRef} position={[0, 0.06, 0.008]} scale={[1, 0, 1]}>
-        <planeGeometry args={[0.28, 0.24]} />
+      {/* Eyelid — circular disk that slides down on blink */}
+      <mesh ref={lidRef} position={[0, 0.13, 0.009]} scale={[1, 0, 1]}>
+        <circleGeometry args={[0.13, 64]} />
         <meshStandardMaterial color="#2D1B4E" />
       </mesh>
     </group>
