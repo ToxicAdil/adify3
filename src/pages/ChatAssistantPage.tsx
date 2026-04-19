@@ -326,7 +326,7 @@ export default function ChatAssistantPage() {
                       Book a Call
                     </a>
                     <a
-                      href="https://wa.me/919876543210"
+                      href="https://wa.me/919341586751"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-medium hover:bg-emerald-100 active:scale-[0.97] transition-all"
