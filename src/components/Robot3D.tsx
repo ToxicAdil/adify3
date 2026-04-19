@@ -147,20 +147,79 @@ function Antenna({ position, delay = 0 }: { position: [number, number, number]; 
   );
 }
 
-/* ═══════════════════ Smile ═══════════════════ */
+/* ═══════════════════ Shared speaking state ════════════════ */
 
-function Smile() {
-  const obj = useMemo(() => {
+const robotState = { isSpeaking: false };
+
+/* ═══════════════════ Mouth (lip-sync) ════════════════════ */
+
+function Mouth() {
+  const gapRef   = useRef<THREE.Mesh>(null!);
+  const openAmt  = useRef(0);
+
+  // Listen for speaking events from ChatAssistantPage
+  useEffect(() => {
+    const handler = (e: Event) => {
+      robotState.isSpeaking = (e as CustomEvent<{ active: boolean }>).detail.active;
+    };
+    window.addEventListener('robot-speaking', handler);
+    return () => window.removeEventListener('robot-speaking', handler);
+  }, []);
+
+  useFrame((_, dt) => {
+    // When speaking: oscillate between 0.15 and 0.85 (natural jaw movement)
+    const target = robotState.isSpeaking
+      ? 0.15 + 0.7 * Math.abs(Math.sin(Date.now() * 0.0065))
+      : 0;
+    openAmt.current = dampLerp(openAmt.current, target, 14, dt);
+    if (gapRef.current) {
+      gapRef.current.scale.y = Math.max(0.0001, openAmt.current);
+    }
+  });
+
+  // Upper lip — wider, thicker, brighter
+  const upperLip = useMemo(() => {
     const curve = new THREE.QuadraticBezierCurve3(
-      new THREE.Vector3(-0.07, 0, 0),
-      new THREE.Vector3(0, -0.04, 0),
-      new THREE.Vector3(0.07, 0, 0)
+      new THREE.Vector3(-0.105, 0, 0),
+      new THREE.Vector3(0, -0.048, 0),
+      new THREE.Vector3(0.105, 0, 0),
     );
-    const geom = new THREE.TubeGeometry(curve, 20, 0.008, 8, false);
-    const mat = new THREE.MeshStandardMaterial({ color: '#E9D5FF', emissive: '#A855F7', emissiveIntensity: 0.35, toneMapped: false });
+    const geom = new THREE.TubeGeometry(curve, 28, 0.014, 12, false);
+    const mat  = new THREE.MeshStandardMaterial({
+      color: '#DDD6FE',
+      emissive: '#A855F7',
+      emissiveIntensity: 0.7,
+      toneMapped: false,
+    });
     return new THREE.Mesh(geom, mat);
   }, []);
-  return <group position={[0, -0.15, 0.52]}><primitive object={obj} /></group>;
+
+  return (
+    <group position={[0, -0.19, 0.52]}>
+      {/* Upper lip arc */}
+      <primitive object={upperLip} />
+
+      {/* Mouth gap — scales open when speaking */}
+      {/* circleGeometry radius 0.055, scaled 1.9x in X = ~0.10 wide ellipse */}
+      <mesh ref={gapRef} position={[0, -0.03, 0.004]} scale={[1.9, 0.0001, 1]}>
+        <circleGeometry args={[0.055, 32]} />
+        <meshStandardMaterial color="#130920" />
+      </mesh>
+
+      {/* Glowing corner dots */}
+      {([-1, 1] as const).map((s) => (
+        <mesh key={s} position={[s * 0.104, -0.003, 0.003]}>
+          <sphereGeometry args={[0.012, 10, 10]} />
+          <meshStandardMaterial
+            color="#C4B5FD"
+            emissive="#A855F7"
+            emissiveIntensity={0.6}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
 }
 
 /* ═══════════════════ Robot ═══════════════════ */
@@ -248,8 +307,8 @@ function CuteBot() {
           <FlatEye position={[-0.13, 0.06, 0.52]} />
           <FlatEye position={[0.13, 0.06, 0.52]} />
 
-          {/* Smile — on visor */}
-          <Smile />
+          {/* Mouth with lip-sync */}
+          <Mouth />
 
           {/* Antennas */}
           <Antenna position={[-0.1, 0.44, 0]} delay={0} />

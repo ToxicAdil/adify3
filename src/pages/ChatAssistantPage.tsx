@@ -78,19 +78,35 @@ const uid = () => Math.random().toString(36).substring(2, 10);
 /* ═══════════════════════ Component ═══════════════════ */
 
 const INTRO_AUDIO_URL = '/audio/start.mp3';
-const WEB_DEV_AUDIO_URL = '/audio/web_step1.mp3';
-const WEB_STEP2_AUDIO_URL = '/audio/web_step2.mp3';
-const WEB_STEP3_AUDIO_URL = '/audio/web_step3.mp3';
-const WEB_STEP4_AUDIO_URL = '/audio/web_step4.mp3';
-const FINAL_AUDIO_URL = '/audio/final.mp3';
-const AI_STEP1_AUDIO_URL = '/audio/ai_step1.mp3';
-const AI_STEP2_AUDIO_URL = '/audio/ai_step2.mp3';
-const AI_STEP3_AUDIO_URL = '/audio/ai_step3.mp3';
-const SOCIAL_STEP1_AUDIO_URL = '/audio/social_step1.mp3';
-const SOCIAL_STEP2_AUDIO_URL = '/audio/social_step2.mp3';
-const SOCIAL_STEP3_AUDIO_URL = '/audio/social_step3.mp3';
-const VIDEO_STEP1_AUDIO_URL = '/audio/video_step1.mp3';
-const VIDEO_STEP2_AUDIO_URL = '/audio/video_step2.mp3';
+
+/* Audio URL map — nodeKey → local file */
+const NODE_AUDIO: Record<string, string> = {
+  web_1:  '/audio/web_step1.mp3',
+  web_2:  '/audio/web_step2.mp3',
+  web_3:  '/audio/web_step3.mp3',
+  web_4:  '/audio/web_step4.mp3',
+  final:  '/audio/final.mp3',
+  ai_1:   '/audio/ai_step1.mp3',
+  ai_2:   '/audio/ai_step2.mp3',
+  ai_3:   '/audio/ai_step3.mp3',
+  smm_1:  '/audio/social_step1.mp3',
+  smm_2:  '/audio/social_step2.mp3',
+  smm_3:  '/audio/social_step3.mp3',
+  video_1: '/audio/video_step1.mp3',
+  video_2: '/audio/video_step2.mp3',
+};
+
+/* Plays audio and fires robot-speaking events for lip-sync */
+function playAudio(url: string): HTMLAudioElement {
+  const audio = new Audio(url);
+  audio.volume = 0.6;
+  window.dispatchEvent(new CustomEvent('robot-speaking', { detail: { active: true } }));
+  const stop = () => window.dispatchEvent(new CustomEvent('robot-speaking', { detail: { active: false } }));
+  audio.addEventListener('ended', stop);
+  audio.addEventListener('error', stop);
+  audio.play().catch(stop);
+  return audio;
+}
 
 export default function ChatAssistantPage() {
   const navigate = useNavigate();
@@ -127,60 +143,8 @@ export default function ChatAssistantPage() {
       });
       setIsTyping(false);
 
-      // Play specific node audio
-      if (nodeKey === 'web_1') {
-        const audio = new Audio(WEB_DEV_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'web_2') {
-        const audio = new Audio(WEB_STEP2_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'web_3') {
-        const audio = new Audio(WEB_STEP3_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'web_4') {
-        const audio = new Audio(WEB_STEP4_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'final') {
-        const audio = new Audio(FINAL_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'ai_1') {
-        const audio = new Audio(AI_STEP1_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'ai_2') {
-        const audio = new Audio(AI_STEP2_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'ai_3') {
-        const audio = new Audio(AI_STEP3_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'smm_1') {
-        const audio = new Audio(SOCIAL_STEP1_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'smm_2') {
-        const audio = new Audio(SOCIAL_STEP2_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'smm_3') {
-        const audio = new Audio(SOCIAL_STEP3_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'video_1') {
-        const audio = new Audio(VIDEO_STEP1_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      } else if (nodeKey === 'video_2') {
-        const audio = new Audio(VIDEO_STEP2_AUDIO_URL);
-        audio.volume = 0.6;
-        audio.play().catch(() => {});
-      }
+      // Play node voice + trigger robot lip-sync
+      if (NODE_AUDIO[nodeKey]) playAudio(NODE_AUDIO[nodeKey]);
 
       if (node.options) {
         // Show options after a brief pause
@@ -191,17 +155,14 @@ export default function ChatAssistantPage() {
     }, delay);
   }, []);
 
-  /* ── Intro audio ── */
+  /* ── Intro audio (with lip-sync) ── */
   useEffect(() => {
-    const audio = new Audio(INTRO_AUDIO_URL);
-    audio.volume = 0.6;
+    const audio = playAudio(INTRO_AUDIO_URL);
     audioRef.current = audio;
-    audio.play().catch(() => {
-      // Autoplay blocked — silently ignore; browser policy may require user interaction first
-    });
     return () => {
       audio.pause();
       audio.src = '';
+      window.dispatchEvent(new CustomEvent('robot-speaking', { detail: { active: false } }));
     };
   }, []); // run once on mount
 
