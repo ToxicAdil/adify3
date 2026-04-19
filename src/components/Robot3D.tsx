@@ -109,8 +109,9 @@ const robotState = { isSpeaking: false };
 /* ═══════════════════ Mouth (lip‑sync) ════════════════════════ */
 
 function Mouth() {
-  const gapRef  = useRef<THREE.Mesh>(null!);
-  const openAmt = useRef(0);
+  const fillRef = useRef<THREE.Mesh>(null!);
+  const glowRef = useRef<THREE.Mesh>(null!);
+  const openAmt = useRef(0.5);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -121,43 +122,54 @@ function Mouth() {
   }, []);
 
   useFrame((_, dt) => {
+    // Resting = 50% open (cute default), Speaking = oscillates 30–100%
     const target = robotState.isSpeaking
-      ? 0.1 + 0.7 * Math.abs(Math.sin(Date.now() * 0.007))
-      : 0;
+      ? 0.30 + 0.70 * Math.abs(Math.sin(Date.now() * 0.007))
+      : 0.50;
     openAmt.current = dampLerp(openAmt.current, target, 14, dt);
-    if (gapRef.current) {
-      gapRef.current.scale.y = Math.max(0.0001, openAmt.current);
+    if (fillRef.current) fillRef.current.scale.y = openAmt.current;
+    if (glowRef.current) {
+      const mat = glowRef.current.material as THREE.MeshStandardMaterial;
+      mat.emissiveIntensity = 1.5 + Math.sin(Date.now() * 0.002) * 0.25;
     }
   });
 
-  // Smile arc — white, matching the reference
-  const upperLip = useMemo(() => {
-    const curve = new THREE.QuadraticBezierCurve3(
-      new THREE.Vector3(-0.08, 0, 0),
-      new THREE.Vector3(0, -0.038, 0),
-      new THREE.Vector3(0.08, 0, 0),
-    );
-    const geom = new THREE.TubeGeometry(curve, 28, 0.011, 10, false);
-    const mat  = new THREE.MeshStandardMaterial({
-      color: '#FFFFFF',
-      emissive: '#FFFFFF',
-      emissiveIntensity: 0.5,
-      toneMapped: false,
-    });
-    return new THREE.Mesh(geom, mat);
-  }, []);
-
   return (
-    <group position={[0, -0.175, 0.47]}>
-      <primitive object={upperLip} />
-      {/* Mouth gap — wide ellipse that opens when speaking */}
-      <mesh ref={gapRef} position={[0, -0.024, 0.004]} scale={[1.75, 0.0001, 1]}>
-        <circleGeometry args={[0.042, 32]} />
-        <meshStandardMaterial color="#060210" />
+    /*
+     * CircleGeometry(r, segs, thetaStart=PI, thetaLength=PI):
+     *   Draws vertices from angle PI (left) → through bottom (−Y) → angle 2PI (right).
+     *   Result: filled D-shape with flat edge at y=0 (top) and curve going DOWN.
+     *   scale.y animates Y-height, making it open/close like a real mouth.
+     */
+    <group position={[0, -0.155, 0.515]}>
+      {/* Soft glow halo behind — same technique as eyes */}
+      <mesh ref={glowRef} scale={[1.0, 0.50, 1]} position={[0, 0, -0.005]}>
+        <circleGeometry args={[0.082, 48, Math.PI, Math.PI]} />
+        <meshStandardMaterial
+          color="#9333EA"
+          emissive="#A855F7"
+          emissiveIntensity={0.5}
+          transparent
+          opacity={0.30}
+          toneMapped={false}
+        />
+      </mesh>
+
+      {/* Main filled glowing semicircle — matches eye material exactly */}
+      <mesh ref={fillRef} scale={[1, 0.50, 1]}>
+        <circleGeometry args={[0.068, 60, Math.PI, Math.PI]} />
+        <meshStandardMaterial
+          color="#C4B5FD"
+          emissive="#C084FC"
+          emissiveIntensity={1.8}
+          toneMapped={false}
+        />
       </mesh>
     </group>
   );
 }
+
+
 
 /* ═══════════════════ Robot ═══════════════════ */
 
