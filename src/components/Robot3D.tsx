@@ -262,8 +262,8 @@ function CuteBot() {
           </mesh>
 
           {/* Eyes — flat, glowing, on the visor */}
-          <FlatEye position={[-0.12, 0.02, 0.43]} />
-          <FlatEye position={[0.12, 0.02, 0.43]} />
+          <FlatEye position={[-0.12, 0.05, 0.46]} />
+          <FlatEye position={[0.12, 0.05, 0.46]} />
 
           {/* Smile — on visor */}
           <Smile />
