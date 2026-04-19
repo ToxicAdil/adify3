@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
@@ -45,21 +45,6 @@ function MouseTracker() {
 function Eye({ position }: { position: [number, number, number] }) {
   const pupilRef = useRef<THREE.Group>(null!);
   const glowRef  = useRef<THREE.Mesh>(null!);
-  const [blink, setBlink] = useState(false);
-  const lidRef   = useRef<THREE.Mesh>(null!);
-
-  useEffect(() => {
-    let t: ReturnType<typeof setTimeout>;
-    const go = () => {
-      t = setTimeout(() => {
-        setBlink(true);
-        setTimeout(() => setBlink(false), 110);
-        go();
-      }, 3200 + Math.random() * 2800);
-    };
-    go();
-    return () => clearTimeout(t);
-  }, []);
 
   useFrame((_, dt) => {
     if (pupilRef.current) {
@@ -71,9 +56,6 @@ function Eye({ position }: { position: [number, number, number] }) {
     if (glowRef.current) {
       const mat = glowRef.current.material as THREE.MeshStandardMaterial;
       mat.emissiveIntensity = 1.7 + Math.sin(Date.now() * 0.0019) * 0.3;
-    }
-    if (lidRef.current) {
-      lidRef.current.scale.y = dampLerp(lidRef.current.scale.y, blink ? 1 : 0.0001, 26, dt);
     }
   });
 
@@ -116,11 +98,6 @@ function Eye({ position }: { position: [number, number, number] }) {
         </mesh>
       </group>
 
-      {/* Blink lid */}
-      <mesh ref={lidRef} position={[0, 0.075, 0.04]} scale={[1, 0.0001, 1]}>
-        <circleGeometry args={[0.075, 32]} />
-        <meshStandardMaterial color="#0B0820" />
-      </mesh>
     </group>
   );
 }
