@@ -77,20 +77,20 @@ const uid = () => Math.random().toString(36).substring(2, 10);
 
 /* ═══════════════════════ Component ═══════════════════ */
 
-const INTRO_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/start.mp3_k0iebg.mp3';
-const WEB_DEV_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/web_step1_k0bw4f.mp3';
-const WEB_STEP2_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303452/web_step2_jenuj3.mp3';
-const WEB_STEP3_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/web_step3_lc1jhu.mp3';
-const WEB_STEP4_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303455/web_step4_qeh0cl.mp3';
-const FINAL_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/final_emrrzq.mp3';
-const AI_STEP1_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303452/ai_step_1_ijn5jh.mp3';
-const AI_STEP2_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303453/ai_step_2_lrmddn.mp3';
-const AI_STEP3_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303453/ai_step_3_zcufs1.mp3';
-const SOCIAL_STEP1_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303452/social_step_1_xr3w6d.mp3';
-const SOCIAL_STEP2_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303452/social_step_2_ujiuvf.mp3';
-const SOCIAL_STEP3_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303453/social_step_3_nllyxd.mp3';
-const VIDEO_STEP1_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/video_step_1_xqycwe.mp3';
-const VIDEO_STEP2_AUDIO_URL = 'https://res.cloudinary.com/dtzo88csm/video/upload/v1776303454/video_step_2_y5adyo.mp3';
+const INTRO_AUDIO_URL = '/audio/start.mp3';
+const WEB_DEV_AUDIO_URL = '/audio/web_step1.mp3';
+const WEB_STEP2_AUDIO_URL = '/audio/web_step2.mp3';
+const WEB_STEP3_AUDIO_URL = '/audio/web_step3.mp3';
+const WEB_STEP4_AUDIO_URL = '/audio/web_step4.mp3';
+const FINAL_AUDIO_URL = '/audio/final.mp3';
+const AI_STEP1_AUDIO_URL = '/audio/ai_step1.mp3';
+const AI_STEP2_AUDIO_URL = '/audio/ai_step2.mp3';
+const AI_STEP3_AUDIO_URL = '/audio/ai_step3.mp3';
+const SOCIAL_STEP1_AUDIO_URL = '/audio/social_step1.mp3';
+const SOCIAL_STEP2_AUDIO_URL = '/audio/social_step2.mp3';
+const SOCIAL_STEP3_AUDIO_URL = '/audio/social_step3.mp3';
+const VIDEO_STEP1_AUDIO_URL = '/audio/video_step1.mp3';
+const VIDEO_STEP2_AUDIO_URL = '/audio/video_step2.mp3';
 
 export default function ChatAssistantPage() {
   const navigate = useNavigate();
@@ -128,7 +128,11 @@ export default function ChatAssistantPage() {
       setIsTyping(false);
 
       // Play specific node audio
-      if (nodeKey === 'web_2') {
+      if (nodeKey === 'web_1') {
+        const audio = new Audio(WEB_DEV_AUDIO_URL);
+        audio.volume = 0.6;
+        audio.play().catch(() => {});
+      } else if (nodeKey === 'web_2') {
         const audio = new Audio(WEB_STEP2_AUDIO_URL);
         audio.volume = 0.6;
         audio.play().catch(() => {});
@@ -220,13 +224,6 @@ export default function ChatAssistantPage() {
   /* ── Option click ── */
   const handleOption = (option: string) => {
     if (isTyping || isComplete) return;
-
-    // Play sound for specific selections
-    if (option === 'Website Development') {
-      const audio = new Audio(WEB_DEV_AUDIO_URL);
-      audio.volume = 0.6;
-      audio.play().catch(() => {});
-    }
 
     // User selection message
     setMessages((prev) => [...prev, { id: uid(), sender: 'user', text: option }]);
