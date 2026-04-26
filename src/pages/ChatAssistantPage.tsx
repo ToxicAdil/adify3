@@ -227,13 +227,9 @@ export default function ChatAssistantPage() {
 
           {/* ═══ LEFT PANEL — Robot ═══ */}
           <div
-            className="hidden lg:flex flex-col items-center justify-center relative overflow-hidden"
+            className="flex flex-col items-center justify-center relative overflow-hidden w-full lg:w-[40%] lg:min-w-[380px] border-b lg:border-b-0 lg:border-r border-purple-500/10 py-6 lg:py-0 shrink-0"
             style={{
-              width: '40%',
-              minWidth: 380,
               background: 'linear-gradient(160deg, #F9F5FF 0%, #F3EEFF 40%, #EDE5FF 100%)',
-              borderRight: '1px solid rgba(168,85,247,0.08)',
-              borderRadius: '20px 0 0 20px',
             }}
           >
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(168,85,247,0.07), transparent 65%)' }} />
@@ -242,11 +238,10 @@ export default function ChatAssistantPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full px-6 flex items-center justify-center"
-              style={{ height: 300 }}
+              className="relative w-full px-6 flex items-center justify-center h-[180px] lg:h-[300px]"
             >
               <div 
-                className="w-[180px] h-[144px] bg-[#3A0F63] border-[5px] border-white/30 shadow-[0_20px_60px_rgba(58,15,99,0.3)] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300"
+                className="w-[180px] h-[144px] bg-[#3A0F63] border-[5px] border-white/30 shadow-[0_20px_60px_rgba(58,15,99,0.3)] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 scale-[0.8] lg:scale-100"
                 style={{ borderRadius: '38%' }}
               >
                 <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
@@ -309,7 +304,7 @@ export default function ChatAssistantPage() {
               </div>
             </motion.div>
 
-            <div className="text-center max-w-[260px] space-y-1.5 relative z-10 mt-2 mb-6">
+            <div className="text-center max-w-[260px] space-y-1.5 relative z-10 mt-0 lg:mt-2 mb-0 lg:mb-6">
               <h2 className="text-lg font-bold tracking-tight text-slate-800">Adibuz Assistant</h2>
               <p className="text-slate-400 text-[11px] leading-relaxed">
                 Your AI-powered guide to finding the right solution.
@@ -318,7 +313,7 @@ export default function ChatAssistantPage() {
           </div>
 
           {/* ═══ RIGHT PANEL — Chat ═══ */}
-          <div className="flex-1 flex flex-col min-w-0 bg-white" style={{ borderRadius: '0 20px 20px 0' }}>
+          <div className="flex-1 flex flex-col min-w-0 bg-white">
 
             {/* Header */}
             <div className="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100">
