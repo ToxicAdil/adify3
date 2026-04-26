@@ -115,7 +115,6 @@ export default function ChatAssistantPage() {
   const [currentOptions, setCurrentOptions] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -175,12 +174,12 @@ export default function ChatAssistantPage() {
 
 
   /* ── Init ── */
+  const hasStartedRef = useRef(false);
   useEffect(() => {
-    if (!hasStarted) {
-      setHasStarted(true);
-      pushBot('start');
-    }
-  }, [hasStarted, pushBot]);
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+    pushBot('start');
+  }, [pushBot]);
 
   /* ── Next node resolver ── */
   const getNextNode = (nodeKey: string, answer: string): string | null => {
