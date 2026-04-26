@@ -207,10 +207,10 @@ export default function ChatAssistantPage() {
   /* ═══════════════════════ Render ═══════════════════════ */
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F3F0F8' }}>
+    <div className="h-[100dvh] lg:h-auto lg:min-h-screen flex flex-col font-sans overflow-hidden lg:overflow-visible" style={{ background: '#F3F0F8' }}>
 
       {/* ── Top Bar ── */}
-      <header className="px-4 py-3 sm:px-6 flex items-center justify-between bg-white/60 backdrop-blur-md border-b border-slate-200/60 shrink-0 z-50">
+      <header className="px-4 py-3 sm:px-6 flex items-center justify-between bg-white/60 backdrop-blur-md border-b border-slate-200/60 shrink-0 lg:sticky lg:top-0 z-50">
         <button onClick={() => navigate('/')} className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 transition-colors group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span className="text-xs hidden sm:inline font-medium">Back</span>
@@ -220,13 +220,15 @@ export default function ChatAssistantPage() {
       </header>
 
       {/* ── Centered Container ── */}
-      <main className="flex-1 flex items-stretch lg:items-start justify-center p-4 sm:p-6 lg:py-8 min-h-0 overflow-hidden">
+      <main className="flex-1 flex items-stretch lg:items-start justify-center p-4 sm:p-6 lg:px-4 lg:py-8 min-h-0 overflow-hidden lg:overflow-visible">
         <div
           className="w-full flex flex-col lg:flex-row overflow-hidden bg-white min-h-0"
           style={{
             maxWidth: 1140,
             borderRadius: 20,
             boxShadow: '0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)',
+            minHeight: window?.innerWidth >= 1024 ? 'min(680px, calc(100vh - 120px))' : undefined,
+            maxHeight: window?.innerWidth >= 1024 ? 'calc(100vh - 120px)' : undefined,
           }}
         >
 
