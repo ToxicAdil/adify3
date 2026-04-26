@@ -128,53 +128,47 @@ export default function ChatAssistantPage() {
     return () => window.removeEventListener('robot-speaking', handleSpeaking);
   }, []);
 
-  /* ── Scroll ── */
-  useEffect(() => {
-    if (scrollRef.current) {
-      // Scroll chat container
-      setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-        }
-      }, 100);
-
-      // On mobile, also scroll the window to ensure the options area at the bottom isn't hidden by the browser UI
-      if (window.innerWidth < 1024) {
-        setTimeout(() => {
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 150);
+  /* ── Scroll to bottom of chat ── */
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
       }
-    }
-  }, [messages, isTyping, currentOptions]);
+    });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping, currentOptions, scrollToBottom]);
 
   /* ── Push bot message ── */
   const pushBot = useCallback((nodeKey: string) => {
     const node = FLOWS[nodeKey];
-    if (!node) return;
+    if (!node) {
+      console.error('[Chatbot] Missing flow node:', nodeKey);
+      return;
+    }
 
     setIsTyping(true);
     setCurrentOptions([]);
     const delay = nodeKey === 'start' ? 400 : 600 + Math.random() * 300;
 
     setTimeout(() => {
-      setMessages((prev) => {
-        const lastBot = [...prev].reverse().find((m) => m.sender === 'bot');
-        if (lastBot && lastBot.text === node.botMessage) return prev;
-        return [...prev, { id: uid(), sender: 'bot', text: node.botMessage }];
-      });
+      setMessages((prev) => [...prev, { id: uid(), sender: 'bot', text: node.botMessage }]);
       setIsTyping(false);
 
-      // Play node voice + trigger robot lip-sync
       if (NODE_AUDIO[nodeKey]) playAudio(NODE_AUDIO[nodeKey]);
 
-      if (node.options) {
-        // Show options after a brief pause
-        setTimeout(() => setCurrentOptions(node.options!), 150);
+      if (node.options && node.options.length > 0) {
+        setTimeout(() => {
+          setCurrentOptions([...node.options!]);
+          scrollToBottom();
+        }, 150);
       } else {
         setIsComplete(true);
       }
     }, delay);
-  }, []);
+  }, [scrollToBottom]);
 
 
   /* ── Init ── */
@@ -197,21 +191,23 @@ export default function ChatAssistantPage() {
   const handleOption = (option: string) => {
     if (isTyping || isComplete) return;
 
-    // User selection message
+    const nextKey = getNextNode(currentNode, option);
+
     setMessages((prev) => [...prev, { id: uid(), sender: 'user', text: option }]);
     setCurrentOptions([]);
 
-    const nextKey = getNextNode(currentNode, option);
     if (nextKey) {
       setCurrentNode(nextKey);
       pushBot(nextKey);
+    } else {
+      console.error('[Chatbot] No next node for:', currentNode, option);
     }
   };
 
   /* ═══════════════════════ Render ═══════════════════════ */
 
   return (
-    <div className="h-[100dvh] lg:h-auto lg:min-h-screen flex flex-col font-sans overflow-hidden lg:overflow-visible" style={{ background: '#F3F0F8' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F3F0F8' }}>
 
       {/* ── Top Bar ── */}
       <header className="px-4 py-3 sm:px-6 flex items-center justify-between bg-white/60 backdrop-blur-md border-b border-slate-200/60 shrink-0 z-50">
@@ -224,9 +220,9 @@ export default function ChatAssistantPage() {
       </header>
 
       {/* ── Centered Container ── */}
-      <main className="flex-1 flex items-stretch lg:items-start justify-center p-4 sm:p-6 lg:py-8 min-h-0">
+      <main className="flex-1 flex items-stretch lg:items-start justify-center p-4 sm:p-6 lg:py-8 min-h-0 overflow-hidden">
         <div
-          className="w-full flex flex-col lg:flex-row overflow-hidden bg-white h-full lg:h-auto lg:min-h-[min(680px,calc(100vh-120px))] lg:max-h-[calc(100vh-120px)]"
+          className="w-full flex flex-col lg:flex-row overflow-hidden bg-white min-h-0"
           style={{
             maxWidth: 1140,
             borderRadius: 20,
@@ -236,7 +232,7 @@ export default function ChatAssistantPage() {
 
           {/* ═══ LEFT PANEL — Robot ═══ */}
           <div
-            className="hidden lg:flex flex-col items-center justify-center relative overflow-hidden"
+            className="hidden lg:flex flex-col items-center justify-center relative overflow-hidden shrink-0"
             style={{
               width: '40%',
               minWidth: 380,
@@ -327,10 +323,10 @@ export default function ChatAssistantPage() {
           </div>
 
           {/* ═══ RIGHT PANEL — Chat ═══ */}
-          <div className="flex-1 flex flex-col min-w-0 bg-white" style={{ borderRadius: '0 20px 20px 0' }}>
+          <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-white" style={{ borderRadius: '0 20px 20px 0' }}>
 
             {/* Header */}
-            <div className="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100">
+            <div className="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100 shrink-0">
               <h3 className="text-base sm:text-lg font-bold text-slate-800 tracking-tight">Project Qualification</h3>
               <p className="text-[12px] sm:text-[13px] text-slate-400 mt-1 leading-relaxed">
                 Answer a few quick prompts so we can route your request correctly.
@@ -338,7 +334,7 @@ export default function ChatAssistantPage() {
             </div>
 
             {/* Messages Area */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 sm:px-8 py-5">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 sm:px-8 py-5 min-h-0">
               <div className="space-y-3">
                 <AnimatePresence initial={false}>
                   {messages.map((msg) => (
@@ -402,8 +398,8 @@ export default function ChatAssistantPage() {
               </div>
             </div>
 
-            {/* ── Bottom: Option Buttons (Scaledek-style grid) ── */}
-            <div className="px-6 sm:px-8 pb-5 pt-3 border-t border-slate-100 bg-white" style={{ borderRadius: '0 0 20px 0' }}>
+            {/* ── Bottom: Option Buttons ── */}
+            <div className="px-6 sm:px-8 pb-5 pt-3 border-t border-slate-100 bg-white shrink-0" style={{ borderRadius: '0 0 20px 0' }}>
               <AnimatePresence mode="wait">
                 {currentOptions.length > 0 && (
                   <motion.div
