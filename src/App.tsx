@@ -20,7 +20,7 @@ import { SimpleHeader } from '@/components/ui/simple-header';
 // ====================================================================
 const CustomCursor = lazy(() => import('./components/CustomCursor'));
 const InteractiveServices = lazy(() => import('./components/InteractiveServices').then(m => ({ default: m.InteractiveServices })));
-const AboutAdify = lazy(() => import('./components/AboutAdify'));
+const AboutAdibuz = lazy(() => import('./components/AboutAdibuz'));
 const AudioCTA = lazy(() => import('./components/AudioCTA').then(m => ({ default: m.AudioCTA })));
 const CircularTestimonials = lazy(() => import('./components/ui/circular-testimonials').then(m => ({ default: m.CircularTestimonials })));
 const InteractiveGlobe = lazy(() => import('./components/ui/interactive-globe').then(m => ({ default: m.InteractiveGlobe })));
@@ -151,9 +151,9 @@ const globeConnections = [
 ];
 
 const testimonialData = [
-  { quote: "Adify completely transformed our ROAS. We went from 2x to 5.5x in just three months. Their AI tools are a game changer!", name: "Sarah Chen", designation: "CEO, LuxeDecor", src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop" },
+  { quote: "Adibuz completely transformed our ROAS. We went from 2x to 5.5x in just three months. Their AI tools are a game changer!", name: "Sarah Chen", designation: "CEO, LuxeDecor", src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop" },
   { quote: "The attention to detail in their creative testing is impressive. We've seen significant improvements in our application's load times and overall user experience.", name: "Michael Rodriguez", designation: "Founder, TechStart", src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" },
-  { quote: "What sets Adify apart is its flexibility. We've been able to maintain consistency across our applications while still customizing components to match our brand identity.", name: "Emily Thompson", designation: "Marketing Director, GlowUp", src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" },
+  { quote: "What sets Adibuz apart is its flexibility. We've been able to maintain consistency across our applications while still customizing components to match our brand identity.", name: "Emily Thompson", designation: "Marketing Director, GlowUp", src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" },
   { quote: "The performance optimization in these components is outstanding. We've seen significant improvements in our application's load times and overall user experience.", name: "James Wilson", designation: "Performance Lead, SwiftScale", src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop" },
   { quote: "The community support and regular updates make this component library a reliable choice for our projects. It's clear that the team behind it is committed to quality.", name: "Sophia Martinez", designation: "E-commerce Manager, UrbanStyle", src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" }
 ];
@@ -520,7 +520,7 @@ export default function App() {
             <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
               <div className="text-left mb-16 space-y-4 relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success Stories</span></h2>
-                <p className="text-slate-500 text-lg font-medium max-w-2xl">Real results from brands that scaled with Adify's AI-driven growth engine.</p>
+                <p className="text-slate-500 text-lg font-medium max-w-2xl">Real results from brands that scaled with Adibuz's AI-driven growth engine.</p>
               </div>
               <div className="flex justify-start relative z-10">
                 <Suspense fallback={<SectionFallback />}>
@@ -555,10 +555,10 @@ export default function App() {
                     <button className="bg-[#3A0F63] text-white px-8 py-4 rounded-full text-sm font-bold shadow-xl shadow-[#3A0F63]/20 hover:shadow-[#3A0F63]/30 transition-all">Scale Your Brand Globally</button>
                   </MagneticButton>
                 </FadeInView>
-                <ScaleInView className="w-full h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center relative overflow-hidden">
+                <ScaleInView className="w-full h-[300px] sm:h-[350px] md:h-[450px] flex items-center justify-center relative overflow-hidden">
                   <div className="w-full h-full max-w-[300px] sm:max-w-[400px] md:max-w-none mx-auto">
                     <Suspense fallback={<div className="w-full h-full" />}>
-                      <InteractiveGlobe size={500} markers={globeMarkers} connections={globeConnections} dotColor="rgba(124, 58, 237, ALPHA)" arcColor="rgba(124, 58, 237, 0.3)" markerColor="rgba(58, 15, 99, 1)" />
+                      <InteractiveGlobe size={450} markers={globeMarkers} connections={globeConnections} dotColor="rgba(124, 58, 237, ALPHA)" arcColor="rgba(124, 58, 237, 0.3)" markerColor="rgba(58, 15, 99, 1)" />
                     </Suspense>
                   </div>
                 </ScaleInView>
@@ -569,14 +569,14 @@ export default function App() {
         </section>
 
         <Suspense fallback={<SectionFallback />}>
-          <AboutAdify />
+          <AboutAdibuz />
         </Suspense>
 
         <section className="py-8" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 500px' }}>
           <div className="container-custom">
             <div className="text-left mb-10 md:mb-20 space-y-4 md:space-y-6">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success.</span></h2>
-              <p className="text-slate-500 text-lg font-medium max-w-2xl">Don't just take our word for it. See what our clients have to say about their growth journey with Adify.</p>
+              <p className="text-slate-500 text-lg font-medium max-w-2xl">Don't just take our word for it. See what our clients have to say about their growth journey with Adibuz.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
               {[1, 2, 3].map(i => (
@@ -584,7 +584,7 @@ export default function App() {
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />)}
                   </div>
-                  <p className="text-slate-600 font-medium leading-relaxed text-sm">"Adify completely transformed our ROAS. We went from 2x to 5.5x in just three months. Their AI tools are a game changer!"</p>
+                  <p className="text-slate-600 font-medium leading-relaxed text-sm">"Adibuz completely transformed our ROAS. We went from 2x to 5.5x in just three months. Their AI tools are a game changer!"</p>
                   <div className="flex items-center gap-4 pt-4">
                     <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden border border-white/60">
                       <img src={`https://picsum.photos/seed/c${i}/100/100`} alt="client" referrerPolicy="no-referrer" width={40} height={40} loading="lazy" decoding="async" />

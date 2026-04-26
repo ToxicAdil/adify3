@@ -4,7 +4,7 @@ import EarbudShowcase from './ui/spatial-product-showcase';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import MagneticButton from './MagneticButton';
 
-const AboutAdify: React.FC = () => {
+const AboutAdibuz: React.FC = () => {
   return (
     <section className="py-8 relative overflow-hidden">
       <div className="container-custom">
@@ -80,4 +80,4 @@ const AboutAdify: React.FC = () => {
   );
 };
 
-export default AboutAdify;
+export default AboutAdibuz;

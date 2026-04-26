@@ -112,12 +112,12 @@ const WorkPage: React.FC = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10"
           >
             {[
-              { title: "Cafe Website", tag: "Sample Build", desc: "An elegant, high-converting website designed to attract more customers and increase orders for your cafe.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" },
-              { title: "Real Estate Website", tag: "Sample Build", desc: "A modern property listing website built to generate leads and showcase listings professionally.", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" },
+              { title: "Cafe Website", tag: "Sample Build", desc: "An elegant, high-converting website designed to attract more customers and increase orders for your cafe.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80", link: "https://adibuz-point.vercel.app/" },
+              { title: "Real Estate Website", tag: "Sample Build", desc: "A modern property listing website built to generate leads and showcase listings professionally.", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80", link: "https://adibuz-creative-houses.vercel.app/" },
               { title: "Healthcare Website", tag: "Sample Build", desc: "A clean, trust-focused website designed to build credibility and increase patient bookings.", img: "https://images.unsplash.com/photo-1505751172107-5732bb72cc53?w=800&q=80" },
-              { title: "E-commerce Website", tag: "Sample Build", desc: "A conversion-optimized online store designed to drive sales and maximize revenue.", img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80" },
+              { title: "E-commerce Website", tag: "Sample Build", desc: "A conversion-optimized online store designed to drive sales and maximize revenue.", img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80", link: "https://adibuz-store.vercel.app/index.html#" },
               { title: "Personal Brand Website", tag: "Sample Build", desc: "A powerful personal brand website to showcase your expertise and attract high-value clients.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" },
-              { title: "SaaS / Startup Website", tag: "Sample Build", desc: "A modern, scalable website designed to communicate your product clearly and drive user acquisition.", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" }
+              { title: "Gaming Website", tag: "Sample Build", desc: "An immersive, high-performance website designed to captivate players and build an engaged gaming community.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80", link: "https://adibuz-ga-ming.vercel.app/" }
             ].map((industry, i) => (
               <motion.div
                 key={i}
@@ -145,9 +145,15 @@ const WorkPage: React.FC = () => {
                   <p className="text-slate-500 font-medium text-sm leading-relaxed">{industry.desc}</p>
                   
                   <div className="pt-4">
-                    <button className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em] hover:gap-4 transition-all pb-2">
-                      View Demo <ChevronRight className="w-4 h-4" />
-                    </button>
+                    {industry.link ? (
+                      <a href={industry.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em] hover:gap-4 transition-all pb-2">
+                        View Demo <ChevronRight className="w-4 h-4" />
+                      </a>
+                    ) : (
+                      <button className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em] hover:gap-4 transition-all pb-2">
+                        View Demo <ChevronRight className="w-4 h-4" />
+                      </button>
+                    )}
                     <div className="h-0.5 w-12 bg-primary/20 group-hover:w-20 transition-all rounded-full" />
                   </div>
                 </div>

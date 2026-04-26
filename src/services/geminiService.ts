@@ -7,7 +7,7 @@ export const generateAdStrategy = async (businessInfo: string) => {
     model: "gemini-3-flash-preview",
     contents: `Analyze this business and provide a high-level ad strategy: ${businessInfo}`,
     config: {
-      systemInstruction: "You are a world-class marketing strategist at Adify. Provide actionable, data-driven ad strategies.",
+      systemInstruction: "You are a world-class marketing strategist at Adibuz. Provide actionable, data-driven ad strategies.",
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,

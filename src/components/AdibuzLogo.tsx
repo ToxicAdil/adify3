@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface AdifyLogoProps {
+interface AdibuzLogoProps {
   height?: number;
   className?: string;
 }
 
-const AdifyLogo: React.FC<AdifyLogoProps> = ({ height = 36, className = '' }) => {
+const AdibuzLogo: React.FC<AdibuzLogoProps> = ({ height = 36, className = '' }) => {
   return (
     <img
       src="/adibuz-logo.png"
@@ -23,4 +23,4 @@ const AdifyLogo: React.FC<AdifyLogoProps> = ({ height = 36, className = '' }) =>
   );
 };
 
-export default AdifyLogo;
+export default AdibuzLogo;

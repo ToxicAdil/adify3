@@ -3,7 +3,7 @@ import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from 'lucide-react';
-import AdifyLogo from '@/components/AdifyLogo';
+import AdibuzLogo from '@/components/AdibuzLogo';
 
 interface FooterLink {
 	title: string;
@@ -66,12 +66,12 @@ export function Footer() {
 			<div className="w-full max-w-6xl mx-auto">
 			<div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
 				<AnimatedContainer className="space-y-4">
-					<AdifyLogo height={44} />
+					<AdibuzLogo height={44} />
 					<p className="text-slate-400 mt-8 text-sm font-medium md:mt-0">
 						We build high-performing marketing systems that drive real revenue, not just clicks.
 					</p>
 					<p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
-						© {new Date().getFullYear()} Adify. All rights reserved.
+						© {new Date().getFullYear()} Adibuz. All rights reserved.
 					</p>
 				</AnimatedContainer>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Bot,
@@ -7,9 +7,8 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AdifyLogo from '../components/AdifyLogo';
+import AdibuzLogo from '../components/AdibuzLogo';
 
-const Robot3D = lazy(() => import('../components/Robot3D'));
 
 /* ═══════════════════════ Types ═══════════════════════ */
 
@@ -81,6 +80,7 @@ const INTRO_AUDIO_URL = '/audio/start.mp3';
 
 /* Audio URL map — nodeKey → local file */
 const NODE_AUDIO: Record<string, string> = {
+  start:  '/audio/start.mp3',
   web_1:  '/audio/web_step1.mp3',
   web_2:  '/audio/web_step2.mp3',
   web_3:  '/audio/web_step3.mp3',
@@ -118,6 +118,15 @@ export default function ChatAssistantPage() {
   const [hasStarted, setHasStarted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    const handleSpeaking = (e: any) => {
+      setIsSpeaking(e.detail?.active || false);
+    };
+    window.addEventListener('robot-speaking', handleSpeaking);
+    return () => window.removeEventListener('robot-speaking', handleSpeaking);
+  }, []);
 
   /* ── Scroll ── */
   useEffect(() => {
@@ -155,16 +164,6 @@ export default function ChatAssistantPage() {
     }, delay);
   }, []);
 
-  /* ── Intro audio (with lip-sync) ── */
-  useEffect(() => {
-    const audio = playAudio(INTRO_AUDIO_URL);
-    audioRef.current = audio;
-    return () => {
-      audio.pause();
-      audio.src = '';
-      window.dispatchEvent(new CustomEvent('robot-speaking', { detail: { active: false } }));
-    };
-  }, []); // run once on mount
 
   /* ── Init ── */
   useEffect(() => {
@@ -208,7 +207,7 @@ export default function ChatAssistantPage() {
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span className="text-xs hidden sm:inline font-medium">Back</span>
         </button>
-        <AdifyLogo height={36} />
+        <AdibuzLogo height={48} />
         <div className="w-14" />
       </header>
 
@@ -243,20 +242,75 @@ export default function ChatAssistantPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full px-6"
-              style={{ height: 380 }}
+              className="relative w-full px-6 flex items-center justify-center"
+              style={{ height: 300 }}
             >
-              <Suspense fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full border-2 border-[#A855F7]/20 border-t-[#A855F7] animate-spin" />
+              <div 
+                className="w-[180px] h-[144px] bg-[#3A0F63] border-[5px] border-white/30 shadow-[0_20px_60px_rgba(58,15,99,0.3)] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300"
+                style={{ borderRadius: '38%' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+                
+                <div className="flex flex-col items-center gap-4 relative z-10 pt-3">
+                  {/* Eyes */}
+                  <div className="flex gap-6">
+                    <motion.div 
+                      animate={{ 
+                        scaleY: [1, 0.1, 1],
+                        opacity: [1, 0.5, 1]
+                      }}
+                      transition={{ 
+                        duration: 0.2, 
+                        repeat: Infinity, 
+                        repeatDelay: 4,
+                        ease: "easeInOut"
+                      }}
+                      className="w-[26px] h-[26px] rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.6)] origin-center" 
+                    />
+                    <motion.div 
+                      animate={{ 
+                        scaleY: [1, 0.1, 1],
+                        opacity: [1, 0.5, 1]
+                      }}
+                      transition={{ 
+                        duration: 0.2, 
+                        repeat: Infinity, 
+                        repeatDelay: 4,
+                        ease: "easeInOut"
+                      }}
+                      className="w-[26px] h-[26px] rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.6)] origin-center" 
+                    />
+                  </div>
+                  {/* Smile / Mouth */}
+                  <motion.svg 
+                    width="65" 
+                    height="18" 
+                    viewBox="0 0 20 6" 
+                    fill="none" 
+                    animate={isSpeaking ? { scaleY: [1, 1.2, 1.05, 1.35, 1, 1.15, 1.05] } : { scaleY: 1 }}
+                    transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.2 }}
+                    className="origin-top"
+                  >
+                    <path 
+                      d="M4 1.5C4 1.5 7.5 4.5 10 4.5C12.5 4.5 16 1.5 16 1.5" 
+                      stroke="white" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round"
+                      className="drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]"
+                    />
+                  </motion.svg>
                 </div>
-              }>
-                <Robot3D />
-              </Suspense>
+
+                <motion.div
+                  animate={{ opacity: [0, 0.15, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute inset-0 bg-white"
+                />
+              </div>
             </motion.div>
 
             <div className="text-center max-w-[260px] space-y-1.5 relative z-10 mt-2 mb-6">
-              <h2 className="text-lg font-bold tracking-tight text-slate-800">Adify Assistant</h2>
+              <h2 className="text-lg font-bold tracking-tight text-slate-800">Adibuz Assistant</h2>
               <p className="text-slate-400 text-[11px] leading-relaxed">
                 Your AI-powered guide to finding the right solution.
               </p>
@@ -368,7 +422,7 @@ export default function ChatAssistantPage() {
 
               {/* Powered by */}
               <p className="text-[8px] text-slate-300 mt-3 uppercase tracking-[0.15em] font-semibold text-center">
-                Powered by Adify
+                Powered by Adibuz
               </p>
             </div>
           </div>

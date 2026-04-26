@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { MenuToggle } from '@/components/ui/menu-toggle';
-import AdifyLogo from '../AdifyLogo';
+import AdibuzLogo from '../AdibuzLogo';
 import MagneticButton from '../MagneticButton';
 import { cn } from '@/lib/utils';
 
@@ -51,7 +51,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 						: "py-2"
 				)}>
 					<Link to="/" className="flex items-center group cursor-pointer">
-						<AdifyLogo height={48} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
+						<AdibuzLogo height={48} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
 					</Link>
 
 					<div className="hidden lg:flex items-center gap-6 xl:gap-10">
@@ -134,7 +134,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 							>
 								<div className="flex flex-col gap-y-4 px-6 pt-20 pb-10 overflow-y-auto">
 									<div className="flex items-center gap-2 mb-8 border-b border-slate-100 pb-6">
-										<AdifyLogo height={48} className={cn(dark && "brightness-0 invert")} />
+										<AdibuzLogo height={48} className={cn(dark && "brightness-0 invert")} />
 									</div>
 									{navItems.map((item) => (
 										item.path && !item.path.includes('#') ? (

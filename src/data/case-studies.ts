@@ -41,7 +41,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Refined audience targeting using spiritual affinity layers.'
     ],
     testimonial: {
-      quote: "Adify's team didn't just run ads; they understood my audience better than I did. The results speak for themselves.",
+      quote: "Adibuz's team didn't just run ads; they understood my audience better than I did. The results speak for themselves.",
       author: "Prakash J.",
       role: "Founder, Askin Astrology"
     }

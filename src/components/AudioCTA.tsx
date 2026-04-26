@@ -127,7 +127,7 @@ export const AudioCTA: React.FC = () => {
                                         <span className="text-[11px] font-black uppercase tracking-[0.3em]">Hear from us</span>
                                     </div>
                                     <p className="text-slate-500 font-bold max-w-sm">
-                                        A quick audio message about how Adify systems can transform your growth trajectory.
+                                        A quick audio message about how Adibuz systems can transform your growth trajectory.
                                     </p>
                                 </div>
 
@@ -160,7 +160,7 @@ export const AudioCTA: React.FC = () => {
                                             to="/about" 
                                             className="w-full sm:w-auto px-10 py-5 rounded-full font-bold text-base text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 group"
                                         >
-                                            About Adify
+                                            About Adibuz
                                         </Link>
                                     </MagneticButton>
                                 </div>

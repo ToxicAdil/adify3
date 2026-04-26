@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Target, Zap, TrendingUp, BarChart3, ArrowRight, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import AdifyLogo from '../components/AdifyLogo';
+import AdibuzLogo from '../components/AdibuzLogo';
 import MagneticButton from '../components/MagneticButton';
 import CustomCursor from '../components/CustomCursor';
 import AboutProcess from '../components/AboutProcess';

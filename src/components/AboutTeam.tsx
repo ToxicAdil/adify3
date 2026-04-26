@@ -9,7 +9,7 @@ const teamMembers = [
     bullets: [
       '10+ years scaling digital brands.',
       'Ex-Growth Lead at top tech firms.',
-      'Visionary behind Adify’s core strategy.'
+      'Visionary behind Adibuz’s core strategy.'
     ]
   },
   {
