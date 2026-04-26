@@ -211,10 +211,10 @@ export default function ChatAssistantPage() {
   /* ═══════════════════════ Render ═══════════════════════ */
 
   return (
-    <div className="min-h-screen flex flex-col font-sans" style={{ background: '#F3F0F8' }}>
+    <div className="h-[100dvh] lg:h-auto lg:min-h-screen flex flex-col font-sans overflow-hidden lg:overflow-visible" style={{ background: '#F3F0F8' }}>
 
       {/* ── Top Bar ── */}
-      <header className="px-4 py-3 sm:px-6 flex items-center justify-between bg-white/60 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-50">
+      <header className="px-4 py-3 sm:px-6 flex items-center justify-between bg-white/60 backdrop-blur-md border-b border-slate-200/60 shrink-0 z-50">
         <button onClick={() => navigate('/')} className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 transition-colors group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span className="text-xs hidden sm:inline font-medium">Back</span>
@@ -224,16 +224,13 @@ export default function ChatAssistantPage() {
       </header>
 
       {/* ── Centered Container ── */}
-      <main className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
+      <main className="flex-1 flex items-stretch lg:items-start justify-center p-4 sm:p-6 lg:py-8 min-h-0">
         <div
-          className="w-full flex flex-col lg:flex-row overflow-hidden"
+          className="w-full flex flex-col lg:flex-row overflow-hidden bg-white h-full lg:h-auto lg:min-h-[min(680px,calc(100vh-120px))] lg:max-h-[calc(100vh-120px)]"
           style={{
             maxWidth: 1140,
             borderRadius: 20,
             boxShadow: '0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)',
-            background: '#fff',
-            minHeight: 'min(680px, calc(100vh - 120px))',
-            maxHeight: 'calc(100vh - 120px)',
           }}
         >
 
