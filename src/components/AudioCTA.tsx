@@ -43,7 +43,7 @@ export const AudioCTA: React.FC = () => {
 
     return (
         <section className="py-24 relative overflow-hidden">
-            <div className="container-custom px-[37px]">
+            <div className="container-custom px-4 sm:px-[37px]">
                 <motion.div 
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -54,12 +54,12 @@ export const AudioCTA: React.FC = () => {
                     {/* Background Animated Glow */}
                     <div className="absolute -inset-10 bg-primary/5 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-10" />
                     
-                    <div className="premium-card rounded-[40px] p-8 md:p-16 lg:py-20 overflow-hidden bg-white/60 backdrop-blur-xl border border-white/40 shadow-2xl shadow-purple-900/5">
+                    <div className="premium-card rounded-3xl sm:rounded-[40px] p-6 sm:p-8 md:p-16 lg:py-20 overflow-hidden bg-white/60 backdrop-blur-xl border border-white/40 shadow-2xl shadow-purple-900/5">
                         <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-center relative z-10">
                             
                             {/* LEFT SIDE: AUDIO PLAYER UI */}
                             <div className="flex flex-col items-center lg:items-start gap-10">
-                                <div className="flex items-center gap-8">
+                                <div className="flex items-center gap-4 sm:gap-8 w-full overflow-hidden">
                                     {/* Minimal Circular Play Button */}
                                     <motion.button 
                                         whileHover={{ scale: 1.05 }}
@@ -95,7 +95,7 @@ export const AudioCTA: React.FC = () => {
                                     </motion.button>
 
                                     {/* Smooth Waveform Animation */}
-                                    <div className="flex items-center gap-2 h-16">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 h-16 overflow-hidden flex-1 min-w-0">
                                         {[...Array(14)].map((_, i) => (
                                             <motion.div
                                                 key={i}
@@ -137,10 +137,10 @@ export const AudioCTA: React.FC = () => {
                             {/* RIGHT SIDE: CONTENT */}
                             <div className="space-y-10 text-center lg:text-left">
                                 <div className="space-y-6">
-                                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[1.05]">
+                                    <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[1.05]">
                                         Still <span className="text-gradient">exploring?</span>
                                     </h2>
-                                    <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+                                    <p className="text-base sm:text-xl md:text-2xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
                                         Let us show you how we help brands grow and scale with precision using AI-driven systems.
                                     </p>
                                 </div>
