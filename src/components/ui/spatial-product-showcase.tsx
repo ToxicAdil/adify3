@@ -68,7 +68,7 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
     label: 'Krish',
     title: 'Creative Director',
     description: 'Founder & Design Lead. Crafting premium visual identities, engaging social experiences, and cohesive brand narratives that convert.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80', // Placeholder
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=75&fm=webp', // Placeholder
     colors: {
       gradient: 'from-slate-900 to-black',
       glow: 'bg-black',
@@ -184,6 +184,8 @@ const ProfileVisual = ({ data, isLeft }: { data: ProfileData; isLeft: boolean })
             exit="exit"
             className="w-full h-full object-cover rounded-full shadow-lg"
             draggable={false}
+            loading="lazy"
+            decoding="async"
           />
         </AnimatePresence>
       </motion.div>

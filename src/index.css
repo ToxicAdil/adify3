@@ -932,3 +932,25 @@
     0 30px 60px -12px rgba(0, 0, 0, 0.5),
     0 10px 20px -5px rgba(109, 40, 217, 0.2);
 }
+
+/* ============================
+   CHATFAB: CSS ANIMATIONS
+   Replaces framer-motion (keeps vendor-motion out of critical path)
+   ============================ */
+@keyframes fabBlink {
+  0%, 90%, 100% { transform: scaleY(1); opacity: 1; }
+  95% { transform: scaleY(0.1); opacity: 0.5; }
+}
+
+@keyframes fabPulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.2; }
+}
+
+/* ============================
+   LAYOUT CONTAINMENT
+   Helps browser skip layout/paint for off-screen sections
+   ============================ */
+section {
+  contain: layout style;
+}

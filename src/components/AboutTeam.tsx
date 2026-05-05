@@ -5,7 +5,7 @@ const teamMembers = [
   {
     name: 'Adil Ali',
     role: 'Founder & CEO',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&fit=crop&w=800&q=75&fm=webp',
     bullets: [
       '10+ years scaling digital brands.',
       'Ex-Growth Lead at top tech firms.',
@@ -15,7 +15,7 @@ const teamMembers = [
   {
     name: 'Sarah Jenkins',
     role: 'Head of Growth',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&fit=crop&w=800&q=75&fm=webp',
     bullets: [
       'Master of performance marketing.',
       'Managed $50M+ in ad spend.',
@@ -25,7 +25,7 @@ const teamMembers = [
   {
     name: 'Marcus Chen',
     role: 'Creative Director',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&fit=crop&w=800&q=75&fm=webp',
     bullets: [
       'Award-winning UI/UX designer.',
       'Crafts high-converting experiences.',
@@ -35,7 +35,7 @@ const teamMembers = [
   {
     name: 'Elena Rostova',
     role: 'Lead Developer',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&fit=crop&w=800&q=75&fm=webp',
     bullets: [
       'Full-stack engineering maestro.',
       'Builds lightning-fast web apps.',
@@ -45,7 +45,7 @@ const teamMembers = [
   {
     name: 'David Kim',
     role: 'Head of SEO',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&fit=crop&w=800&q=75&fm=webp',
     bullets: [
       'Decade of organic traffic scaling.',
       'Technical & content SEO master.',
@@ -113,6 +113,8 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
         <img 
           src={member.image} 
           alt={member.name}
+          width={800}
+          height={1000}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover object-center filter grayscale contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.03]"

@@ -209,10 +209,11 @@ const CaseStudyDetailPage: React.FC = () => {
                         muted
                         loop
                         playsInline
+                        preload="none"
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <img src={study.image} className="w-full h-full object-cover" />
+                      <img src={study.image} alt={study.client} width={1200} height={750} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     )}
                     
                     {/* Brand Watermark */}

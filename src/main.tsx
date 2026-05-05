@@ -2,8 +2,12 @@ import {StrictMode, lazy, Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
-import ChatFAB from './components/ChatFAB.tsx';
 import './index.css';
+
+// PERFORMANCE: Lazy-load ChatFAB — it's a floating button that doesn't need to
+// be in the initial bundle. This keeps framer-motion entirely out of the
+// critical path since App.tsx also lazy-loads all motion-dependent components.
+const ChatFAB = lazy(() => import('./components/ChatFAB.tsx'));
 
 // Lazy-load all sub-pages so their heavy dependencies (Spline, etc.) 
 // are only downloaded when the user actually navigates to them.
@@ -31,7 +35,9 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/assistant" element={<ChatAssistantPage />} />
         </Routes>
       </Suspense>
-      <ChatFAB />
+      <Suspense fallback={null}>
+        <ChatFAB />
+      </Suspense>
     </BrowserRouter>
   </StrictMode>,
 );
