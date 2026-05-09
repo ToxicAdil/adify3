@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, lazy, Suspense } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 // Defer Three.js loading — only load after page is idle
@@ -61,7 +62,13 @@ const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(
         {...props}
       >
         {/* Globe Container */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        <motion.div 
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.10] md:opacity-[0.18]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, ease: "easeOut", delay: 0.3 }}
+          style={{ willChange: 'opacity' }}
+        >
           {showThree ? (
             <Suspense fallback={<CSSGlobe />}>
               <ThreeGlobe radius={globeRadius} speed={rotationSpeed} />
@@ -69,7 +76,7 @@ const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(
           ) : (
             <CSSGlobe />
           )}
-        </div>
+        </motion.div>
 
         {/* Content Container */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-[37px] flex flex-col items-center justify-center text-center">

@@ -22,7 +22,7 @@ const Globe: React.FC<{ rotationSpeed: number; radius: number; paused: boolean }
     <group ref={groupRef}>
       <mesh>
         <sphereGeometry args={[radius, segments, segments]} />
-        <meshBasicMaterial color="#7B2FF7" transparent opacity={0.3} wireframe />
+        <meshBasicMaterial color="#c4b5fd" transparent opacity={0.25} wireframe />
       </mesh>
     </group>
   );

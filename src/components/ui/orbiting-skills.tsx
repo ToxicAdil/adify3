@@ -102,7 +102,7 @@ interface GlowingOrbitPathProps {
 }
 
 // --- Icons Record using Lucide ---
-const serviceIcons: Record<ServiceType, { component: React.ElementType; color: string }> = {
+const serviceIcons: Record<ServiceType, { component: React.ComponentType<any>; color: string }> = {
   strategic: { component: Target, color: '#E34F26' },
   social: { component: Users, color: '#1572B6' },
   ads: { component: Zap, color: '#F7DF1E' },

@@ -1,55 +1,56 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { FadeInUp, StaggerContainer, StaggerItem } from '@/lib/animations';
 
 const teamMembers = [
   {
-    name: 'Adil Ali',
-    role: 'Founder & CEO',
+    name: 'Md Adil Ali',
+    role: 'Founder & Growth Strategist',
     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     bullets: [
-      '10+ years scaling digital brands.',
-      'Ex-Growth Lead at top tech firms.',
-      'Visionary behind Adibuz’s core strategy.'
+      'Leads Adibuz\'s growth and digital strategy.',
+      'Architects scalable marketing systems and brand positioning.',
+      'Helps businesses build lasting digital authority.'
     ]
   },
   {
-    name: 'Sarah Jenkins',
-    role: 'Head of Growth',
+    name: 'Krish Rawat',
+    role: 'Co-Founder & SEO Specialist',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     bullets: [
-      'Master of performance marketing.',
-      'Managed $50M+ in ad spend.',
-      'Data obsessive optimization expert.'
+      'Develops SEO strategies for long-term organic growth.',
+      'Optimizes content structure, keywords, and search visibility.',
+      'Helps brands build sustainable online authority.'
     ]
   },
   {
-    name: 'Marcus Chen',
-    role: 'Creative Director',
+    name: 'Mozzamil Hussain',
+    role: 'Brand & Creative Designer',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     bullets: [
-      'Award-winning UI/UX designer.',
-      'Crafts high-converting experiences.',
-      'Blends aesthetic with psychology.'
+      'Creates modern visual identities and marketing creatives.',
+      'Focused on clean UI/UX and high-converting brand experiences.',
+      'Combines design strategy with digital storytelling.'
     ]
   },
   {
-    name: 'Elena Rostova',
-    role: 'Lead Developer',
+    name: 'Deepak Rawat',
+    role: 'Full Stack Developer',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     bullets: [
-      'Full-stack engineering maestro.',
-      'Builds lightning-fast web apps.',
-      'Expert in Next.js & modern stacks.'
+      'Builds fast, scalable, and modern digital platforms.',
+      'Specializes in responsive frontend and backend integrations.',
+      'Focused on performance, functionality, and clean architecture.'
     ]
   },
   {
-    name: 'David Kim',
-    role: 'Head of SEO',
+    name: 'Dev Rawat',
+    role: 'Performance Marketing Specialist',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     bullets: [
-      'Decade of organic traffic scaling.',
-      'Technical & content SEO master.',
-      'Drives sustainable, compounding ROI.'
+      'Manages paid advertising and campaign optimization.',
+      'Focused on improving conversions and customer acquisition.',
+      'Operates across Meta Ads, Google Ads, and analytics systems.'
     ]
   }
 ];
@@ -64,21 +65,20 @@ const AboutTeam = () => {
       <div className="w-full max-w-[1400px] mx-auto relative z-10 flex flex-col items-center">
         
         {/* Hero Header */}
-        <motion.h2
-          className="text-slate-900 text-3xl md:text-5xl lg:text-6xl font-[900] tracking-tight text-center mb-8 md:mb-12 mt-10 select-none uppercase"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          OUR TEAM
-        </motion.h2>
+        <FadeInUp>
+          <h2 className="text-slate-900 text-3xl md:text-5xl lg:text-6xl font-[900] tracking-tight text-center mb-8 md:mb-12 mt-10 select-none uppercase">
+            OUR TEAM
+          </h2>
+        </FadeInUp>
 
         {/* Team Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 xl:gap-6 w-full">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 xl:gap-6 w-full">
           {teamMembers.map((member, index) => (
-            <TeamCard key={index} member={member} index={index} />
+            <StaggerItem key={index}>
+              <TeamCard member={member} index={index} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
         
       </div>
     </section>
@@ -87,13 +87,8 @@ const AboutTeam = () => {
 
 const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
-      whileHover={{ y: -6 }}
-      className="group relative w-full bg-white rounded-[18px] border border-slate-200/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-purple-300 hover:shadow-xl"
+    <div
+      className="group relative w-full h-full bg-white rounded-[18px] border border-slate-200/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-purple-300 hover:shadow-xl hover:-translate-y-1.5"
     >
       {/* Soft Blurred Gradient SaaS Effect */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -138,7 +133,7 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
           ))}
         </ul>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

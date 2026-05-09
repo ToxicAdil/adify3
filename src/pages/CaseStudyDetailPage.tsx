@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import MagneticButton from '@/components/MagneticButton';
 import { FloatingPurpleShapes } from '@/components/ui/floating-purple-shapes';
+import { SEO } from '@/components/SEO';
 
 const CaseStudyDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,6 +47,10 @@ const CaseStudyDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#fdfaff] selection:bg-primary selection:text-white relative overflow-hidden">
+      <SEO 
+        title={`${study.title} | Adibuz Case Study`}
+        description={study.challenge}
+      />
       <SimpleHeader />
       <FloatingPurpleShapes />
 

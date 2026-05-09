@@ -19,7 +19,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-text-size-adjust: 100%;
   }
   
@@ -28,7 +28,7 @@
   }
   
   body {
-    @apply font-sans;
+    font-family: 'Inter', sans-serif;
     color: var(--text-main);
     background-color: #fdfaff;
     background-image: 
@@ -36,10 +36,46 @@
       radial-gradient(circle at 85% 30%, rgba(109, 40, 217, 0.08) 0%, transparent 50%);
     background-attachment: fixed;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     /* Prevent horizontal scroll from any child overflow */
     max-width: 100vw;
+  }
+
+  /* Premium SaaS Typography System (Unified) */
+  h1 { 
+    font-weight: 700; 
+    letter-spacing: -0.04em; 
+    line-height: 1.05; 
+    color: #0A0A0A; 
+  }
+  h2 { 
+    font-weight: 600; 
+    letter-spacing: -0.03em; 
+    line-height: 1.15; 
+    color: #111111; 
+  }
+  h3, h4 { 
+    font-weight: 600; 
+    letter-spacing: -0.015em; 
+    line-height: 1.2; 
+    color: #171717; 
+  }
+  p { 
+    font-weight: 400; 
+    line-height: 1.65; 
+    color: #525252; 
+  }
+  .badge, .label, .tag, .section-label, .category, .ai-badge { 
+    font-weight: 600; 
+    letter-spacing: 0.08em; 
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #4C1D95; /* Deep purple */
+  }
+  button, .btn { 
+    font-weight: 600; 
+    letter-spacing: -0.01em; 
   }
 
   /* Ensure interactive elements also show cursor */
@@ -107,8 +143,8 @@
 }
 
 @keyframes activeGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(58, 15, 99, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(58, 15, 99, 0.6); }
+  0%, 100% { box-shadow: 0 0 15px rgba(58, 15, 99, 0.05); }
+  50% { box-shadow: 0 0 25px rgba(58, 15, 99, 0.1); }
 }
 
 .active-node-glow {
@@ -129,7 +165,7 @@
   @apply relative backdrop-blur-2xl border border-slate-200 transition-all duration-300 ease-out flex flex-col gap-4 bg-white/80;
   padding: 24px 20px;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 }
 
 @media (min-width: 768px) {
@@ -146,11 +182,10 @@
 }
 
 .service-box:hover {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-4px);
   box-shadow: 
-    0 40px 80px -12px rgba(0, 0, 0, 0.1),
-    0 10px 30px rgba(58, 15, 99, 0.15);
-  animation: glowPulse 6s ease-in-out infinite;
+    0 20px 60px -12px rgba(0, 0, 0, 0.08),
+    0 10px 20px rgba(58, 15, 99, 0.05);
 }
 
 .service-box::before {
@@ -170,11 +205,11 @@
 .text-gradient {
   background: linear-gradient(
     to right,
-    #3A0F63 0%,
-    #6D28D9 25%,
-    #A78BFA 50%,
-    #6D28D9 75%,
-    #3A0F63 100%
+    #2E1065 0%,
+    #581C87 30%,
+    #7E22CE 50%,
+    #581C87 70%,
+    #2E1065 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -322,30 +357,19 @@
 .shimmer-text {
   background: linear-gradient(
     to right,
-    #3A0F63 0%,
-    #6D28D9 25%,
-    #A78BFA 50%,
-    #6D28D9 75%,
-    #3A0F63 100%
+    #2E1065 0%,
+    #581C87 30%,
+    #7E22CE 50%,
+    #581C87 70%,
+    #2E1065 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientMove 8s linear infinite, textGlowPulse 4s ease-in-out infinite;
+  animation: gradientMove 8s linear infinite;
   display: inline-block;
   font-weight: 700;
-}
-
-@keyframes textGlowPulse {
-  0%, 100% { 
-    text-shadow: 0 0 15px rgba(58, 15, 99, 0.05);
-    opacity: 0.98;
-  }
-  50% { 
-    text-shadow: 0 0 30px rgba(58, 15, 99, 0.15);
-    opacity: 1;
-  }
 }
 
 @keyframes gradientMove {
@@ -356,7 +380,7 @@
 .hero-left p {
   font-size: 16px;
   margin-top: 14px;
-  color: #6b7280;
+  color: #525252;
   @apply leading-relaxed font-medium;
 }
 
@@ -373,25 +397,16 @@
 .primary-button {
   background-color: #3A0F63 !important;
   color: white !important;
-  box-shadow: 
-    0 10px 25px rgba(58, 15, 99, 0.25),
-    0 0 10px rgba(58, 15, 99, 0.15);
-  transition: all 0.3s ease;
-  /* Touch-friendly minimum size */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 14px rgba(58, 15, 99, 0.2);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   min-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 
-    0 15px 35px rgba(58, 15, 99, 0.35),
-    0 0 20px rgba(58, 15, 99, 0.2);
-  animation: buttonGlow 4s ease-in-out infinite;
-}
-
-@keyframes buttonGlow {
-  0%, 100% { box-shadow: 0 15px 35px rgba(58, 15, 99, 0.35), 0 0 20px rgba(58, 15, 99, 0.2); }
-  50% { box-shadow: 0 15px 45px rgba(58, 15, 99, 0.45), 0 0 30px rgba(58, 15, 99, 0.3); }
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 8px 24px rgba(58, 15, 99, 0.25);
 }
 
 /* ============================
@@ -932,3 +947,24 @@
     0 30px 60px -12px rgba(0, 0, 0, 0.5),
     0 10px 20px -5px rgba(109, 40, 217, 0.2);
 }
+
+/* ============================
+   PROSE (MARKDOWN) TYPOGRAPHY
+============================ */
+.prose {
+  @apply text-slate-600;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-slate-900 font-bold mt-8 mb-4;
+}
+.prose h2 { @apply text-3xl tracking-tight; }
+.prose h3 { @apply text-2xl tracking-tight; }
+.prose p { @apply mb-6 leading-relaxed text-[17px]; }
+.prose ul { @apply list-disc pl-6 mb-6; }
+.prose ol { @apply list-decimal pl-6 mb-6; }
+.prose li { @apply mb-2 pl-2; }
+.prose a { @apply text-[#3A0F63] hover:underline font-semibold transition-colors; }
+.prose blockquote { @apply border-l-4 border-[#3A0F63] pl-6 italic bg-slate-50 py-4 my-8 rounded-r-xl text-slate-700; }
+.prose strong { @apply text-slate-900 font-bold; }
+.prose code { @apply bg-slate-100 text-[#3A0F63] px-1.5 py-0.5 rounded-md text-sm font-mono border border-slate-200; }
+.prose img { @apply rounded-2xl shadow-lg my-8 w-full object-cover; }

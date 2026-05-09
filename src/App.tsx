@@ -8,10 +8,12 @@ import {
 } from 'lucide-react';
 import ScrollIndicator from './components/ScrollIndicator';
 import MagneticButton from './components/MagneticButton';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 import { FloatingPurpleShapes } from '@/components/ui/floating-purple-shapes';
 import { BackgroundGradientGlow } from '@/components/ui/background-gradient-glow';
 import { SimpleHeader } from '@/components/ui/simple-header';
+import { SEO } from '@/components/SEO';
 
 // ====================================================================
 // PERFORMANCE: Lazy-load ALL components that use framer-motion
@@ -21,11 +23,14 @@ import { SimpleHeader } from '@/components/ui/simple-header';
 const CustomCursor = lazy(() => import('./components/CustomCursor'));
 const InteractiveServices = lazy(() => import('./components/InteractiveServices').then(m => ({ default: m.InteractiveServices })));
 const AboutAdibuz = lazy(() => import('./components/AboutAdibuz'));
-const AudioCTA = lazy(() => import('./components/AudioCTA').then(m => ({ default: m.AudioCTA })));
+const AboutPreviewCard = lazy(() => import('./components/AboutPreviewCard').then(m => ({ default: m.AboutPreviewCard })));
+const InsightPreviewCard = lazy(() => import('./components/InsightPreviewCard').then(m => ({ default: m.InsightPreviewCard })));
 const CircularTestimonials = lazy(() => import('./components/ui/circular-testimonials').then(m => ({ default: m.CircularTestimonials })));
 const InteractiveGlobe = lazy(() => import('./components/ui/interactive-globe').then(m => ({ default: m.InteractiveGlobe })));
 const LogoCloud = lazy(() => import('./components/ui/logo-cloud-4').then(m => ({ default: m.LogoCloud })));
 const Footer = lazy(() => import('./components/ui/footer-section').then(m => ({ default: m.Footer })));
+
+import { FadeInUp, StaggerContainer, StaggerItem, floatVariant, ScaleInView } from '@/lib/animations';
 
 // Lazy-load Three.js globe — deferred via requestIdleCallback inside globe-hero
 const DotGlobeHero = lazy(() => import('@/components/ui/globe-hero').then(m => ({ default: m.DotGlobeHero })));
@@ -37,90 +42,6 @@ const isMobile = typeof window !== 'undefined' && (
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
   window.innerWidth < 768
 );
-
-// ====================================================================
-// PERFORMANCE: FadeInView — replaces motion.div whileInView
-// Uses IntersectionObserver + CSS transitions (0 JS library overhead)
-// Visually identical: same fade-up entrance on scroll
-// ====================================================================
-const FadeInView = memo(({ children, className, delay = 0, style }: { 
-  children: React.ReactNode; className?: string; delay?: number; style?: React.CSSProperties 
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.05, rootMargin: '50px 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        ...style,
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(40px)',
-        transition: `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
-        willChange: visible ? undefined : 'opacity, transform',
-      }}
-    >
-      {children}
-    </div>
-  );
-});
-FadeInView.displayName = 'FadeInView';
-
-// Scale-in variant for video containers
-const ScaleInView = memo(({ children, className, delay = 0 }: { 
-  children: React.ReactNode; className?: string; delay?: number 
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.05, rootMargin: '50px 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'scale(1)' : 'scale(0.95)',
-        transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`,
-      }}
-    >
-      {children}
-    </div>
-  );
-});
-ScaleInView.displayName = 'ScaleInView';
 
 const services = [
   "Web Development",
@@ -197,11 +118,23 @@ LazyVideo.displayName = 'LazyVideo';
 
 const SectionFallback = () => <div style={{ minHeight: '400px' }} />;
 
+import { Preloader } from '@/components/ui/preloader';
+
 // --- Main App ---
 
 export default function App() {
+  const [preloaderDone, setPreloaderDone] = useState(false);
+  const { scrollY } = useScroll();
+  const heroScale = useTransform(scrollY, [0, 800], [1, 1.15]);
+  const heroY = useTransform(scrollY, [0, 800], [0, -100]);
+  const heroOpacity = useTransform(scrollY, [0, 800], [1, 0.2]);
+  const heroFilter = useTransform(scrollY, [0, 800], ["blur(0px)", "blur(6px)"]);
+
   return (
     <div className="min-h-screen selection:bg-primary selection:text-white relative">
+      <SEO />
+      <Preloader onComplete={() => setPreloaderDone(true)} />
+      <div id="main-app-content" className="opacity-0">
       {!isMobile && (
         <Suspense fallback={null}>
           <CustomCursor />
@@ -214,102 +147,126 @@ export default function App() {
           HERO SECTION — CSS animations replace framer-motion
           Same visual: fade-up, scale-in with identical timing/easing
           ============================================================ */}
-      <header id="home" className="relative">
-        <BackgroundGradientGlow className="min-h-screen">
+      <header id="home" className="sticky top-0 z-[1] h-screen min-h-[100vh] max-h-[100vh] overflow-hidden">
+        <motion.div
+          style={{
+            opacity: heroOpacity,
+            filter: heroFilter,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <BackgroundGradientGlow className="w-full h-full flex flex-col items-center justify-center">
           <FloatingPurpleShapes />
-          <Suspense fallback={<div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-center pt-20" />}>
-          <DotGlobeHero className="pt-16 md:pt-20" globeRadius={isMobile ? 0.8 : 1.3}>
-            <div className="flex flex-col items-center max-w-5xl px-4 sm:px-6 md:px-[37px]">
-              {/* Top Badge — CSS animation */}
-              <div
-                className="ai-badge bg-white/40 border border-white/60 font-medium text-slate-500 uppercase tracking-[0.2em] shadow-sm backdrop-blur-md mb-8"
-                style={{ animation: 'heroFadeUp 0.8s ease-out both' }}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-primary" /> AI-FIRST MARKETING
-              </div>
-
-              {/* Main Headline */}
-              <div className="text-center space-y-2 mb-8">
-                <span
-                  className="block text-5xl md:text-5xl font-light text-slate-600 tracking-tight"
-                  style={{ animation: 'heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both' }}
+          <Suspense fallback={<div className="relative w-full h-full overflow-hidden flex flex-col items-center justify-center pt-20" />}>
+          <DotGlobeHero className="w-full h-full flex flex-col items-center justify-center" globeRadius={isMobile ? 0.8 : 1.3}>
+            {/* Inner motion wrapper to animate text/buttons but NOT the globe! */}
+            <motion.div
+              style={{
+                scale: heroScale,
+                y: heroY,
+              }}
+              className="flex flex-col items-center justify-center w-full h-full relative z-10"
+            >
+            {/* PROBLEM 7: Hero Content Centered */}
+            <div className="flex flex-col items-center justify-center text-center w-full max-w-[900px] mx-auto">
+              {/* Main Headline Wrapper */}
+              <div className="text-center w-full flex flex-col items-center">
+                <motion.span
+                  className="block text-slate-600 opacity-65 font-normal tracking-tight mb-[12px] text-[clamp(1.6rem,3.5vw,2.6rem)]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 >
                   Scale Smarter.
-                </span>
+                </motion.span>
                 
-                <div className="relative inline-block">
-                  {/* Blur glow duplicate layer */}
-                  <span
-                    className="absolute inset-0 blur-2xl select-none pointer-events-none text-5xl sm:text-5xl md:text-8xl font-black text-gradient md:whitespace-nowrap"
-                    aria-hidden="true"
-                    style={{ animation: 'heroBlurIn 1.2s ease 0.3s both' }}
+                <div className="relative w-full flex flex-col items-center">
+                  <motion.h1
+                    className="font-[800] tracking-tighter text-gradient relative z-10 md:whitespace-nowrap text-[clamp(3rem,7vw,6rem)] leading-[1.05]"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
                   >
                     Grow Your Brand Faster
-                  </span>
-                  
-                  <h1
-                    className="text-5xl sm:text-5xl md:text-8xl font-black tracking-tighter text-gradient relative z-10 md:whitespace-nowrap"
-                    style={{ animation: 'heroScaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}
-                  >
-                    Grow Your Brand Faster
-                  </h1>
+                  </motion.h1>
 
                   {/* Animated Underline */}
-                  <div
-                    className="h-1.5 md:h-2 bg-gradient-to-r from-primary/80 to-transparent rounded-full mt-2"
-                    style={{ animation: 'heroUnderline 1.5s ease-in-out 0.8s both' }}
+                  <motion.div
+                    className="h-[1.5px] w-full max-w-[80%] md:max-w-full bg-gradient-to-r from-transparent via-[#7c3aed] to-transparent -mt-[8px] mb-[32px]"
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    animate={{ opacity: 0.4, scaleX: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                    style={{ transformOrigin: "center" }}
                   />
                 </div>
               </div>
 
               {/* Subtext */}
-              <p
-                className="text-lg sm:text-lg md:text-2xl text-slate-500 font-medium leading-relaxed mb-8 md:mb-12 max-w-3xl"
-                style={{ animation: 'heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both' }}
+              <motion.p
+                className="text-slate-500 font-normal mx-auto mb-[48px] w-full px-5 md:px-0 max-w-[580px] text-[clamp(1rem,1.8vw,1.2rem)] leading-[1.75]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
               >
-                We build high-performing marketing systems that drive{" "}
-                <span className="relative inline-block px-2 py-0.5 mx-1">
-                  <span className="relative z-10 text-primary">real revenue</span>
-                  <span 
-                    className="absolute inset-0 bg-primary/10 rounded-lg -rotate-1"
-                    style={{ animation: 'heroHighlight 0.8s ease 1.2s both' }}
-                  />
-                </span>
-                , not just clicks.
-              </p>
+                We build high-performing marketing systems that drive <span className="text-primary font-bold">real revenue</span>, not just clicks.
+              </motion.p>
 
               {/* CTA Buttons */}
-              <div
-                className="flex flex-col sm:flex-row items-center gap-6"
-                style={{ animation: 'heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both' }}
+              <motion.div
+                className="flex flex-col md:flex-row items-center justify-center gap-[14px] md:gap-[20px] flex-wrap mt-0 w-full"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.65 }}
               >
                 <MagneticButton>
-                  <button 
+                  <motion.button 
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                     data-cursor-text="Book"
-                    className="w-full sm:w-auto bg-slate-900 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm sm:text-base btn-premium flex items-center justify-center gap-3 primary-button"
+                    className="w-full md:w-auto bg-[#3A0F63] text-white px-[36px] py-[16px] rounded-[50px] font-semibold text-[clamp(0.85rem,1.2vw,1rem)] flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
                   >
                     Book a Strategy Call <ArrowRight className="w-5 h-5" />
-                  </button>
+                  </motion.button>
                 </MagneticButton>
                 
                 <MagneticButton>
-                  <button 
-                    data-cursor-text="Free"
-                    className="w-full sm:w-auto px-6 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm sm:text-base text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group min-h-[44px]"
+                  <motion.a
+                    href="/insights"
+                    whileHover={{ x: 4 }}
+                    data-cursor-text="Read"
+                    className="w-full md:w-auto px-[32px] py-[16px] rounded-[50px] font-semibold text-[clamp(0.85rem,1.2vw,1rem)] text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
                   >
-                    <CheckCircle2 className="w-5 h-5 group-hover:text-emerald-500 transition-colors" /> Free Audit
-                  </button>
+                    <Sparkles className="w-5 h-5 text-primary" /> View Insights
+                  </motion.a>
                 </MagneticButton>
-              </div>
+              </motion.div>
             </div>
+            </motion.div>
           </DotGlobeHero>
           </Suspense>
         </BackgroundGradientGlow>
+        </motion.div>
       </header>
 
-      {/* Clients Section (Animated Logo Cloud) */}
-      <section className="py-8 border-b border-white relative z-10" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 200px' }}>
-        <div className="container-custom">
+      {/* ============================================================
+          SLIDING PAGE CONTENT
+          ============================================================ */}
+      <main className="relative z-[10] bg-[#fdfaff] rounded-t-[48px] shadow-[0_-24px_60px_rgba(109,40,217,0.08)]">
+        {/* Background Gradients to match the body */}
+        <div className="absolute inset-0 z-0 pointer-events-none rounded-t-[48px]" style={{
+          backgroundImage: `radial-gradient(circle at 15% 50%, rgba(167, 139, 250, 0.12) 0%, transparent 50%), radial-gradient(circle at 85% 30%, rgba(109, 40, 217, 0.08) 0%, transparent 50%)`,
+          backgroundAttachment: 'fixed'
+        }} />
+        
+        <div className="relative z-10 w-full">
+          {/* Clients Section (Animated Logo Cloud) */}
+          <section className="pt-16 pb-12 mt-0 overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 200px' }}>
+            <div className="container-custom">
           <div className="w-full">
             <h2 className="mb-5 text-center">
               <span className="block font-medium text-2xl text-slate-500">Our Expertise</span>
@@ -331,7 +288,7 @@ export default function App() {
       {/* Strategic Marketing Detail Section */}
       <section id="strategic-marketing" className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <ScaleInView delay={0.2} className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5">
                 <LazyVideo src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774899653/marketing_video_yes6gn.mp4" className="w-full h-full object-cover block" style={{ borderRadius: 'inherit' }} />
@@ -356,14 +313,14 @@ export default function App() {
               </div>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Social Media Detail Section */}
       <section className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <div className="flex-1 w-full lg:max-w-[500px] space-y-8 order-2 lg:order-1 text-center lg:text-left">
                 <div className="space-y-6">
@@ -389,14 +346,14 @@ export default function App() {
               </ScaleInView>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Automation Detail Section */}
       <section className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <ScaleInView delay={0.2} className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5">
                 <LazyVideo src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897694/automation_video_eevmht.mp4" className="w-full h-full object-cover block" style={{ borderRadius: 'inherit' }} />
@@ -419,14 +376,14 @@ export default function App() {
               </div>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Web Development Detail Section */}
       <section id="web-development" className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
@@ -449,14 +406,14 @@ export default function App() {
               </ScaleInView>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
       {/* SEO Detail Section */}
       <section id="seo" className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <ScaleInView delay={0.2} className="relative w-full aspect-[4/3] lg:w-[380px] lg:min-w-[380px] mx-auto rounded-[24px] overflow-hidden group shadow-xl ring-1 ring-black/5">
                 <LazyVideo src="https://res.cloudinary.com/dtzo88csm/video/upload/v1774897169/seo_video_dgkbor.mp4" className="w-full h-full object-cover block" style={{ borderRadius: 'inherit' }} />
@@ -479,14 +436,14 @@ export default function App() {
               </div>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Visual Branding Detail Section */}
       <section id="visual-branding" className="py-8 relative" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
         <div className="container-custom">
-          <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+          <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center relative z-10">
               <div className="flex-1 w-full lg:max-w-[500px] space-y-8 text-center lg:text-left order-2 lg:order-1">
                 <div className="space-y-6">
@@ -509,7 +466,7 @@ export default function App() {
               </ScaleInView>
             </div>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-          </FadeInView>
+          </FadeInUp>
         </div>
       </section>
 
@@ -517,7 +474,7 @@ export default function App() {
       <div id="clients">
         <section className="py-8 relative overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
           <div className="container-custom">
-            <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
+            <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-12 lg:py-[40px] lg:px-[60px] overflow-hidden">
               <div className="text-left mb-16 space-y-4 relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success Stories</span></h2>
                 <p className="text-slate-500 text-lg font-medium max-w-2xl">Real results from brands that scaled with Adibuz's AI-driven growth engine.</p>
@@ -533,28 +490,37 @@ export default function App() {
                 </Suspense>
               </div>
               <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-            </FadeInView>
+            </FadeInUp>
           </div>
         </section>
 
         <section className="py-8 relative overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 600px' }}>
           <div className="container-custom">
-            <FadeInView className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-8 lg:py-[24px] lg:px-[60px] overflow-hidden">
+            <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] p-6 md:p-8 lg:py-[24px] lg:px-[60px] overflow-hidden">
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
-                <FadeInView className="space-y-8">
+                <FadeInUp className="space-y-8">
                   <div className="space-y-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.2]">Scaling Brands <br /> <span className="text-gradient">Beyond Borders.</span></h2>
                     <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl">We help businesses grow across <span className="text-[#3A0F63] font-bold">global markets</span> with data-driven <span className="text-[#3A0F63] font-bold">marketing systems</span>.</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-4">
-                    <div className="space-y-1"><div className="text-3xl font-bold text-[#3A0F63]">500+</div><div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Clients</div></div>
-                    <div className="space-y-1"><div className="text-3xl font-bold text-[#3A0F63]">₹500Cr+</div><div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Ad Spend</div></div>
-                    <div className="space-y-1"><div className="text-3xl font-bold text-[#3A0F63]">6</div><div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Countries Served</div></div>
+                    <div className="space-y-2">
+                      <div className="text-3xl md:text-4xl font-[900] text-[#3A0F63] tracking-tight">25+</div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Clients</div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-3xl md:text-4xl font-[900] text-[#3A0F63] tracking-tight">₹35L+</div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Ad Spend Managed</div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-3xl md:text-4xl font-[900] text-[#3A0F63] tracking-tight">6</div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Countries Served</div>
+                    </div>
                   </div>
                   <MagneticButton>
-                    <button className="bg-[#3A0F63] text-white px-8 py-4 rounded-full text-sm font-bold shadow-xl shadow-[#3A0F63]/20 hover:shadow-[#3A0F63]/30 transition-all">Scale Your Brand Globally</button>
+                    <button className="bg-[#3A0F63] text-white px-8 py-4 rounded-full text-sm font-bold shadow-xl shadow-[#3A0F63]/20 hover:shadow-[#3A0F63]/30 transition-all">Grow Beyond Borders</button>
                   </MagneticButton>
-                </FadeInView>
+                </FadeInUp>
                 <ScaleInView className="w-full h-[300px] sm:h-[350px] md:h-[450px] flex items-center justify-center relative overflow-hidden">
                   <div className="w-full h-full max-w-[300px] sm:max-w-[400px] md:max-w-none mx-auto">
                     <Suspense fallback={<div className="w-full h-full" />}>
@@ -564,7 +530,7 @@ export default function App() {
                 </ScaleInView>
               </div>
               <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-            </FadeInView>
+            </FadeInUp>
           </div>
         </section>
 
@@ -572,71 +538,92 @@ export default function App() {
           <AboutAdibuz />
         </Suspense>
 
-        <section className="py-8" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 500px' }}>
-          <div className="container-custom">
-            <div className="text-left mb-10 md:mb-20 space-y-4 md:space-y-6">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Client <span className="text-gradient">Success.</span></h2>
-              <p className="text-slate-500 text-lg font-medium max-w-2xl">Don't just take our word for it. See what our clients have to say about their growth journey with Adibuz.</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
-              {[1, 2, 3].map(i => (
-                <FadeInView key={i} delay={i * 0.1} className="premium-card p-6 md:p-10 rounded-3xl md:rounded-[32px] space-y-8">
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />)}
-                  </div>
-                  <p className="text-slate-600 font-medium leading-relaxed text-sm">"Adibuz completely transformed our ROAS. We went from 2x to 5.5x in just three months. Their AI tools are a game changer!"</p>
-                  <div className="flex items-center gap-4 pt-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden border border-white/60">
-                      <img src={`https://picsum.photos/seed/c${i}/100/100`} alt="client" referrerPolicy="no-referrer" width={40} height={40} loading="lazy" decoding="async" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-900">Sarah Jenkins</p>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">CEO, LuxeDecor</p>
-                    </div>
-                  </div>
-                </FadeInView>
-              ))}
-            </div>
-          </div>
-        </section>
+        <div id="clients">
+          <Suspense fallback={<SectionFallback />}>
+            <InsightPreviewCard />
+          </Suspense>
+        </div>
       </div>
 
+      {/* About Preview Card */}
+      <Suspense fallback={<SectionFallback />}>
+        <AboutPreviewCard />
+      </Suspense>
+
       {/* FAQs Section */}
-      <section id="faqs" className="py-8">
+      <section id="faqs" className="py-16 md:py-24">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-[1fr,2fr] gap-10 lg:gap-16">
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">Common <span className="text-gradient">Questions.</span></h2>
-              <p className="text-slate-500 text-lg font-medium leading-relaxed">Everything you need to know about working with us and how we help you scale.</p>
+          <div className="grid lg:grid-cols-[1fr,2fr] gap-12 lg:gap-20">
+            <div className="space-y-8">
+
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">
+                Frequently Asked <br /><span className="text-gradient">Questions.</span>
+              </h2>
+              <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-md">
+                Everything you need to know about our AI-driven systems and how we help ambitious brands scale.
+              </p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {[
-                { q: 'How long does it take to see results?', a: 'Typically, we see initial data trends within 14 days and significant scaling potential by the 30-day mark.' },
-                { q: 'Do you handle creative production?', a: 'Yes! We have a full creative studio that produces high-converting video and static assets.' },
-                { q: 'What is your minimum ad spend requirement?', a: 'We typically work with brands spending at least ₹2,0,000 per month to ensure statistical significance.' }
+                { 
+                  q: 'How does Adibuz use AI in digital marketing?', 
+                  a: 'Adibuz integrates AI into strategy, automation, audience analysis, content workflows, lead qualification, and performance optimization. Our systems help brands reduce manual effort, improve efficiency, and scale faster through data-driven decision making and intelligent automation.' 
+                },
+                { 
+                  q: 'What makes Adibuz different from traditional agencies?', 
+                  a: 'Unlike traditional agencies that focus only on execution, Adibuz builds scalable digital systems. We combine AI automation, premium branding, performance marketing, web development, and strategic growth frameworks to create long-term business impact instead of short-term vanity metrics.' 
+                },
+                { 
+                  q: 'What services does Adibuz specialize in?', 
+                  a: 'Adibuz specializes in AI automation, high-performance website development, SEO, social media management, paid advertising, branding strategy, conversion optimization, and modern digital growth systems tailored for scalable businesses.' 
+                },
+                { 
+                  q: 'Can Adibuz help startups and growing businesses?', 
+                  a: 'Yes. We work with startups, personal brands, service businesses, SaaS companies, e-commerce brands, and growing enterprises. Our systems are designed to adapt to different growth stages and business goals.' 
+                },
+                { 
+                  q: 'How long does it usually take to see measurable growth?', 
+                  a: 'The timeline depends on the service and market competition. Paid campaigns can generate results within weeks, while SEO and long-term brand systems typically compound over several months. Our focus is sustainable, measurable, and scalable growth.' 
+                },
+                { 
+                  q: 'Does Adibuz provide both branding and performance marketing?', 
+                  a: 'Yes. Adibuz combines premium brand positioning with performance-driven marketing strategies. We help businesses create strong digital identities while also building systems that generate leads, conversions, and long-term customer growth.' 
+                },
+                { 
+                  q: 'Can you redesign or optimize an existing website?', 
+                  a: 'Absolutely. We help businesses modernize outdated websites by improving performance, user experience, branding consistency, responsiveness, SEO structure, and conversion-focused design systems.' 
+                }
               ].map((faq, i) => (
-                <FadeInView key={i} delay={i * 0.1} className="premium-card rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer" style={{ cursor: 'pointer' }}>
-                  <details className="group">
-                    <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                      <span className="text-sm font-bold text-slate-800 tracking-tight">{faq.q}</span>
-                      <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
-                    </summary>
-                    <div className="px-6 pb-6 text-slate-500 text-sm leading-relaxed font-medium">{faq.a}</div>
-                  </details>
-                </FadeInView>
+                <FadeInUp key={i} delay={i * 0.1} className="premium-card rounded-[20px] md:rounded-[24px] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer group hover:shadow-[0_20px_40px_-10px_rgba(58,15,99,0.08)] hover:-translate-y-1 border border-slate-200/50 hover:border-[#3A0F63]/30 bg-white hover:bg-[#fcfaff]">
+                  <div className="flex items-center justify-between py-4 px-5 md:py-[18px] md:px-7 cursor-pointer">
+                    <span className="text-base md:text-[1.1rem] font-bold text-slate-800 tracking-tight group-hover:text-[#3A0F63] transition-colors duration-500 pr-4 leading-snug">
+                      {faq.q}
+                    </span>
+                    <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-[#3A0F63] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[#3A0F63]/20 group-hover:scale-105">
+                      <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:-rotate-180 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                    </div>
+                  </div>
+                  <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <div className="overflow-hidden">
+                      <div className="px-5 md:px-7 pb-5 md:pb-6 text-slate-500 text-[0.95rem] md:text-[1.05rem] leading-[1.65] font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[50ms]">
+                        {faq.a}
+                      </div>
+                    </div>
+                  </div>
+                </FadeInUp>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <Suspense fallback={<SectionFallback />}>
-        <AudioCTA />
-      </Suspense>
 
       <Suspense fallback={<div style={{ minHeight: '300px' }} />}>
         <Footer />
       </Suspense>
+        </div>
+      </main>
+      </div>
     </div>
   );
 }
