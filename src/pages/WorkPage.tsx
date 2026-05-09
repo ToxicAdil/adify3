@@ -89,12 +89,12 @@ const WorkPage: React.FC = () => {
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
             {[
-              { title: "Cafe Website", tag: "Sample Build", desc: "An elegant, high-converting website designed to attract more customers and increase orders for your cafe.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80", link: "https://adibuz-point.vercel.app/" },
-              { title: "Real Estate Website", tag: "Sample Build", desc: "A modern property listing website built to generate leads and showcase listings professionally.", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80", link: "https://adibuz-creative-houses.vercel.app/" },
-              { title: "Healthcare Website", tag: "Sample Build", desc: "A clean, trust-focused website designed to build credibility and increase patient bookings.", img: "https://images.unsplash.com/photo-1505751172107-5732bb72cc53?w=800&q=80" },
-              { title: "E-commerce Website", tag: "Sample Build", desc: "A conversion-optimized online store designed to drive sales and maximize revenue.", img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80", link: "https://adibuz-store.vercel.app/" },
-              { title: "Personal Brand Website", tag: "Sample Build", desc: "A powerful personal brand website to showcase your expertise and attract high-value clients.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" },
-              { title: "Gaming Website", tag: "Sample Build", desc: "An immersive, high-performance website designed to captivate players and build an engaged gaming community.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80", link: "https://adibuz-ga-ming.vercel.app/" }
+              { title: "Cafe Website", tag: "Sample Build", desc: "An elegant, high-converting website designed to attract more customers and increase orders for your cafe.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=75&fm=webp", link: "https://adibuz-point.vercel.app/" },
+              { title: "Real Estate Website", tag: "Sample Build", desc: "A modern property listing website built to generate leads and showcase listings professionally.", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=75&fm=webp", link: "https://adibuz-creative-houses.vercel.app/" },
+              { title: "Healthcare Website", tag: "Sample Build", desc: "A clean, trust-focused website designed to build credibility and increase patient bookings.", img: "https://images.unsplash.com/photo-1505751172107-5732bb72cc53?w=800&q=75&fm=webp" },
+              { title: "E-commerce Website", tag: "Sample Build", desc: "A conversion-optimized online store designed to drive sales and maximize revenue.", img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=75&fm=webp", link: "https://adibuz-store.vercel.app/" },
+              { title: "Personal Brand Website", tag: "Sample Build", desc: "A powerful personal brand website to showcase your expertise and attract high-value clients.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=75&fm=webp" },
+              { title: "Gaming Website", tag: "Sample Build", desc: "An immersive, high-performance website designed to captivate players and build an engaged gaming community.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=75&fm=webp", link: "https://adibuz-ga-ming.vercel.app/" }
             ].map((industry, i) => (
               <StaggerItem
                 key={i}
@@ -104,6 +104,10 @@ const WorkPage: React.FC = () => {
                   <img 
                     src={industry.img} 
                     alt={industry.title}
+                    width={800}
+                    height={500}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
                   />
                   <div className="absolute top-4 right-4 z-20">
@@ -194,6 +198,7 @@ const CaseStudyCard: React.FC<{ study: any, index: number }> = ({ study, index }
                   muted
                   loop
                   playsInline
+                  preload="none"
                   className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay opacity-50 group-hover:opacity-0 transition-opacity" />
@@ -205,6 +210,10 @@ const CaseStudyCard: React.FC<{ study: any, index: number }> = ({ study, index }
               <img 
                 src={study.image} 
                 alt={study.client}
+                width={800}
+                height={500}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
               />
             )}

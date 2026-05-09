@@ -23,7 +23,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: 'Askin Astrology',
     challenge: 'Low conversions and inconsistent leads',
     result: '₹4Cr+ Revenue Generated',
-    image: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200&q=75&fm=webp',
     videoUrl: 'https://res.cloudinary.com/dtzo88csm/video/upload/v1774899653/marketing_video_yes6gn.mp4',
     metrics: [
       { label: 'Total Revenue', value: '₹4Cr+' },
@@ -51,7 +51,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: 'LuxeDecor',
     challenge: 'High competition in high-ticket luxury niche',
     result: '5.5x Average ROAS Scaled',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=75&fm=webp',
     videoUrl: 'https://res.cloudinary.com/dtzo88csm/video/upload/v1774898952/management_video_j9vvld.mp4',
     metrics: [
       { label: 'Avg ROAS', value: '5.5x' },
@@ -79,7 +79,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: 'TechStart',
     challenge: 'Struggling to acquire B2B enterprise leads',
     result: '850+ Qualified MQLs/Month',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=75&fm=webp',
     videoUrl: 'https://res.cloudinary.com/dtzo88csm/video/upload/v1774897694/automation_video_eevmht.mp4',
     metrics: [
       { label: 'Monthly MQLs', value: '850+' },

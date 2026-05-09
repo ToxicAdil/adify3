@@ -108,6 +108,8 @@ const TeamCard: React.FC<{ member: any, index: number }> = ({ member, index }) =
         <img 
           src={member.image} 
           alt={member.name}
+          width={800}
+          height={1000}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover object-center filter grayscale contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.03]"

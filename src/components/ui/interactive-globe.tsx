@@ -183,8 +183,10 @@ export function InteractiveGlobe({
     const ry = rotYRef.current;
     const rx = rotXRef.current;
 
-    // Draw dots
+    // Draw dots — batch by alpha ranges for fewer state changes
     const dots = dotsRef.current;
+    const alphaBuckets: Map<string, [number, number, number][]> = new Map();
+    
     for (let i = 0; i < dots.length; i++) {
       let [x, y, z] = dots[i];
       x *= radius;
@@ -198,11 +200,21 @@ export function InteractiveGlobe({
 
       const [sx, sy] = project(x, y, z, cx, cy, fov);
       const depthAlpha = Math.max(0.1, 1 - (z + radius) / (2 * radius));
-      const dotSize = 1 + depthAlpha * 0.8;
-
+      // Quantize alpha to reduce unique fillStyle calls
+      const alphaKey = (Math.round(depthAlpha * 5) / 5).toFixed(1);
+      
+      if (!alphaBuckets.has(alphaKey)) alphaBuckets.set(alphaKey, []);
+      alphaBuckets.get(alphaKey)!.push([sx, sy, 1 + depthAlpha * 0.8]);
+    }
+    
+    // Draw each batch with one fillStyle
+    for (const [alpha, points] of alphaBuckets) {
+      ctx.fillStyle = dotColor.replace("ALPHA", alpha);
       ctx.beginPath();
-      ctx.arc(sx, sy, dotSize, 0, Math.PI * 2);
-      ctx.fillStyle = dotColor.replace("ALPHA", depthAlpha.toFixed(2));
+      for (const [sx, sy, dotSize] of points) {
+        ctx.moveTo(sx + dotSize, sy);
+        ctx.arc(sx, sy, dotSize, 0, Math.PI * 2);
+      }
       ctx.fill();
     }
 

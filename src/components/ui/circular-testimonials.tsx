@@ -78,16 +78,26 @@ export const CircularTestimonials = ({
     [activeIndex, testimonials]
   );
 
-  // Responsive gap calculation
+  // Responsive gap calculation (debounced)
   useEffect(() => {
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     function handleResize() {
-      if (imageContainerRef.current) {
-        setContainerWidth(imageContainerRef.current.offsetWidth);
-      }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (imageContainerRef.current) {
+          setContainerWidth(imageContainerRef.current.offsetWidth);
+        }
+      }, 150);
     }
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // Initial measurement
+    if (imageContainerRef.current) {
+      setContainerWidth(imageContainerRef.current.offsetWidth);
+    }
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
 
   // Autoplay
@@ -188,6 +198,11 @@ export const CircularTestimonials = ({
               className="testimonial-image"
               data-index={index}
               style={getImageStyle(index)}
+              loading="lazy"
+              decoding="async"
+              width={400}
+              height={400}
+              referrerPolicy="no-referrer"
             />
           ))}
         </div>
