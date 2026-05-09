@@ -61,11 +61,19 @@ export function UniqueAccordion() {
           const isHovered = hoveredId === item.id
 
           return (
-            <div key={item.id} className="border-b border-slate-200 last:border-0">
+            <div 
+              key={item.id} 
+              className="border-b border-slate-200 last:border-0"
+              onMouseEnter={() => {
+                setHoveredId(item.id);
+                setActiveId(item.id);
+              }}
+              onMouseLeave={() => {
+                setHoveredId(null);
+                setActiveId(null);
+              }}
+            >
               <motion.button
-                onClick={() => setActiveId(isActive ? null : item.id)}
-                onMouseEnter={() => setHoveredId(item.id)}
-                onMouseLeave={() => setHoveredId(null)}
                 className="w-full group relative text-left"
                 initial={false}
               >

@@ -11,6 +11,7 @@ import WhoWeWorkWith from '../components/WhoWeWorkWith';
 import ImpactStatement from '../components/ImpactStatement';
 import { SimpleHeader } from '@/components/ui/simple-header';
 import { Footer } from '@/components/ui/footer-section';
+import { SEO } from '@/components/SEO';
 
 const AboutPage = () => {
   const { scrollY } = useScroll();
@@ -18,6 +19,10 @@ const AboutPage = () => {
   const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   return (
     <div className="min-h-screen selection:bg-primary selection:text-white relative">
+      <SEO 
+        title="About Adibuz | Our Mission & Team" 
+        description="Learn about the team behind Adibuz. We are a premium digital marketing agency focused on strategic AI automation, creative design, and data-driven growth."
+      />
       <CustomCursor />
       
       <SimpleHeader />

@@ -48,8 +48,8 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
   left: {
     id: 'left',
     label: 'Adil',
-    title: 'Adil Ali',
-    description: 'Founder & Visionary behind Adibuz. Spearheading strategic growth, full-stack development, and data-driven marketing systems that scale brands beyond borders.',
+    title: 'Md Adil Ali',
+    description: 'Leading Adibuz\'s vision through strategic growth systems, digital innovation, and scalable marketing solutions for modern brands.',
     image: 'https://res.cloudinary.com/dtzo88csm/image/upload/f_auto,q_auto,w_800,c_fill/v1774977463/IMG_6729_q6mmay.jpg',
     colors: {
       gradient: 'from-[#3A0F63] to-purple-800',
@@ -66,19 +66,19 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
   right: {
     id: 'right',
     label: 'Krish',
-    title: 'Creative Director',
-    description: 'Founder & Design Lead. Crafting premium visual identities, engaging social experiences, and cohesive brand narratives that convert.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=75&fm=webp', // Placeholder
+    title: 'Krish Rawat',
+    description: 'Develops SEO strategies focused on long-term organic growth, search visibility, and sustainable digital authority for modern brands.',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=75&fm=webp',
     colors: {
-      gradient: 'from-slate-900 to-black',
-      glow: 'bg-black',
-      ring: 'border-slate-900',
-      shadow: 'shadow-[0_0_100px_rgba(0,0,0,0.65)]',
+      gradient: 'from-[#3A0F63] to-purple-800',
+      glow: 'bg-[#3A0F63]',
+      ring: 'border-[#3A0F63]',
+      shadow: 'shadow-[0_0_100px_rgba(58,15,99,0.65)]',
     },
     stats: { status: 'Crafting Brands', focusLevel: 98 },
     features: [
-      { label: 'Creativity', value: 99, icon: Sparkles },
-      { label: 'Design', value: 96, icon: PenTool },
+      { label: 'SEO Strategy', value: 99, icon: Sparkles },
+      { label: 'Brand Design', value: 96, icon: PenTool },
     ],
   },
 };
@@ -87,7 +87,7 @@ const PROFILE_DATA: Record<ProductId, ProfileData> = {
 // 2. ANIMATION VARIANTS
 // =========================================
 
-const ANIMATIONS = {
+const ANIMATIONS: Record<string, any> = {
   container: {
     hidden: { opacity: 0 },
     visible: {
@@ -218,11 +218,14 @@ const ProfileDetails = ({ data, isLeft }: { data: ProfileData; isLeft: boolean; 
       className={`flex flex-col ${alignClass} w-full`}
     >
       <motion.h2 variants={ANIMATIONS.item} className="text-sm font-bold uppercase tracking-[0.2em] text-[#3A0F63] mb-2 bg-[#3A0F63]/10 px-3 py-1 rounded-full">
-        {data.label}
+        {data.id === 'left' ? 'Founder' : 'Co-Founder'}
       </motion.h2>
-      <motion.h1 variants={ANIMATIONS.item} className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-slate-900">
+      <motion.h1 variants={ANIMATIONS.item} className="text-3xl md:text-5xl font-bold tracking-tight mb-1 text-slate-900">
         {data.title}
       </motion.h1>
+      <motion.p variants={ANIMATIONS.item} className="text-xs font-bold uppercase tracking-[0.2em] text-[#3A0F63]/70 mb-4">
+        {data.id === 'left' ? 'Founder & Growth Strategist' : 'Co-Founder & SEO Specialist'}
+      </motion.p>
       <motion.p variants={ANIMATIONS.item} className={`text-slate-500 mb-8 max-w-sm leading-relaxed text-sm md:text-base font-medium ${isLeft ? 'mr-auto' : 'ml-auto'}`}>
         {data.description}
       </motion.p>

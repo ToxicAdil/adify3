@@ -1,8 +1,12 @@
 import {StrictMode, lazy, Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
+import ScrollToTop from './components/ScrollToTop.tsx';
 import './index.css';
+
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 
 // PERFORMANCE: Lazy-load ChatFAB — it's a floating button that doesn't need to
 // be in the initial bundle. This keeps framer-motion entirely out of the
@@ -15,6 +19,8 @@ const AboutPage = lazy(() => import('./pages/AboutPage.tsx'));
 const WorkPage = lazy(() => import('./pages/WorkPage.tsx'));
 const CaseStudyDetailPage = lazy(() => import('./pages/CaseStudyDetailPage.tsx'));
 const ChatAssistantPage = lazy(() => import('./pages/ChatAssistantPage.tsx'));
+const InsightsPage = lazy(() => import('./pages/InsightsPage.tsx'));
+const InsightDetailPage = lazy(() => import('./pages/InsightDetailPage.tsx'));
 
 // Minimal loading fallback
 const PageLoader = () => (
@@ -25,19 +31,26 @@ const PageLoader = () => (
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/work/:id" element={<CaseStudyDetailPage />} />
-          <Route path="/assistant" element={<ChatAssistantPage />} />
-        </Routes>
-      </Suspense>
-      <Suspense fallback={null}>
-        <ChatFAB />
-      </Suspense>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Suspense fallback={<PageLoader />}>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/work/:id" element={<CaseStudyDetailPage />} />
+              <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/insights/:slug" element={<InsightDetailPage />} />
+              <Route path="/assistant" element={<ChatAssistantPage />} />
+            </Routes>
+          </Suspense>
+          <Suspense fallback={null}>
+            <ChatFAB />
+          </Suspense>
+        </BrowserRouter>
+      </HelmetProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );

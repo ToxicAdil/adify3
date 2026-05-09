@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { FadeInUp, StaggerContainer, StaggerItem, ScaleInView } from '@/lib/animations';
 import { 
   Target, 
   Users, 
@@ -103,58 +104,33 @@ export const InteractiveServices: React.FC = () => {
   return (
     <section id="services" className="py-8 relative overflow-hidden">
       <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="premium-card rounded-3xl md:rounded-[32px] relative"
-        >
-          {/* Centered Header */}
-          <div className="text-center mt-12 mb-8 relative z-10 px-6">
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-4 flex flex-col items-center"
-            >
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">
-                Our <span className="text-gradient">Services.</span>
-              </h2>
-              <p className="text-slate-600 text-sm md:text-base font-medium max-w-2xl leading-relaxed">
-                Transforming brands into industry leaders with data-driven creative and technical systems.
-              </p>
-            </motion.div>
-          </div>
+        <FadeInUp className="premium-card rounded-3xl md:rounded-[32px] relative">
+          <StaggerContainer className="flex flex-col">
+            {/* Centered Header */}
+            <div className="text-center mt-12 mb-8 relative z-10 px-6 flex justify-center">
+              <StaggerItem className="space-y-4 flex flex-col items-center">
+                <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">
+                  Our <span className="text-gradient">Services.</span>
+                </h2>
+                <p className="text-slate-600 text-sm md:text-base font-medium max-w-2xl leading-relaxed">
+                  Transforming brands into industry leaders with data-driven creative and technical systems.
+                </p>
+              </StaggerItem>
+            </div>
 
-          <div className="flex flex-col lg:flex-row items-start justify-between min-h-[400px] md:min-h-[500px] relative z-10 px-6 md:px-12 pb-8 md:pb-12">
-            {/* Left Side: Interactive Accordion Content */}
-            <div className="w-full lg:w-[45%] lg:pl-4">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-              >
+            <div className="flex flex-col lg:flex-row items-start justify-between min-h-[400px] md:min-h-[500px] relative z-10 px-6 md:px-12 pb-8 md:pb-12">
+              {/* Left Side: Interactive Accordion Content */}
+              <StaggerItem className="w-full lg:w-[45%] lg:pl-4">
                 <UniqueAccordion />
-              </motion.div>
-            </div>
+              </StaggerItem>
 
-            {/* Right Side: Circular Animation */}
-            <div className="w-full lg:w-[55%] flex justify-center lg:justify-end mt-8 lg:-mt-6">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-                className="relative w-full flex justify-center lg:justify-end"
-              >
+              {/* Right Side: Circular Animation */}
+              <ScaleInView delay={0.2} className="w-full lg:w-[55%] flex justify-center lg:justify-end mt-8 lg:-mt-6 relative">
                 <OrbitingServices />
-              </motion.div>
+              </ScaleInView>
             </div>
-          </div>
-        </motion.div>
+          </StaggerContainer>
+        </FadeInUp>
       </div>
     </section>
   );

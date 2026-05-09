@@ -6,6 +6,7 @@ import { MenuToggle } from '@/components/ui/menu-toggle';
 import AdibuzLogo from '../AdibuzLogo';
 import MagneticButton from '../MagneticButton';
 import { cn } from '@/lib/utils';
+import { motion } from 'motion/react';
 
 export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 	const [open, setOpen] = React.useState(false);
@@ -20,8 +21,9 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 	const navItems = [
 		{ label: 'Home', id: 'home', path: '/' },
 		{ label: 'Services', id: 'services', path: '/#services' },
-		{ label: 'Work', id: 'work', path: '/work' },
 		{ label: 'Clients', id: 'clients', path: '/#clients' },
+		{ label: 'Work', id: 'work', path: '/work' },
+		{ label: 'Insights', id: 'insights', path: '/insights' },
 		{ label: 'About', id: 'about', path: '/about' }
 	];
 
@@ -37,21 +39,30 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 	};
 
 	return (
-		<header className={cn(
-			"fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-			isScrolled ? "py-4" : "py-8"
-		)}>
-			<nav className="container-custom">
-				<div className={cn(
-					"flex items-center justify-between transition-all duration-500",
-					isScrolled 
-						? dark 
-							? "bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 sm:px-6 lg:px-12 py-3 shadow-2xl shadow-purple-900/20"
-							: "glass rounded-full px-4 sm:px-6 lg:px-12 py-3 shadow-md"
-						: "py-2"
-				)}>
+		<motion.header 
+			initial={{ y: -40, opacity: 0, filter: "blur(12px)" }}
+			animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+			transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+			className={cn(
+				"fixed top-0 left-0 right-0 z-[1000] transition-all duration-500",
+				isScrolled ? "py-4" : "py-6"
+			)}
+		>
+			<nav className="container-custom flex justify-center">
+				<motion.div 
+					layout
+					transition={{ type: "spring", stiffness: 400, damping: 30 }}
+					className={cn(
+						"flex items-center justify-between transition-all duration-500 w-full",
+						isScrolled 
+							? dark 
+								? "bg-black/90 backdrop-blur-md border border-white/10 rounded-[16px] px-6 sm:px-8 py-3 shadow-lg max-w-5xl"
+								: "bg-[#ffffff] border border-slate-100 rounded-[16px] px-6 sm:px-8 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.06)] max-w-5xl"
+							: "py-2 px-2 max-w-7xl"
+					)}
+				>
 					<Link to="/" className="flex items-center group cursor-pointer">
-						<AdibuzLogo height={48} className={cn("transition-transform duration-300 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
+						<AdibuzLogo height={isScrolled ? 36 : 44} className={cn("transition-all duration-500 group-hover:scale-[1.02]", dark && "brightness-0 invert")} />
 					</Link>
 
 					<div className="hidden lg:flex items-center gap-6 xl:gap-10">
@@ -64,13 +75,14 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 									key={item.label} 
 									to={item.path}
 									className={cn(
-										"text-[13px] font-semibold transition-colors tracking-wide",
+										"relative text-[13px] font-semibold transition-colors tracking-wide group pb-1",
 										dark 
 											? isActive ? "text-purple-400" : "text-slate-400 hover:text-white"
-											: "text-slate-500 hover:text-slate-900"
+											: isActive ? "text-slate-900" : "text-slate-500 hover:text-slate-900"
 									)}
 								>
 									{item.label}
+									<div className={cn("absolute -bottom-[6px] left-0 w-full h-[3px] rounded-full origin-center transition-transform duration-300 scale-x-0 group-hover:scale-x-100", dark ? "bg-purple-400" : "bg-primary")} />
 								</Link>
 							) : (
 								<a 
@@ -78,13 +90,14 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 									href={item.path}
 									onClick={(e) => handleScrollTo(e, item.id)}
 									className={cn(
-										"text-[13px] font-semibold transition-colors tracking-wide",
+										"relative text-[13px] font-semibold transition-colors tracking-wide group pb-1",
 										dark 
-											? "text-slate-400 hover:text-white"
-											: "text-slate-500 hover:text-slate-900"
+											? isActive ? "text-purple-400" : "text-slate-400 hover:text-white"
+											: isActive ? "text-slate-900" : "text-slate-500 hover:text-slate-900"
 									)}
 								>
 									{item.label}
+									<div className={cn("absolute -bottom-[6px] left-0 w-full h-[3px] rounded-full origin-center transition-transform duration-300 scale-x-0 group-hover:scale-x-100", dark ? "bg-purple-400" : "bg-primary")} />
 								</a>
 							);
 						})}
@@ -176,8 +189,8 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 							</SheetContent>
 						</Sheet>
 					</div>
-				</div>
+				</motion.div>
 			</nav>
-		</header>
+		</motion.header>
 	);
 }
