@@ -108,6 +108,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 							<MagneticButton>
 								<button 
 									data-cursor-text="Chat"
+									aria-label="Open live chat"
 									className={cn(
 										"text-[13px] font-bold transition-opacity",
 										dark ? "text-slate-300 hover:text-white" : "text-slate-900 hover:opacity-70"
@@ -119,6 +120,7 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 							<MagneticButton>
 								<button 
 									data-cursor-text="Join"
+									aria-label="Get started with Adibuz"
 									className={cn(
 										"px-6 py-2.5 rounded-full text-[13px] font-bold transition-all",
 										dark 
@@ -132,7 +134,13 @@ export function SimpleHeader({ dark = false }: { dark?: boolean }) {
 						</div>
 
 						<Sheet open={open} onOpenChange={setOpen}>
-							<Button size="icon" variant="ghost" className={cn("lg:hidden p-2 hover:bg-transparent min-h-[44px] min-w-[44px]", dark ? "text-slate-300" : "text-slate-600")}>
+							<Button 
+								size="icon" 
+								variant="ghost" 
+								aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+								aria-expanded={open}
+								aria-controls="mobile-nav"
+								className={cn("lg:hidden p-2 hover:bg-transparent min-h-[44px] min-w-[44px]", dark ? "text-slate-300" : "text-slate-600")}>
 								<MenuToggle
 									strokeWidth={2.5}
 									open={open}

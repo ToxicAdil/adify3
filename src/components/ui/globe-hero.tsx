@@ -1,23 +1,39 @@
 "use client";
 
-import React, { useRef, useEffect, useState, lazy, Suspense } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { lazy, Suspense } from "react";
 
-// Defer Three.js loading — only load after page is idle
-const ThreeGlobe = lazy(() => 
-  new Promise<{ default: React.ComponentType<{ radius: number; speed: number }> }>((resolve) => {
-    // Wait for idle or 4 seconds, whichever comes first
-    const load = () => {
-      import("./globe-three-inner").then(m => resolve({ default: m.ThreeGlobeInner }));
-    };
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(load, { timeout: 4000 });
-    } else {
-      setTimeout(load, 3000);
-    }
-  })
-);
+// Detect mobile once at module level
+const isMobileDevice =
+  typeof window !== "undefined" &&
+  (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) ||
+    window.innerWidth < 768);
+
+// Defer Three.js loading — only on desktop, only after idle
+const ThreeGlobe = !isMobileDevice
+  ? lazy(
+      () =>
+        new Promise<{ default: React.ComponentType<{ radius: number; speed: number }> }>(
+          (resolve) => {
+            const load = () => {
+              import("./globe-three-inner").then((m) =>
+                resolve({ default: m.ThreeGlobeInner })
+              );
+            };
+            // Increase timeout: give LCP a chance to complete first
+            if ("requestIdleCallback" in window) {
+              (window as any).requestIdleCallback(load, { timeout: 6000 });
+            } else {
+              setTimeout(load, 5000);
+            }
+          }
+        )
+    )
+  : null;
 
 interface DotGlobeHeroProps {
   rotationSpeed?: number;
@@ -27,24 +43,29 @@ interface DotGlobeHeroProps {
 }
 
 /**
- * CSS-only wireframe globe that loads instantly.
- * Three.js version loads lazily after page is interactive.
+ * Pure-CSS animated background shown while Three.js loads (or permanently on mobile).
+ * Zero JS cost — all GPU-composited CSS animations.
  */
 const CSSGlobe = () => (
-  <div className="css-globe-container" style={{ width: '100%', height: '100%', position: 'relative' }}>
-    {/* Main sphere wireframe */}
+  <div
+    className="css-globe-container"
+    style={{ width: "100%", height: "100%", position: "relative" }}
+    aria-hidden="true"
+  >
     <div className="css-globe" />
   </div>
 );
 
 const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(
   ({ rotationSpeed = 0.005, globeRadius = 1.3, className, children, ...props }, ref) => {
+    // On mobile, never attempt to load Three.js
     const [showThree, setShowThree] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // After mount, schedule Three.js loading
     useEffect(() => {
-      const timer = setTimeout(() => setShowThree(true), 100);
+      if (isMobileDevice) return; // Never show Three on mobile
+      // Small delay to let React paint first, then schedule Three.js
+      const timer = setTimeout(() => setShowThree(true), 200);
       return () => clearTimeout(timer);
     }, []);
 
@@ -52,8 +73,9 @@ const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(
       <div
         ref={(node) => {
           (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-          if (typeof ref === 'function') ref(node);
-          else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref)
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
         }}
         className={cn(
           "relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-center",
@@ -61,15 +83,17 @@ const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(
         )}
         {...props}
       >
-        {/* Globe Container */}
-        <motion.div 
+        {/* Globe Container — opacity 0.10 on mobile, 0.18 on desktop */}
+        <motion.div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.10] md:opacity-[0.18]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, ease: "easeOut", delay: 0.3 }}
-          style={{ willChange: 'opacity' }}
+          style={{ willChange: "opacity" }}
+          aria-hidden="true"
         >
-          {showThree ? (
+          {/* Mobile: always CSS globe. Desktop: Three.js after idle */}
+          {!isMobileDevice && showThree && ThreeGlobe ? (
             <Suspense fallback={<CSSGlobe />}>
               <ThreeGlobe radius={globeRadius} speed={rotationSpeed} />
             </Suspense>

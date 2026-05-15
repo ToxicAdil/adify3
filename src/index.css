@@ -968,3 +968,25 @@
 .prose strong { @apply text-slate-900 font-bold; }
 .prose code { @apply bg-slate-100 text-[#3A0F63] px-1.5 py-0.5 rounded-md text-sm font-mono border border-slate-200; }
 .prose img { @apply rounded-2xl shadow-lg my-8 w-full object-cover; }
+
+/* ============================
+   CHAT FAB ANIMATIONS
+============================ */
+
+/* Eye blink — squish scaleY to 0.05 for a crisp blink */
+@keyframes fabBlink {
+  0%, 45%, 55%, 100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleY(0.05);
+    opacity: 0.8;
+  }
+}
+
+/* Subtle background pulse — stays nearly invisible so it never covers the face */
+@keyframes fabPulse {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 0.06; }
+}
