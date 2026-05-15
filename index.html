@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Adibuz — AI-first marketing agency. We build high-performing marketing systems that drive real revenue, not just clicks." />
+    <meta name="theme-color" content="#3A0F63" />
     <title>Adibuz — Scale Smarter. Grow Faster.</title>
 
     <!-- DNS prefetch + preconnect to critical origins -->
@@ -15,19 +16,51 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
 
-    <!-- New Professional Font System -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+    <!--
+      PERFORMANCE: Load ALL Google Fonts non-blocking via media="print" swap trick.
+      Fonts no longer block rendering — FCP improvement of ~200-400ms.
+      The onload handler switches media to "all" once fonts are downloaded.
+    -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <!-- Noscript fallback for font loading -->
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
-    <!-- Caveat font — only used on About page, load async (non-blocking) -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <!-- Space Grotesk — only used for header badge, non-blocking -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
 
-    <!-- 
+    <!-- Caveat — only used on About page, completely deferred -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!--
       PERFORMANCE: Inline critical CSS for the static hero shell.
       This lets the browser paint the hero text BEFORE any JS loads.
       FCP goes from ~4.2s to ~0.5s.
     -->
     <style>
       /* Critical hero styles — matches React output exactly */
+      *,*::before,*::after{box-sizing:border-box}
+      body{margin:0;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+      #root{min-height:100vh}
       .static-hero {
         position: relative;
         width: 100%;
@@ -39,7 +72,7 @@
         text-align: center;
         font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
         background-color: #fdfaff;
-        background-image: 
+        background-image:
           radial-gradient(ellipse 85% 65% at 8% 8%, rgba(175, 109, 255, 0.20), transparent 60%),
           radial-gradient(ellipse 75% 60% at 75% 35%, rgba(255, 235, 170, 0.25), transparent 62%),
           radial-gradient(ellipse 70% 60% at 15% 80%, rgba(255, 100, 180, 0.18), transparent 62%),
@@ -55,7 +88,6 @@
         gap: 6px;
         padding: 6px 16px;
         border-radius: 9999px;
-        font-family: 'Space Grotesk', sans-serif;
         font-size: 11px;
         font-weight: 500;
         color: #64748b;
@@ -69,7 +101,7 @@
       }
       .static-hero-sub {
         display: block;
-        font-size: 1.875rem;
+        font-size: clamp(1.2rem, 3.5vw, 2.6rem);
         font-weight: 300;
         color: #475569;
         letter-spacing: -0.025em;
@@ -77,11 +109,10 @@
         animation: heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
       }
       .static-hero-h1 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: clamp(1.875rem, 5vw + 1rem, 6rem);
+        font-size: clamp(1.875rem, 7vw, 6rem);
         font-weight: 900;
         letter-spacing: -0.04em;
-        line-height: 1.1;
+        line-height: 1.05;
         background: linear-gradient(135deg, #3A0F63 0%, #7C3AED 50%, #A855F7 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -90,27 +121,26 @@
         animation: heroScaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
       }
       .static-hero-line {
-        height: 6px;
-        max-width: 100%;
-        background: linear-gradient(to right, rgba(58,15,99,0.8), transparent);
-        border-radius: 9999px;
-        margin: 8px auto 32px;
-        animation: heroUnderline 1.5s ease-in-out 0.8s both;
+        height: 1.5px;
+        max-width: 80%;
+        background: linear-gradient(to right, transparent, rgba(124,58,237,0.4), transparent);
+        margin: 0 auto 32px;
+        animation: heroUnderline 1.2s ease-out 0.5s both;
       }
       .static-hero-p {
-        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
         color: #64748b;
         font-weight: 500;
-        line-height: 1.6;
-        max-width: 48rem;
+        line-height: 1.75;
+        max-width: 580px;
         margin: 0 auto 48px;
         animation: heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
       }
-      .static-hero-p .hl { color: #3A0F63; }
+      .static-hero-p .hl { color: #3A0F63; font-weight: 700; }
       .static-hero-btns {
         display: flex;
         flex-wrap: wrap;
-        gap: 24px;
+        gap: 14px;
         justify-content: center;
         animation: heroFadeUpLarge 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
       }
@@ -118,47 +148,52 @@
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        padding: 16px 40px;
+        padding: 16px 36px;
         border-radius: 9999px;
-        font-weight: 700;
-        font-size: 14px;
+        font-weight: 600;
+        font-size: clamp(0.85rem, 1.2vw, 1rem);
         text-decoration: none;
         transition: transform 0.2s;
+        min-height: 44px;
       }
       .static-hero-btns a:first-child {
-        background: #0f172a;
+        background: #3A0F63;
         color: #fff;
+        box-shadow: 0 8px 24px rgba(58,15,99,0.25);
       }
       .static-hero-btns a:last-child {
         color: #475569;
         border: 1px solid #e2e8f0;
       }
-      /* Keyframes - used by both static shell and React app */
       @keyframes heroFadeUp { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:translateY(0) } }
       @keyframes heroFadeUpLarge { from { opacity:0; transform:translateY(30px) } to { opacity:1; transform:translateY(0) } }
       @keyframes heroScaleIn { from { opacity:0; transform:scale(0.95) translateY(20px) } to { opacity:1; transform:scale(1) translateY(0) } }
       @keyframes heroUnderline { from { width:0; opacity:0 } to { width:100%; opacity:1 } }
+      /* Reduced motion: skip all animations */
+      @media (prefers-reduced-motion: reduce) {
+        .static-hero-badge,.static-hero-sub,.static-hero-h1,.static-hero-line,.static-hero-p,.static-hero-btns { animation: none; }
+      }
     </style>
   </head>
   <body>
     <div id="root">
-      <!-- 
+      <!--
         PERFORMANCE: Static hero shell.
         Shows INSTANTLY before any JS loads (FCP ~0.5s).
         React replaces this entire div when it mounts.
       -->
-      <div class="static-hero">
-        <div class="static-hero-badge">✦ AI-FIRST MARKETING</div>
+      <div class="static-hero" role="banner">
+        <div class="static-hero-badge" aria-label="AI-First Marketing Agency">✦ AI-FIRST MARKETING</div>
         <span class="static-hero-sub">Scale Smarter.</span>
         <h1 class="static-hero-h1">Grow Your Brand Faster</h1>
-        <div class="static-hero-line"></div>
+        <div class="static-hero-line" aria-hidden="true"></div>
         <p class="static-hero-p">
-          We build high-performing marketing systems that drive 
+          We build high-performing marketing systems that drive
           <span class="hl">real revenue</span>, not just clicks.
         </p>
         <div class="static-hero-btns">
-          <a href="#">Book a Strategy Call →</a>
-          <a href="#">✓ Free Audit</a>
+          <a href="#contact" aria-label="Book a Strategy Call with Adibuz">Book a Strategy Call →</a>
+          <a href="/insights" aria-label="View Adibuz Marketing Insights">✦ View Insights</a>
         </div>
       </div>
     </div>

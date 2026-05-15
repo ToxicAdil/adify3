@@ -5,10 +5,21 @@ import { PerspectiveCamera } from "@react-three/drei";
 import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 
-const Globe: React.FC<{ rotationSpeed: number; radius: number; paused: boolean }> = ({ rotationSpeed, radius, paused }) => {
+const isMobileDevice =
+  typeof window !== "undefined" &&
+  (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) ||
+    window.innerWidth < 768);
+
+const Globe: React.FC<{ rotationSpeed: number; radius: number; paused: boolean }> = ({
+  rotationSpeed,
+  radius,
+  paused,
+}) => {
   const groupRef = useRef<THREE.Group>(null!);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const segments = isMobile ? 32 : 64;
+  // Fewer segments on all devices to reduce geometry cost
+  const segments = isMobileDevice ? 24 : 48;
 
   useFrame(() => {
     if (groupRef.current && !paused) {
@@ -28,7 +39,10 @@ const Globe: React.FC<{ rotationSpeed: number; radius: number; paused: boolean }
   );
 };
 
-export const ThreeGlobeInner: React.FC<{ radius: number; speed: number }> = ({ radius, speed }) => {
+export const ThreeGlobeInner: React.FC<{ radius: number; speed: number }> = ({
+  radius,
+  speed,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -37,22 +51,21 @@ export const ThreeGlobeInner: React.FC<{ radius: number; speed: number }> = ({ r
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { rootMargin: '100px 0px', threshold: 0 }
+      { rootMargin: "100px 0px", threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
+    <div ref={containerRef} style={{ width: "100%", height: "100%" }} aria-hidden="true">
       <Canvas
         frameloop={isVisible ? "always" : "never"}
-        dpr={[1, 1.5]}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
+        dpr={[1, 1.2]}
+        gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 3.5]} fov={75} />
         <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
         <Globe rotationSpeed={speed} radius={radius} paused={!isVisible} />
       </Canvas>
     </div>

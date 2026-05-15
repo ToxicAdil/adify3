@@ -48,7 +48,7 @@ const CaseStudyDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#fdfaff] selection:bg-primary selection:text-white relative overflow-hidden">
       <SEO 
-        title={`${study.title} | Adibuz Case Study`}
+        title={`${study.client} | Adibuz Case Study`}
         description={study.challenge}
       />
       <SimpleHeader />
